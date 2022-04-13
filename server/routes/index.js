@@ -6,4 +6,10 @@ router.get('/', function(req, res, next) {
   res.json("Hello, World!");
 });
 
+router.get('/user', function(req, res, next) {
+  res.json({
+    Name:'Sam'
+  });
+});
+
 module.exports = router;
