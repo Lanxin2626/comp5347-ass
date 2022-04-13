@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 // import router
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 
 
 // middleware
