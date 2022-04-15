@@ -1,4 +1,13 @@
-body {font-family: Arial, Helvetica, sans-serif;}
+body {
+  font-family: 'Montserrat',sans-serif;
+  background-image: linear-gradient(120deg,#3498db,#8e44ad);;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: -20px 0 50px; */
+}
 * {box-sizing: border-box;}
 
 /* Full-width input fields */
@@ -19,7 +28,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 /* Set a style for all buttons */
 button {
-  background-color: #04AA6D;
+  background-color: #3498db;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -34,13 +43,13 @@ button:hover {
 }
 
 /* Extra styles for the cancel button */
-.cancelbtn {
+.clearButton {
   padding: 14px 20px;
-  background-color: #f44336;
+  background-color: #8e44ad;
 }
 
 /* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
+.clearButton, .signupbtn {
   float: left;
   width: 50%;
 }
@@ -64,12 +73,13 @@ button:hover {
   padding-top: 50px;
 }
 
-/* Modal Content/Box */
+/* Content Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  margin: 5% auto 20% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 70%; /* Could be more or less, depending on screen size */
+  border-radius: 10px;
 }
 
 /* Style the horizontal ruler */
@@ -78,21 +88,6 @@ hr {
   margin-bottom: 25px;
 }
  
-/* The Close Button (x) */
-.close {
-  position: absolute;
-  right: 35px;
-  top: 15px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #f1f1f1;
-}
-
-.close:hover,
-.close:focus {
-  color: #f44336;
-  cursor: pointer;
-}
 
 /* Clear floats */
 .clearfix::after {
@@ -101,22 +96,23 @@ hr {
   display: table;
 }
 
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .signupbtn {
-     width: 100%;
-  }
-}
-
-
 ul {
    list-style-type: none;
    margin: 0;
-   padding: 0;
+   padding: 100;
+  text-align: center;
+  font-size: 18px;
  }
  
- li a {
+ /* li a {
    display: block;
    width: 60px;
    background-color: #dddddd;
- }
+ } */
+
+ /* Change styles for cancel button and signup button on extra small screens */
+/* @media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+} */
