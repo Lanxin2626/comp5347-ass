@@ -1,5 +1,6 @@
-//const bcrypt = require("bcryptjs");
 const userModel = require("../models/users");
+//md5 encryption
+const md5 = require('js-md5');
 //const jwt = require("jsonwebtoken");
 //Jwt for further use
 //const { JWT_SECRET } = require("../config/keys");
@@ -45,7 +46,7 @@ class Auth {
                 //判断邮箱格式
                 var szReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                 var emailCheck = szReg.test(email);
-                if(!emailCheck){
+                if (!emailCheck) {
                     error = {
                         email: "Your email address is not valid",
                     };
@@ -53,8 +54,6 @@ class Auth {
                 }
                 // If username exists in Database then:
                 try {
-                    //加密稍后做
-                    //password = bcrypt.hashSync(password, 10);
                     const data = await userModel.findOne({ email: email });
                     if (data) {
                         error = {
@@ -62,11 +61,15 @@ class Auth {
                         };
                         return res.json({ error });
                     } else {
+                        var password = md5(password);
+                        console.log(password);
+                        //跟sql不一样这里usermodel必须跟model里fields一样
                         let newUser = new userModel({
                             firstname,
                             lastname,
                             email,
-                            password,
+                            password
+                            ,
                         });
                         newUser
                             .save()
@@ -89,6 +92,7 @@ class Auth {
     async userLogin(req, res) {
         var email = req.body.email;
         var password = req.body.pwd;
+        var password = md5(password);
         let error = {};
         if (!email || !password) {
             error = {
