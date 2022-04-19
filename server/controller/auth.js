@@ -1,15 +1,12 @@
 const userModel = require("../models/users");
 //md5 encryption
 const md5 = require('js-md5');
-//const jwt = require("jsonwebtoken");
-//Jwt for further use
-//const { JWT_SECRET } = require("../config/keys");
+const jwt = require('jsonwebtoken');
+const { token } = require("morgan");
+//jwtKey应该放到环境变量里,但是图方便放这里
+const jwtKey = "my_secret_key"
 
 class Auth {
-    /*test(req,res){
-        return res.json({ test:"success5432" });
-    }*/
-
     /* User Registration/Signup controller  */
     async userSignup(req, res) {
         var firstname = req.body.firstname;
@@ -18,6 +15,7 @@ class Auth {
         var cpassword = req.body.cpwd;
         var email = req.body.email;
         let error = {};
+        //const{test1,test2,test3,test4,test5}=req.body;
         //判断空值
         if (!firstname || !lastname || !password || !email) {
             error = {
@@ -71,6 +69,7 @@ class Auth {
                             password
                             ,
                         });
+                        //储存入数据库
                         newUser
                             .save()
                             .then((data) => {
@@ -94,6 +93,7 @@ class Auth {
         var password = req.body.pwd;
         var password = md5(password);
         let error = {};
+        //输入为空
         if (!email || !password) {
             error = {
                 email: "Filed must not be empty",
@@ -103,6 +103,7 @@ class Auth {
         }
         else {
             try {
+                //查询数据库判断账号密码正确性
                 const data = await userModel.findOne({ email: email, password: password });
                 //console.log(data);
                 if (!data) {
@@ -112,14 +113,54 @@ class Auth {
                     return res.json({ error });
                 }
                 else {
-                    return res.json({
-                        success: "Logged in",
-                    });
+                    //登陆成功
+                    jwt.sign(
+                        //传入firstname,lastname,email
+                        {
+                            firstname: data.firstname,
+                            lastname: data.lastname,
+                            email: email,
+                        },
+                        jwtKey,
+                        { expiresIn: '10s' },
+                        (err, token) => {
+                            if (err) {
+                                return res.json({ error: err });
+                            }
+                            return res.json({ success: "Logged in", token });
+                        }
+                    );
                 }
             } catch (error) {
-                console.log(err);
+                console.log(error);
             }
         }
+    }
+
+    async userLogout(req, res) {
+        return res.json({
+            //in front-end: localStorage.removeItem("name of localStorage variable you want to remove");
+            logout: "Delete localstorage",
+        });
+    }
+
+    // jwt测试,成功则返还message,失败返还403
+    testJwt(req, res) {
+        return Auth.checkJwtExpire(req, res);
+    }
+
+    //static 方法可以复用
+    static checkJwtExpire(req, res) { //Bearer -> outh 2.0规定
+        //前端发送token资料
+        //https://blog.csdn.net/m0_37528005/article/details/124082570?utm_medium=distribute.pc_relevant.none-task-blog-2
+        //~default~baidujs_baidulandingword~default-1.pc_relevant_antiscanv2&spm=1001.2101.3001.4242.2&utm_relevant_index=4
+        const headers = req.headers;
+        const token = headers['authorization'].split(' ')[1];
+        //应该是前端拿到localstorage传到后端
+        jwt.verify(token, jwtKey, (err, payload) => {
+            if (err) return res.sendStatus(403);//之后可以改成false 再做判断
+            return res.json({ message: 'authenticate successfully', payload });//之后可以改成return true
+        });
     }
 }
 const authController = new Auth();
