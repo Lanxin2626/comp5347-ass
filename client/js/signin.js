@@ -1,5 +1,5 @@
 // for sign in 
-
+console.log("entered")
 $(document).ready(function() {
     $("#signinbtn").on("click",function() {
         var email = $("#email").val();
@@ -18,15 +18,17 @@ $(document).ready(function() {
                 emailInput.text("");
                 pswInput.text("");
 
-                // if (error) {
-                //     if (email == "") {
-                //         emailInput.text(error.email);
-                //     }
-                //     if (pwd == "") {
-                //         pswInput.text(error.password);
-                //     }
-                //     // 可能还需要加判断账号密码正确性
-                // }
+                if (error) {
+                    if (email == "") {
+                        emailInput.text(error.email);
+                        console.log("error in email")
+                    }
+                    if (pwd == "") {
+                        pswInput.text(error.password);
+                        console.log("error in password")
+                    }
+                    // 可能还需要加判断账号密码正确性
+                }
 
                 if (response.data['success']) {
                     // alert 会优先执行并且阻塞页面渲染
