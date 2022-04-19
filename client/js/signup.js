@@ -54,7 +54,7 @@ $(document).ready(function() {
                         alert(response.data['success']);
                         window.location.href = "Signin.html";
                     }, 1000);
-                    console.log("success to send message to server")
+                    console.log("success - server")
                 }
             })
             .catch(function (error) {
