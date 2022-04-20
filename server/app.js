@@ -10,7 +10,7 @@ const cors = require("cors");
 // import router
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/auth');
-
+const phoneRouter = require('./routes/phonelist');
 // Database Connection
 mongoose.connect('mongodb://localhost/COMP5347PROJECT', { useNewUrlParser: true }, function(err){
 	console.log('mongodb connected')
@@ -30,9 +30,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-// routes
+// user routes
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
+
+//phone routes
+app.use('/api/phone', phoneRouter);
+
 
 // Run Server
 const PORT = process.env.PORT || 3000;

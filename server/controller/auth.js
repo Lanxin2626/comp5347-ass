@@ -149,15 +149,17 @@ class Auth {
         return Auth.checkJwtExpire(req, res);
     }
 
-    //static 方法可以复用
+    //static 方法可以复用->后台除了登录登出每个方法都需要调用来判断用户权限情况
     static checkJwtExpire(req, res) { //Bearer -> outh 2.0规定
         //前端发送token资料
         //https://blog.csdn.net/m0_37528005/article/details/124082570?utm_medium=distribute.pc_relevant.none-task-blog-2
         //~default~baidujs_baidulandingword~default-1.pc_relevant_antiscanv2&spm=1001.2101.3001.4242.2&utm_relevant_index=4
         const headers = req.headers;
         const token = headers['authorization'].split(' ')[1];
-        //应该是前端拿到localstorage传到后端
+        //应该是前端从localstorage拿到token传到后端
+        //后端解析得到用户信息
         jwt.verify(token, jwtKey, (err, payload) => {
+            //console.log("this is payload :"+payload); 后台可以从payload里取出用户信息
             if (err) return res.sendStatus(403);//之后可以改成false 再做判断
             return res.json({ message: 'authenticate successfully', payload });//之后可以改成return true
         });
