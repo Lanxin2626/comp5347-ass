@@ -1,22 +1,22 @@
 // for sign in 
 console.log("entered")
-$(document).ready(function() {
-    $("#signinbtn").on("click",function() {
+$(document).ready(function () {
+    $("#signinbtn").on("click", function () {
         var email = $("#email").val();
-        var psw = $("#psw").val();
+        var pwd = $("#psw").val();
 
         var emailInput = $("#emailInput");
-        var pswInput = $("#pswInput");
+        var pwdInput = $("#pswInput");
 
         const data = {
-            email:email,
-            psw:psw
+            email: email,
+            psw: pwd
         }
         axios.post('http://localhost:3000/api/user/signin', data)
             .then(function (response) {
                 var error = response.data['error'];
                 emailInput.text("");
-                pswInput.text("");
+                pwdInput.text("");
 
                 if (error) {
                     if (email == "") {
@@ -24,7 +24,7 @@ $(document).ready(function() {
                         console.log("error in email")
                     }
                     if (pwd == "") {
-                        pswInput.text(error.password);
+                        pwdInput.text(error.password);
                         console.log("error in password")
                     }
                     // 可能还需要加判断账号密码正确性
@@ -37,7 +37,7 @@ $(document).ready(function() {
                         window.location.href = "Main.html";
                     }, 1000);
                     console.log("success - server")
-                } else{
+                } else {
                     console.log("error occurs")
                 }
             })
