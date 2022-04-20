@@ -21,12 +21,12 @@ $(document).ready(function () {
                 if (error) {
                     if (email == "") {
                         emailInput.text(error.email);
-                        console.log("this is error" + error);
+                        console.log("this is error1" + error.email);
                         console.log("error in email")
                     }
                     if (pwd == "") {
                         pwdInput.text(error.password);
-                        console.log("this is error2" + error);
+                        console.log("this is error2" + error.password);
                         // pwd.innerHTML="error in password";
                         console.log("error in password")
                     }

@@ -59,14 +59,14 @@ class Auth {
                         };
                         return res.json({ error });
                     } else {
-                        var password = md5(password);
-                        console.log(password);
+                        var passwordEncrypt = md5(password);
+                        console.log(passwordEncrypt);
                         //跟sql不一样这里usermodel必须跟model里fields一样
                         let newUser = new userModel({
                             firstname,
                             lastname,
                             email,
-                            password
+                            password:passwordEncrypt
                             ,
                         });
                         //储存入数据库
@@ -91,7 +91,7 @@ class Auth {
     async userLogin(req, res) {
         var email = req.body.email;
         var password = req.body.pwd;
-        var password = md5(password);
+        var passwordEncrypt = md5(password);
         let error = {};
         //输入为空
         if (!email || !password) {
@@ -104,7 +104,7 @@ class Auth {
         else {
             try {
                 //查询数据库判断账号密码正确性
-                const data = await userModel.findOne({ email: email, password: password });
+                const data = await userModel.findOne({ email: email, password: passwordEncrypt });
                 //console.log(data);
                 if (!data) {
                     error = {
