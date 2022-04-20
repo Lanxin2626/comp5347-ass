@@ -1,0 +1,201 @@
+.d-flex{
+    width: 45%;
+    margin-left: 50%;
+    margin-bottom: -30px;
+}
+#dropDownFunction{
+    margin-bottom: -30px;
+    margin-left: 50%;
+    margin-right: 20%;
+    width: 50%;
+}
+#brand{
+    width: 20%;
+    height: 80px;
+    margin-left: 5%;
+    font-size: 2.5rem;
+}
+#function-personal{ 
+    margin-left:-290%;
+    margin-right: 20%;
+    width: 120%;
+}
+.middle-area{
+    height: 150px;
+}
+.price-slider-area{
+    margin-top: 10px;
+    margin-bottom: -30px;
+    width: 150%;
+    margin-left: -290%;
+    margin-right: 200%;
+}
+.price-slider-area .value
+{
+    color: aliceblue;
+}
+.ul2{
+    width: 15%;
+    float: right;
+}
+body{
+    width: 100%;
+    height: 100%;
+    background-image: url("/client/static/images-other/background.jpg");
+}
+@media screen and (max-width: 1600px) {
+    .container-fluid{
+        display: initial !important;
+    }
+    .container-fluid .navbar-collapse{
+        display: inherit;
+    }
+    .container-fluid .navbar-collapse{
+        align-items: baseline !important;
+    }
+    .container-fluid .navbar-collapse form{
+        width: 100% !important;
+        margin-right: 0;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+    .container-fluid .navbar-toggler{
+        float: right;
+        margin-top: 10px;
+    }
+    .container-fluid .navbar-nav{
+        margin-bottom: auto !important;
+    }
+    #dropDownFunction{
+        margin-bottom: 0;
+        
+    }
+    .container-fluid .ul2{
+        padding-right: 0;
+        padding-bottom: 1em;
+        margin-right: 0;
+    }
+    .container-fluid .function-personal{
+        margin-right: 0;
+    }
+    #searchBox-inNav{
+        width: 40%;
+        height: 10%;
+        margin-right: 0;
+        margin-bottom: -30px;
+    }
+}
+.buttonArea-back{
+    background: white;
+    border-radius: 0.5em;
+    margin-top: 5%;
+    height: 60px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+}
+#checkoutArea{  
+    width: 80%;   
+}
+.buttonArea-back h2{
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+}
+#back-button{
+    width: 5%;
+    margin-left: 1%;
+    float: left;
+    margin-right: 1%;
+    font-size:larger;
+    margin-top: 0.5%;
+}
+#shoppingList{
+    margin-top: 5%;
+    background: white;   
+    border-radius: 0.5em;
+    font-family:'Times New Roman', Times, serif;
+    font-size: small;
+    
+}
+#shoppingList table{
+         border-top: solid;
+         border-bottom: solid;
+         border-color: white;
+         text-align: center;
+         border-collapse: collapse;
+         table-layout: fixed;
+         background: antiquewhite;
+
+}
+#shoppingList table tr{
+    border: dashed;
+    border-right: 0;
+    border-left: 0;
+    
+}
+#shoppingList table td:nth-child(1){
+    width: 80px;
+
+}
+#shoppingList table td:nth-child(2){
+    width: 270px;
+
+}
+#shoppingList thead{
+    font-weight: bolder;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: x-large;
+    background: seagreen;
+    color: antiquewhite;
+    
+}
+#shoppingList table tbody img{
+    width: 200px;
+    height: 200px;
+    
+}
+#transactionFunction{
+    float:right;
+    margin-top: 5%;
+    margin-right: 10%;
+    width: 100%;
+}
+#transactionButton{
+    width: 100px;
+    height: 40px;
+    margin-right: -5%;
+    margin-bottom: 3%;
+    float:right;
+}
+#transactionArea{
+    border-top: dashed;
+    background: white;
+    border-radius: 0.5em;
+    margin-bottom: 10%;
+    float: right;
+}
+.transaction-Details{
+    margin-bottom: 4%;
+    width: 100%;
+}
+.productTotalPrice{
+    float: right;
+    margin-left: -10%;
+    width: 40%;
+    
+}
+#totalPrice_trasaction{
+    float: right;
+    margin-top: -10%;
+    margin-right: 15%;
+}
+.productTotalQuality{
+    float: right;
+    width: 40%;
+    margin-right: 20%;
+}
+#totalQuality_trasaction{
+    float: right;
+    margin-top: -10%;
+    margin-right: 15%;
+}
