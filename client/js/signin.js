@@ -3,14 +3,14 @@ console.log("entered")
 $(document).ready(function () {
     $("#signinbtn").on("click", function () {
         var email = $("#email").val();
-        var pwd = $("#psw").val();
+        var pwd = $("#pwd").val();
 
         var emailInput = $("#emailInput");
-        var pwdInput = $("#pswInput");
+        var pwdInput = $("#pwdInput");
 
         const data = {
             email: email,
-            psw: pwd
+            pwd: pwd
         }
         axios.post('http://localhost:3000/api/user/signin', data)
             .then(function (response) {
