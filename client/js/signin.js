@@ -21,10 +21,13 @@ $(document).ready(function () {
                 if (error) {
                     if (email == "") {
                         emailInput.text(error.email);
+                        console.log("this is error" + error);
                         console.log("error in email")
                     }
                     if (pwd == "") {
                         pwdInput.text(error.password);
+                        console.log("this is error2" + error);
+                        // pwd.innerHTML="error in password";
                         console.log("error in password")
                     }
                     // 可能还需要加判断账号密码正确性
