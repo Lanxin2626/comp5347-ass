@@ -6,7 +6,7 @@
     "server-start": "node ./app.js"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
