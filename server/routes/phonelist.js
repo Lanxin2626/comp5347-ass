@@ -12,6 +12,9 @@ router.get('/filter',phoneController.filterBrand);
 router.get('/brand',phoneController.allBrand);
 
 //range selector
-router.get('/range',phoneController.rangeSelector)
+router.get('/range',phoneController.rangeSelector);
+
+//range selector
+router.get('/changeUrl',phoneController.changeUrl);
 
 module.exports = router;

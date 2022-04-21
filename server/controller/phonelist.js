@@ -9,12 +9,12 @@ class Phonelist {
     async searchPhone(req, res) {
         //console.log(req.param("n"));
         var title = req.query.title;
-        console.log("title is "+title);
-        await phoneModel.findByTitle(title, function (err, phonelist) {
+        console.log("title is " + title);
+        phoneModel.findByTitle(title, function (err, phonelist) {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success:phonelist});//前端去判断disable
+                res.json({ success: phonelist });//前端去判断disable
             }
         })
     }
@@ -22,38 +22,87 @@ class Phonelist {
     //过滤手机品牌
     async filterBrand(req, res) {
         var brand = req.query.brand;
-        await phoneModel.filterBrand(brand, function (err, phonelist) {
+        phoneModel.filterBrand(brand, function (err, phonelist) {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success:phonelist});//前端去判断disable
+                res.json({ success: phonelist });//前端去判断disable
             }
         })
     }
-    
+
     //获取所有手机的brand给dropdown选项
     async allBrand(req, res) {
         //.find().distinct是mongooes自带方法
-        phoneModel.find().distinct('brand', function(err, phonelist) {
+        phoneModel.find().distinct('brand', function (err, phonelist) {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success:phonelist});//前端去判断disable
+                res.json({ success: phonelist });//前端去判断disable
             }
         });
     }
+
     //过滤手机价格
     async rangeSelector(req, res) {
         var price = Number(req.query.price);
-        console.log("price is "+ price);
-        await phoneModel.rangeSelector(price, function (err, phonelist) {
+        console.log("price is " + price);
+        phoneModel.rangeSelector(price, function (err, phonelist) {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success:phonelist});//前端去判断disable
+                res.json({ success: phonelist });//前端去判断disable
             }
         })
     }
+
+    //修改url 数据预处理
+    changeUrl(req, res) {
+        //MyModel.updateMany({}, { $set: { notInSchema: 1 } });  
+        phoneModel.updateMany({brand:"Samsung"}, {image:"../../../client/static/phone_default_images/Samsung.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+        phoneModel.updateMany({brand:"Apple"}, {image:"../../../client/static/phone_default_images/Apple.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+        phoneModel.updateMany({brand:"HTC"}, {image:"../../../client/static/phone_default_images/HTC.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+        phoneModel.updateMany({brand:"Huawei"}, {image:"../../../client/static/phone_default_images/Huawei.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+        phoneModel.updateMany({brand:"LG"}, {image:"../../../client/static/phone_default_images/LG.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+        phoneModel.updateMany({brand:"Motorola"}, {image:"../../../client/static/phone_default_images/Motorola.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+        phoneModel.updateMany({brand:"Nokia"}, {image:"../../../client/static/phone_default_images/Nokia.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+        phoneModel.updateMany({brand:"Sony"}, {image:"../../../client/static/phone_default_images/Sony.jpeg"}, function (err, docs) {
+            if (err){
+                console.log(err)
+            }
+        });
+     
+        res.json({ success: "success change url" });
+    }
+
 }
 
 const phoneController = new Phonelist();
