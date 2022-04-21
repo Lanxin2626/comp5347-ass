@@ -17,4 +17,10 @@ router.get('/range',phoneController.rangeSelector);
 //range selector
 router.get('/changeUrl',phoneController.changeUrl);
 
+//find top 5 sold out soon phone product 前端无需判断disabled情况
+router.get('/findSoldOut',phoneController.findSoldOut);
+
+//find top 5 best seller with highest average rating 前端无需判断disabled情况
+router.get('/bestSeller',phoneController.bestSeller);
+
 module.exports = router;

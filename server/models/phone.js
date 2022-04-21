@@ -57,6 +57,20 @@ phoneSchema.statics.rangeSelector = function (price, callback) {
         .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
         .exec(callback)
 }
+phoneSchema.statics.findSoldOut = function (callback) {
+    return this
+        .find ({stock:{$gt:0}},{disabled:null}).sort({stock: 1}).limit(5)
+        .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
+        .exec(callback)
+}
+//稍后做
+phoneSchema.statics.bestSeller = function (callback) {
+    return this
+    //db.mycollection.aggregate([{$project: { count: { $size:"$foo" }}}])
+        .find ({stock:{$gt:0}},{disabled:null}).sort({}).limit(5)
+        .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
+        .exec(callback)
+}
 
 const phoneModel = mongoose.model("phonelists", phoneSchema);
 module.exports = phoneModel;
