@@ -27,14 +27,14 @@ class Auth {
             return res.json({ error });
         }
         //判断confrim password
-        else if (cpassword != password) {
+        else if (cpassword !== password) {
             error = {
                 pwdConfirm: "Password doesn't match"
             };
             return res.json({ error });
         }
         else {
-            if ((password.length > 255) | (password.length < 5)) {
+            if ((password.length > 255) || (password.length < 5)) {
                 error = {
                     password: "Password must be at least 5 charecter",
                 };
@@ -117,12 +117,13 @@ class Auth {
                     jwt.sign(
                         //传入firstname,lastname,email
                         {
+                            id:data.id,
                             firstname: data.firstname,
                             lastname: data.lastname,
                             email: email,
                         },
                         jwtKey,
-                        { expiresIn: '10s' },
+                        { expiresIn: '3600s' },
                         (err, token) => {
                             if (err) {
                                 return res.json({ error: err });
