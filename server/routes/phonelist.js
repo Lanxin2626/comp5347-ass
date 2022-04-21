@@ -8,4 +8,10 @@ router.get('/search',phoneController.searchPhone);
 //filter brand
 router.get('/filter',phoneController.filterBrand);
 
+//get all brand for dropdown selection
+router.get('/brand',phoneController.allBrand);
+
+//range selector
+router.get('/range',phoneController.rangeSelector)
+
 module.exports = router;

@@ -22,7 +22,7 @@ const phoneSchema = new mongoose.Schema(
             maxlength: 100,
         },
         price: {
-            type: String,
+            type: Number,
             maxlength: 100,
         },
         reviews: {
@@ -50,6 +50,21 @@ phoneSchema.statics.filterBrand = function (brand, callback) {
         .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
         .exec(callback)
 }
+
+phoneSchema.statics.getBrands = function (callback) {
+    return this
+        .find({})
+        .select({brand: 1})
+        .exec(callback)
+}
+
+phoneSchema.statics.rangeSelector = function (price, callback) {
+    return this
+        .find({ price: { $lt:price}})
+        .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
+        .exec(callback)
+}
+
 
 const phoneModel = mongoose.model("phonelists", phoneSchema);
 module.exports = phoneModel;
