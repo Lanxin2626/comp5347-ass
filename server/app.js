@@ -12,6 +12,7 @@ const indexRouter = require('./routes/index');
 const userRouter = require('./routes/auth');
 const phoneRouter = require('./routes/phonelist');
 const userActionRouter = require('./routes/user_operation');
+const cartRouter = require('./routes/checkout')
 
 // Database Connection
 mongoose.connect('mongodb://localhost/COMP5347PROJECT', { useNewUrlParser: true }, function(err){
@@ -37,6 +38,7 @@ app.use(bodyParser.json());
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/userop', userActionRouter);
+app.use('/api/cart', cartRouter)
 
 //phone routes
 app.use('/api/phone', phoneRouter);

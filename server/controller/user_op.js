@@ -2,7 +2,6 @@ const userModel = require("../models/users");
 const phoneModel = require("../models/phone")
 const jwt = require("jsonwebtoken");
 const md5 = require("js-md5");
-const Module = require("module");
 const jwtKey = "my_secret_key";
 
 class user_op {
@@ -23,7 +22,7 @@ class user_op {
             return res.status(401).json({
                 code: 401,
                 message:"Invalid Token!"
-            }).send();
+            });
         }
     }
 
@@ -50,7 +49,7 @@ class user_op {
                 })
             }
         } catch (err) {
-            console.log("Error in get_profile!");
+            console.log("Error in get_profile!", err);
         }
     }
 
@@ -106,7 +105,7 @@ class user_op {
                 })
             }
         } catch (err) {
-            console.log("Error in change_password!");
+            console.log("Error in change_password!", err);
         }
     }
 
@@ -171,7 +170,7 @@ class user_op {
                 })
             }
         } catch (err) {
-            console.log("Error in edit_profile!");
+            console.log("Error in edit_profile!", err);
         }
     }
 
@@ -204,7 +203,7 @@ class user_op {
                 })
             }
         } catch (err) {
-            console.log("Error in get_listing!");
+            console.log("Error in get_listing!", err);
         }
     }
 
@@ -234,7 +233,7 @@ class user_op {
                     code: 403,
                     message: "Disabled attribute error!"
                 });
-            } else if (!reg_positive_int.test(stock)) {
+            } else if (!reg_positive_int.test(stock) || stock === "0") {
                 //validate stock
                 return res.status(403).json({
                     code: 403,
@@ -282,7 +281,7 @@ class user_op {
                 }
             }
         } catch (err) {
-            console.log("Error in add_listing!");
+            console.log("Error in add_listing!", err);
         }
 
     }
@@ -343,7 +342,7 @@ class user_op {
                 })
             }
         } catch (err) {
-            console.log("Error in listing_operation!");
+            console.log("Error in listing_operation!", err);
         }
     }
 
@@ -393,7 +392,7 @@ class user_op {
                 })
             }
         } catch (err) {
-            console.log("Error in remove_listing!");
+            console.log("Error in remove_listing!", err);
         }
     }
 
@@ -425,12 +424,9 @@ class user_op {
                 })
             }
         } catch (err) {
-            console.log("Error in get_comments!");
+            console.log("Error in get_comments!", err);
         }
     }
-
-
-
 }
 
 const userController = new user_op();

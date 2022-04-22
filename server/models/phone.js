@@ -16,6 +16,7 @@ const phoneSchema = new mongoose.Schema(
         },
         stock: {
             type: Number,
+            min:0,
             maxlength: 100,
         },
         seller: {
@@ -24,6 +25,7 @@ const phoneSchema = new mongoose.Schema(
         },
         price: {
             type: Number,
+            min:0,
             maxlength: 100,
         },
         reviews: [
@@ -36,6 +38,8 @@ const phoneSchema = new mongoose.Schema(
         disabled: {
             type: String,
             maxlength: 100,
+            default: 'false',
+            enum: ['true', 'false'],
         },
     },
     { timestamps: true }
