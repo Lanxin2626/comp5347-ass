@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -11,6 +11,8 @@ const cors = require("cors");
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/auth');
 const phoneRouter = require('./routes/phonelist');
+const userActionRouter = require('./routes/user_operation');
+
 // Database Connection
 mongoose.connect('mongodb://localhost/COMP5347PROJECT', { useNewUrlParser: true }, function(err){
 	console.log('mongodb connected')
@@ -27,16 +29,25 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 // user routes
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
+app.use('/api/userop', userActionRouter);
 
 //phone routes
 app.use('/api/phone', phoneRouter);
 
+//404 page
+app.use( function (req, res, next){
+	res.status(404).json({
+		code: 404,
+		message:"404 - Not Found"
+	})
+});
 
 // Run Server
 const PORT = process.env.PORT || 3000;

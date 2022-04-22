@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 
 const phoneSchema = new mongoose.Schema(
     {
@@ -25,10 +26,13 @@ const phoneSchema = new mongoose.Schema(
             type: Number,
             maxlength: 100,
         },
-        reviews: {
-            type: [Object],
-            maxlength: 100,
-        },
+        reviews: [
+            {
+                reviewer: { type: ObjectId, ref: "users" },
+                rating: Number,
+                comment: String,
+            },
+        ],
         disabled: {
             type: String,
             maxlength: 100,
