@@ -27,14 +27,14 @@ class Auth {
             return res.json({ error });
         }
         //判断confrim password
-        else if (cpassword != password) {
+        else if (cpassword !== password) {
             error = {
                 pwdConfirm: "Password doesn't match"
             };
             return res.json({ error });
         }
         else {
-            if ((password.length > 255) | (password.length < 5)) {
+            if ((password.length > 255) || (password.length < 5)) {
                 error = {
                     password: "Password must be at least 5 charecter",
                 };
@@ -59,14 +59,14 @@ class Auth {
                         };
                         return res.json({ error });
                     } else {
-                        var password = md5(password);
-                        console.log(password);
+                        var passwordEncrypt = md5(password);
+                        console.log(passwordEncrypt);
                         //跟sql不一样这里usermodel必须跟model里fields一样
                         let newUser = new userModel({
                             firstname,
                             lastname,
                             email,
-                            password
+                            password:passwordEncrypt
                             ,
                         });
                         //储存入数据库
@@ -91,7 +91,7 @@ class Auth {
     async userLogin(req, res) {
         var email = req.body.email;
         var password = req.body.pwd;
-        var password = md5(password);
+        var passwordEncrypt = md5(password);
         let error = {};
         //输入为空
         if (!email || !password) {
@@ -104,7 +104,7 @@ class Auth {
         else {
             try {
                 //查询数据库判断账号密码正确性
-                const data = await userModel.findOne({ email: email, password: password });
+                const data = await userModel.findOne({ email: email, password: passwordEncrypt });
                 //console.log(data);
                 if (!data) {
                     error = {
@@ -117,12 +117,13 @@ class Auth {
                     jwt.sign(
                         //传入firstname,lastname,email
                         {
+                            id:data.id,
                             firstname: data.firstname,
                             lastname: data.lastname,
                             email: email,
                         },
                         jwtKey,
-                        { expiresIn: '10s' },
+                        { expiresIn: '3600s' },
                         (err, token) => {
                             if (err) {
                                 return res.json({ error: err });
@@ -149,15 +150,17 @@ class Auth {
         return Auth.checkJwtExpire(req, res);
     }
 
-    //static 方法可以复用
+    //static 方法可以复用->后台除了登录登出每个方法都需要调用来判断用户权限情况
     static checkJwtExpire(req, res) { //Bearer -> outh 2.0规定
         //前端发送token资料
         //https://blog.csdn.net/m0_37528005/article/details/124082570?utm_medium=distribute.pc_relevant.none-task-blog-2
         //~default~baidujs_baidulandingword~default-1.pc_relevant_antiscanv2&spm=1001.2101.3001.4242.2&utm_relevant_index=4
         const headers = req.headers;
         const token = headers['authorization'].split(' ')[1];
-        //应该是前端拿到localstorage传到后端
+        //应该是前端从localstorage拿到token传到后端
+        //后端解析得到用户信息
         jwt.verify(token, jwtKey, (err, payload) => {
+            //console.log("this is payload :"+payload); 后台可以从payload里取出用户信息
             if (err) return res.sendStatus(403);//之后可以改成false 再做判断
             return res.json({ message: 'authenticate successfully', payload });//之后可以改成return true
         });

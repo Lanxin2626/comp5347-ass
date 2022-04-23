@@ -16,49 +16,14 @@
     <script type="text/javascript" src="/client/js/mainFunction.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="navBar-sellPhone">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#" id="brand">SellPhone</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBox">
-                <button class="btn btn-outline-success" type="button" onclick="searchFunction_FrontEnd()">Search</button>
-              </form>
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown" id="dropDownFunction">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="categoryList">
-                    <li><a class="dropdown-item" href="#" name="action">Action</a></li>
-                    <li><a class="dropdown-item" href="#" name="another action">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#" name="something else">Something else here</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <ul class="ul2">
-                <li class="function-personal">
-                    <button type="button" class="btn btn-outline-light">Checkout</button>
-                    <button type="button" class="btn btn-outline-light">Login</button>
-                </li>
-                <li class="price-slider-area">
-                    <span class="value">price range</span> 
-                    <input title="price Range" type="range" name="price-slider" id="price-slider" min="10" max="500" step="1" value="50" oninput="getRange_Price()" onchange="rangeAction_Frontend(value)">
-                    <span class="value" id="priceRangeGet">100 $</span>                    
-                </li>
-              </ul>
-            </div>
-        </div>
-    </nav>
+  <div id="page_content">
+  </div>
     <div class="middle-area"></div>
     <div id="showingArea">
+      <script>init_NavBar()</script>
         <script> homeState()</script>
-        <script>catergorySelector_FontEnd()</script>
     </div>
+
     
 </body>
 </html>
