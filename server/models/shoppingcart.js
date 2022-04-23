@@ -5,9 +5,9 @@ const cartSchema = new mongoose.Schema(
     {
         user_id: {
             type: ObjectId,
-                ref: "users",
-                required: true,
-                maxlength: 25,
+            ref: "users",
+            required: true,
+            maxlength: 25,
         },
         phone_id: {
             type: ObjectId,

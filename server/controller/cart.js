@@ -2,7 +2,6 @@ const phoneModel = require("../models/phone")
 const userModel = require("../models/users");
 const cartModel = require("../models/shoppingcart")
 const jwt = require('jsonwebtoken');
-const {raw} = require("body-parser");
 
 const jwtKey = "my_secret_key"
 
@@ -69,6 +68,14 @@ class cart {
                     return res.status(403).json({
                         code: 403,
                         message: "Number exceeds stock!"
+                    });
+                }
+
+                //validate phone status
+                if (phone.disabled === "true") {
+                    return res.status(403).json({
+                        code: 403,
+                        message: "This phone is unavailable!"
                     });
                 }
 
@@ -182,6 +189,13 @@ class cart {
                             return res.status(403).json({
                                 code: 403,
                                 message: "Number exceeds stock!"
+                            });
+                        }
+                        //validate phone status
+                        if (phone.disabled === "true") {
+                            return res.status(403).json({
+                                code: 403,
+                                message: "This phone is unavailable!"
                             });
                         }
                         cart.updateOne({
@@ -347,6 +361,14 @@ class cart {
                             phone_id:phone_id, user_id:user_id
                         })
                     }
+
+                    //check stock and update status
+                    let result = await phoneModel.updateMany(
+                        {stock:0},
+                        {disabled:"true"}
+                    )
+                    console.log(result.modifiedCount + " phone in stock is disabled");
+
                     return res.status(200).json({
                         code: 200,
                         message: "Successful transaction!"
