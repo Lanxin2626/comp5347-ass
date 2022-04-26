@@ -70,7 +70,7 @@ class Auth {
                             return res.json({ error });
                         }
 
-                        //如果前端认证了邮箱
+                        //如果认证了邮箱
                         else {
                             var passwordEncrypt = md5(password);
                             console.log(passwordEncrypt);
@@ -93,6 +93,7 @@ class Auth {
                                 .catch((err) => {
                                     console.log(err);
                                 });
+                            checkEmailVerification = false;
                         }
                     }
                 } catch (err) {
@@ -160,7 +161,7 @@ class Auth {
     //修改checkEmailVerification为true 前端不用管
     emailVerified(req, res) {
         checkEmailVerification = true;
-        console.log("xxxx"+checkEmailVerification);
+        console.log("xxxx" + checkEmailVerification);
         res.send('<h1>Congrats,you have verified your email!</h1>');
     }
 
