@@ -14,4 +14,11 @@ router.get('/logout',authController.userLogout );
 router.post('/verificate',authController.checkEmail );
 //点击认证链接 这里可以变成post吗？
 router.get('/emailVerified',authController.emailVerified );
+
+//reset password - 输入邮箱
+router.post('/resetPwd',authController.isVaildEmial);
+//reset password - 输入密码
+router.post('/inputPwd',authController.inputNewPwd);
+
+
 module.exports = router;

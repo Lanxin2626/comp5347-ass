@@ -47,21 +47,21 @@ const phoneSchema = new mongoose.Schema(
 
 phoneSchema.statics.findByTitle = function (title, callback) {
     return this
-        .find({ title: { $regex: title, $options: 'i' } })//效率不高因为需要扫描所有手机 regex无法建立索引
+        .find({ title: { $regex: title, $options: 'i' },disabled:{$exists:false} })//效率不高因为需要扫描所有手机 regex无法建立索引
         .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
         .exec(callback)
 }
 
 phoneSchema.statics.filterBrand = function (brand, callback) {
     return this
-        .find({ brand: brand })
+        .find({ brand: brand,disabled:{$exists:false} })
         .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
         .exec(callback)
 }
 
 phoneSchema.statics.rangeSelector = function (price, callback) {
     return this
-        .find({ price: { $lt:price}})
+        .find({ price: { $lt:price},disabled:{$exists:false}})
         .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
         .exec(callback)
 }

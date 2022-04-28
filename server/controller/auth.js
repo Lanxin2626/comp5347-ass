@@ -5,8 +5,12 @@ const jwt = require('jsonwebtoken');
 const { token } = require("morgan");
 //jwtKey应该放到环境变量里,但是图方便放这里
 const jwtKey = "my_secret_key"
-
+// create reusable transporter object using the default SMTP transport 
+var nodemailer = require('nodemailer');
 var checkEmailVerification = false;
+var emialMustBetheSame = "";
+var recordEmail = "";
+
 class Auth {
 
     /* User Registration/Signup controller  */
@@ -21,11 +25,11 @@ class Auth {
         //判断空值
         if (!firstname || !lastname || !password || !email || !cpassword) {
             error = {
-                firstname: "Filed must not be empty",
-                lastname: "Filed must not be empty",
-                password: "Filed must not be empty",
-                email: "Filed must not be empty",
-                cpassword: "Filed must not be empty",
+                firstname: "Field must not be empty",
+                lastname: "Field must not be empty",
+                password: "Field must not be empty",
+                email: "Field must not be empty",
+                cpassword: "Field must not be empty",
             };
             return res.json({ error });
         }
@@ -64,9 +68,18 @@ class Auth {
                     } else {
 
                         if (!checkEmailVerification) {//如果没有认证邮箱
+                            emialMustBetheSame = "";
                             error = {
-                                fail: "Please verify your email first",
+                                email: "Please verify your email first",
                             };
+                            return res.json({ error });
+                        }
+                        else if (email != emialMustBetheSame) {
+                            error = {
+                                email: "The email is not the verified email",
+                            };
+                            checkEmailVerification = false;
+                            emialMustBetheSame = "";
                             return res.json({ error });
                         }
 
@@ -82,6 +95,9 @@ class Auth {
                                 password: passwordEncrypt
                                 ,
                             });
+                            //两个属性变成默认值
+                            checkEmailVerification = false;
+                            emialMustBetheSame = "";
                             //储存入数据库
                             newUser
                                 .save()
@@ -93,7 +109,6 @@ class Auth {
                                 .catch((err) => {
                                     console.log(err);
                                 });
-                            checkEmailVerification = false;
                         }
                     }
                 } catch (err) {
@@ -103,10 +118,8 @@ class Auth {
         }
     }
 
-    //测试邮箱发送
+    //注册时发送邮件到指定邮箱
     checkEmail(req, res) {
-        // create reusable transporter object using the default SMTP transport 
-        var nodemailer = require('nodemailer');
         //接收前端邮件
         var email = req.body.email;
         let error = {};
@@ -151,7 +164,8 @@ class Auth {
                 return res.json({ error });
             }
             console.log('Message sent: ' + info.response);
-            //发送邮件成功
+            //发送邮件成功 更改emialMustBetheSame值为输入邮箱
+            emialMustBetheSame = email;
             return res.json({
                 success: "successfully send email",
             });
@@ -173,8 +187,8 @@ class Auth {
         //输入为空
         if (!email || !password) {
             error = {
-                email: "Filed must not be empty",
-                password: "Filed must not be empty",
+                email: "Field must not be empty",
+                password: "Field must not be empty",
             };
             return res.json({ error });
         }
@@ -225,6 +239,113 @@ class Auth {
     // jwt测试,成功则返还message,失败返还403
     testJwt(req, res) {
         return Auth.checkJwtExpire(req, res);
+    }
+
+
+    //reset password
+    //1. 首先判断email是否存在
+    async isVaildEmial(req, res) {
+        var email = req.body.email;
+        let error = {};
+        const data = await userModel.findOne({ email: email });
+        //如果输入email为空
+        if (email == null || email == "") {
+            error = {
+                email: "Field must not be empty",
+            };
+            return res.json({ error });
+        }
+
+        //如果没有找到email
+        else if (data == null) {
+            error = {
+                email: "cannot find your email",
+            };
+            return res.json({ error });
+        }
+
+        //如果email存在
+        else if (email == data.email) {
+            var transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: '587',
+                auth: {
+                    user: "saufontt@gmail.com",
+                    pass: "Zxf28453000"
+                },
+                secureConnection: 'false',
+                tls: {
+                    ciphers: 'SSLv3'
+                }
+            });
+
+            // setup e-mail data with unicode symbols 
+            var mailOptions = {
+                from: "saufontt@gmail.com", // sender address 
+                to: email, // 从前端接收email
+                subject: "testreset", // Subject line 
+                html: '<a href="http://localhost:5501/client/views/reset_password.html">click here to reset your password</a>' // html body 
+            };
+
+            // send mail with defined transport object 
+            transporter.sendMail(mailOptions, function (err, info) {
+                //发送邮件失败情况
+                if (err) {
+                    console.log("ERROR----" + err);
+                    error = {
+                        email: "fail to send reset link to your email",
+                    };
+                    return res.json({ error });
+                }
+                console.log('Message sent: ' + info.response);
+                recordEmail = email;
+                return res.json({
+                    success: "A reset link was sent to your email",
+                });
+            });
+
+        }
+    }
+
+    //reset password
+    //2. 判断两次输入邮箱是否合法
+    async inputNewPwd(req, res) {
+        var newpwd = req.body.pwd;
+        var cpwd = req.body.cpwd;
+        var error = {};
+        //判断为空的情况
+        if (!newpwd || !cpwd) {
+            error = {
+                pwd: "Field must not be empty",
+                cpwd: "Field must not be empty",
+            };
+            return res.json({ error });
+        }
+        //密码小于5位数
+        else if (newpwd.length < 5) {
+            error = {
+                pwd: "Password must be at least 5 charecter",
+            };
+            return res.json({ error });
+        }
+        //不为空的情况 且 大于等于5位数
+        else {
+            //两次输入密码不相等的情况
+            if (newpwd != cpwd) {
+                error = {
+                    fail: "Your password does not match",
+                };
+                return res.json({ error });
+            }
+            else {
+                var passwordEncrypt = md5(newpwd);
+                const data = await userModel.findOneAndUpdate({ email: recordEmail }, { password: passwordEncrypt });
+                recordEmail="";
+                return res.json({
+                    success: "Your password has been reset",
+                });
+            }
+        }
     }
 
     //static 方法可以复用->后台除了登录登出每个方法都需要调用来判断用户权限情况
