@@ -34,7 +34,7 @@ $(document).ready(function () {
                     // alert 会优先执行并且阻塞页面渲染
                     setTimeout(function () {
                         alert(response.data['success']);
-                        window.location.href = "Main.html";
+                        window.location.href = "MainPage.html";
                     }, 1000);
                     console.log("success - server")
                 } else {

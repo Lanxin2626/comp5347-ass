@@ -293,12 +293,18 @@ function searchState(searchResult){
     
 }
 // drop down function
-function itemCatergory(categoryData){
+// function itemCatergory(categoryData){
 
-}
+// }
+
 // show product detail page
-function productDetail(){
+function productDetail_State(){
     
+    
+    
+    showingUserComment();
+}
+function showingUserComment(){
 
 }
 //showing Login button or logout and profile button
@@ -389,7 +395,7 @@ function showPhoneDetail_FrontEnd(productID){
     })).then(function(response){
         //console.log(response);
         //function about showing product in this price range
-        productDetail();
+        productDetail_State();
     });
 
     
