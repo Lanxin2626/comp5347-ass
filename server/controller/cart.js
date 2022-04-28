@@ -244,7 +244,7 @@ class cart {
                 let items = await cartModel.find(
                     {user_id:user_id},
                     {_id:0,__v:0,user_id:0}
-                ).populate("phone_id", "title brand");
+                ).populate("phone_id", "title brand image price");
                 if (items.length > 0) {
                     return res.status(200).json({
                         code: 200,
