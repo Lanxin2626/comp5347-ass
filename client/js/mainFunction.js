@@ -298,14 +298,190 @@ function searchState(searchResult){
 // }
 
 // show product detail page
-function productDetail_State(){
+function productDetail_State(item){
+    var showingArea = document.getElementById("showingArea");
+    showingArea.innerHTML="";
+    var section=document.createElement('section');
+    section.setAttribute('class','container productDetail my-1 pt-5');
+    showingArea.appendChild(section);
+    var div1_level1=document.createElement('div');
+    div1_level1.setAttribute('class','row mt-1');
     
-    
-    
-    showingUserComment();
-}
-function showingUserComment(){
+    var div1_level1_1=document.createElement('div');
+    div1_level1.appendChild(div1_level1_1);
+    div1_level1_1.setAttribute('class','col-lg-5 col-md-12 col-12');
+    var image_product=document.createElement('img');
+    image_product.setAttribute('class','img-fluid w-100 productDetail_photo');
+    image_product.setAttribute('src',item.image);
+    div1_level1_1.appendChild(image_product);
 
+    var div1_level1_2=document.createElement('div');
+    div1_level1.appendChild(div1_level1_2);
+    div1_level1_1.setAttribute('class','col-lg-6 col-md-12 col-12');
+    var div1_level1_2_1=document.createElement('div');
+    div1_level1_2.appendChild(div1_level1_2_1);
+    div1_level1_2_1.setAttribute('class','phoneDetail-FunctionArea');
+
+    var phoneDetail_Title =document.createElement('h3');
+    phoneDetail_Title.setAttribute('class','phoneDetail-Title');
+    div1_level1_2_1.appendChild(phoneDetail_Title);
+    var phoneDetail_Brand =document.createElement('h4');
+    phoneDetail_Brand.setAttribute('class','phoneDetail-Brand');
+    div1_level1_2_1.appendChild(phoneDetail_Brand);
+    var phoneDetail_Price =document.createElement('h1');
+    phoneDetail_Price.setAttribute('class','phoneDetail-Price');
+    div1_level1_2_1.appendChild(phoneDetail_Price);
+    var phoneDetail_Stock =document.createElement('h6');
+    div1_level1_2_1.appendChild(phoneDetail_Stock);
+    phoneDetail_Stock.setAttribute('class','phoneDetail-Stock');
+
+    var div1_level1_2_1_2 =document.createElement('div');
+    div1_level1_2_1.appendChild(div1_level1_2_1_2);
+    div1_level1_2_1_2.setAttribute('class','addingFunction-area');
+    var button_addingCart=document.createElement('button');
+    button_addingCart.setAttribute('class','adding-btn btn btn-dark');
+    button_addingCart.innerHTML='Add it to cart';
+    button_addingCart.onclick=function(){
+        addToCart(item.id);
+    };
+    div1_level1_2_1_2.appendChild(button_addingCart);
+    var itemInCart=document.createElement('input');
+    div1_level1_2_1_2.appendChild(itemInCart);
+    itemInCart.setAttribute('type','text');
+    itemInCart.setAttribute('class','cart-itemNum');
+    itemInCart.setAttribute('id','itemInCart');
+    itemInCart.setAttribute('title','The number of the this item in your cart');
+    itemInCart.setAttribute('readonly');
+
+
+    var div1_level1_2_1_3 =document.createElement('div');
+    div1_level1_2_1.appendChild(div1_level1_2_1_3);
+    div1_level1_2_1_3.setAttribute('class','ratingAndComment');
+    var rating_function=document.createElement('div');
+    rating_function.setAttribute('class','rating_function');
+    div1_level1_2_1_3.appendChild(rating_function);
+    // init stars
+    var star1_radio=document.createElement('input');
+    star1_radio.setAttribute('type','radio');
+    star1_radio.setAttribute('title','1 point');
+    star1_radio.setAttribute('name',"rating1");
+    star1_radio.setAttribute('id','rating1');
+    star1_radio.setAttribute('value','1');
+    rating_function.appendChild(star1_radio);
+    var star1_label=document.createElement('label');
+    star1_label.setAttribute('for','rating1');
+    star1_label.setAttribute('class','fa fa-star checked');
+    rating_function.appendChild(star1_label);
+
+    var star2_radio=document.createElement('input');
+    star2_radio.setAttribute('type','radio');
+    star2_radio.setAttribute('title','2 point');
+    star2_radio.setAttribute('name',"rating1");
+    star2_radio.setAttribute('id','rating2');
+    star2_radio.setAttribute('value','2');
+    rating_function.appendChild(star2_radio);
+    var star2_label=document.createElement('label');
+    star2_label.setAttribute('for','rating2');
+    star2_label.setAttribute('class','fa fa-star checked');
+    rating_function.appendChild(star2_label);
+
+    var star3_radio=document.createElement('input');
+    star3_radio.setAttribute('type','radio');
+    star3_radio.setAttribute('title','3 point');
+    star3_radio.setAttribute('name',"rating1");
+    star3_radio.setAttribute('id','rating3');
+    star3_radio.setAttribute('value','3');
+    rating_function.appendChild(star3_radio);
+    var star3_label=document.createElement('label');
+    star3_label.setAttribute('for','rating3');
+    star3_label.setAttribute('class','fa fa-star checked');
+    rating_function.appendChild(star3_label);
+
+    var star4_radio=document.createElement('input');
+    star4_radio.setAttribute('type','radio');
+    star4_radio.setAttribute('title','4 point');
+    star4_radio.setAttribute('name',"rating1");
+    star4_radio.setAttribute('id','rating4');
+    star4_radio.setAttribute('value','4');
+    rating_function.appendChild(star4_radio);
+    var star4_label=document.createElement('label');
+    star4_label.setAttribute('for','rating4');
+    star4_label.setAttribute('class','fa fa-star checked');
+    rating_function.appendChild(star4_label);
+
+    var star5_radio=document.createElement('input');
+    star5_radio.setAttribute('type','radio');
+    star5_radio.setAttribute('title','5 point');
+    star5_radio.setAttribute('name',"rating1");
+    star5_radio.setAttribute('id','rating5');
+    star5_radio.setAttribute('value','5');
+    star5_radio.setAttribute('checked');
+    rating_function.appendChild(star5_radio);
+    var star5_label=document.createElement('label');
+    star5_label.setAttribute('for','rating5');
+    star5_label.setAttribute('class','fa fa-star checked');
+    rating_function.appendChild(star5_label);
+    // 如果监听不到rating 就把 rating_fuction 这个区都传入post的onclick事件里，再在onclick getElementID
+
+    var commentingFunction_area=document.createElement('div');
+    div1_level1_2_1_3.appendChild(commentingFunction_area);
+    commentingFunction_area.setAttribute('class','commentingFunction-area');
+    var commentBox=document.createElement('textarea');
+    commentingFunction_area.appendChild(commentBox);
+    commentBox.setAttribute('title','input your comment about this product');
+    commentBox.setAttribute('id',);
+    commentBox.setAttribute('cols','30');
+    commentBox.setAttribute('rows','10');
+    var button_post =document.createElement('button');
+    button_post.setAttribute('id','comment-btn');
+    button_post.setAttribute('class','comment-btn btn btn-success');
+    button_post.setAttribute('title','comment Something');
+    commentingFunction_area.appendChild(button_post);
+    button_post.onclick=function(){
+        postComment(commentBox.innerHTML,section);
+        //后续完善post函数
+    };
+    //后续确定接口 不一定是 showingUserComment(section);
+}
+function showingUserComment(section,commentSet){
+    //section.appendChild(userCommentArea);
+    var div2_level1=document.createElement('div');
+    div2_level1.setAttribute('class','row mt-1');
+    div2_level1.setAttribute('id','users_comment_Area')
+    section.appendChild(div2_level1);
+    
+    var div2_level2=document.createElement('div');
+    div2_level2.setAttribute('class','users_comment');
+    div2_level1.appendChild(div2_level2);
+    var users_comment_title=document.createElement('h3');
+    users_comment_title.setAttribute('class','users_comment_title');
+    users_comment_title.innerHTML='Users-Comment';
+    var div2_level3=document.createElement('div');
+    div2_level2.appendChild(div2_level3);
+    div2_level3.setAttribute('class','card');
+    for(var i=0;i<commentSet.length;i++)
+    {
+        var commentRow =document.createElement('div');
+        commentRow.setAttribute('class','card-body');
+        div2_level3.appendChild(commentRow);
+        //Title 可以写得分
+        var comment_Title =document.createElement('h5');
+        comment_Title.setAttribute('class','card-title');
+        commentRow.appendChild(comment_Title);
+        //subTitle 可以写用户名
+        var comment_SubTitle =document.createElement('h6');
+        commentRow.appendChild(comment_SubTitle);
+        comment_SubTitle.setAttribute('class','card-subtitle mb-6');
+        //记得判断一下p是否大于200;
+        var comment_commentText =document.createElement('p');
+        commentRow.appendChild(comment_commentText);
+        comment_commentText.setAttribute('class','card-text');
+        var comment_moreWord =document.createElement('a');
+        comment_moreWord.setAttribute('class','card-link');
+        comment_moreWord.setAttribute('href','#');
+        commentRow.appendChild(comment_moreWord);
+
+    }
 }
 //showing Login button or logout and profile button
 function whetherLogin_ButtonControl(li_functionPersonal){
@@ -464,7 +640,7 @@ function rangeAction_Frontend(priceRange){
     })
 }
 //product Detail page function
-function postComment(){
+function postComment(comment,section){
     var v=null;
     v=$('input[name="rating1"]:checked').val();
     if(v=null){
@@ -474,6 +650,8 @@ function postComment(){
        // console.log($('input[name="rating1"]:checked').val());
         // record in database
         // comment area 动态更新
+        //if token else
+        showingUserComment(section);
     }
     
 
