@@ -5,6 +5,27 @@ const { token } = require("morgan");
 const jwtKey = "my_secret_key"
 
 class Phonelist {
+    
+    //JWT 验证
+    static verify(req, res) {
+        const token =
+            req.body.token || req.query.token || req.headers["authorization"];
+        if (!token) {
+            return res.status(400).json({
+                code: 400,
+                message: "A token is required for authentication!"
+            });
+        }
+        try {
+            return jwt.verify(token, jwtKey);
+        } catch (err) {
+            return res.status(401).json({
+                code: 401,
+                message:"Invalid Token!"
+            });
+        }
+    }
+
     //搜索手机title
     async searchPhone(req, res) {
         //console.log(req.param("n"));
@@ -14,19 +35,19 @@ class Phonelist {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success: phonelist });//前端去判断disable
+                res.json({ success: phonelist });
             }
         })
     }
 
-    //过滤手机品牌
+    //过滤手机品牌 价格品牌drop down需要一起工作吗?
     async filterBrand(req, res) {
         var brand = req.query.brand;
         phoneModel.filterBrand(brand, function (err, phonelist) {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success: phonelist });//前端去判断disable
+                res.json({ success: phonelist });
             }
         })
     }
@@ -38,7 +59,7 @@ class Phonelist {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success: phonelist });//前端去判断disable
+                res.json({ success: phonelist });
             }
         });
     }
@@ -51,9 +72,25 @@ class Phonelist {
             if (err) {
                 console.log("Query error!");
             } else {
-                res.json({ success: phonelist });//前端去判断disable
+                res.json({ success: phonelist });
             }
         })
+    }
+
+    //同时作用 brand, title, range
+    async searchPhoneList(req, res) {
+        var title = req.query.title;
+        var brand = req.query.brand;
+        var price = req.query.price;
+        var params = { title, brand, price };
+        phoneModel.searchPhoneList(params, function (err, phonelist) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json({ success: phonelist });
+            }
+        })
+
     }
 
     //修改url 数据预处理
@@ -116,19 +153,51 @@ class Phonelist {
 
     //top 5 最好卖家with平均最好评分
     async bestSeller(req, res) {//稍后做
-       await phoneModel.aggregate([{$project: { count: { $size:"$reviews" }}}]).limit(5);
-
-
-        /*phoneModel.bestSeller(function (err, phonelist) {
+        phoneModel.bestSeller(function (err, phonelist) {
             if (err) {
                 console.log("Query error!");
             } else {
                 res.json({ success: phonelist });//在后端判断disable 因为disable可能占了top5
             }
-        })*/
+        })
     }
 
+    //find specific phone according to phone id
+    async findOne(req, res) {
+        var phoneId = req.query.id;
+        phoneModel.findOne(phoneId, function (err, phonelist) {
+            if (err) {
+                console.log("Query error!");
+            } else {
+                res.json({ success: phonelist });//在后端判断disable 因为disable可能占了top5
+            }
+        })
+    }
+
+    async comment(req,res){
+        var user_id = Phonelist.verify(req, res)["id"]
+        //前端传参id,rating,comments
+        var phoneId =req.body.id;
+        var rating=req.body.rating;
+        var comments=req.body.comments;
+        //定义错误jason
+        var error={};
+        var pushData={reviewer:user_id,rating:rating,comment:comments};
+        if(!comments||!rating){
+            error = {
+                comments: "Field must not be empty",
+                rating: "Field must not be empty",
+            };
+            return res.json({ error });  
+        }
+        const data = await phoneModel.findOneAndUpdate({ _id: phoneId }, {$push : { reviews: pushData }});
+        return res.json({
+            success: "You have commented successfully",
+        });
+    
+    }
 }
+
 
 const phoneController = new Phonelist();
 module.exports = phoneController;
