@@ -269,6 +269,46 @@ class cart {
         }
     }
 
+    async test_query_cart(req, res) {
+        try {
+            //query user based on id
+            let email = req.body.email
+            let user = await userModel.findOne({email:email});
+            if (!user) {
+                return res.status(404).json({
+                    code: 404,
+                    message:"No such user!"
+                })
+            }
+            try {
+                let items = await cartModel.find(
+                    {user_id:user["_id"].toString()},
+                    {_id:0,__v:0,user_id:0}
+                ).populate("phone_id", "title brand image price");
+                if (items.length > 0) {
+                    return res.status(200).json({
+                        code: 200,
+                        message:"Query success!",
+                        data: {items}
+                    })
+                } else {
+                    return res.status(404).json({
+                        code: 404,
+                        message:"No items!"
+                    })
+                }
+            } catch (err) {
+                console.log("Query error: ", err);
+                return res.status(500).json({
+                    code: 500,
+                    message:"Server error!"
+                })
+            }
+        } catch (err) {
+            console.log("Error in query_cart!", err);
+        }
+    }
+
     async delete_item(req, res) {
         try {
             //query user based on id
