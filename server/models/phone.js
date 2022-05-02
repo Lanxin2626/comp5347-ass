@@ -20,8 +20,8 @@ const phoneSchema = new mongoose.Schema(
             maxlength: 100,
         },
         seller: {
-            type: mongoose.Schema.Types.ObjectId,ref:"users"
-            
+            type: String,
+            ref:"users"
         },
         price: {
             type: Number,
