@@ -271,7 +271,7 @@ class cart {
 
     async test_query_cart(req, res) {
         try {
-            //query user based on id
+            //query user based on email
             let email = req.body.email
             let user = await userModel.findOne({email:email});
             if (!user) {
