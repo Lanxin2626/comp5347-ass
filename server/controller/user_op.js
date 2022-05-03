@@ -142,7 +142,7 @@ class user_op {
                 })
             } else {
                 //validate email in database
-                let temp = await userModel.findOne({email:email});
+                let temp = await userModel.findOne({_id: {$ne: user._id},email:email});
                 if (temp) {
                     return res.status(403).json({
                         code: 403,
