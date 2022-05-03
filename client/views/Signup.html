@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html
-<!--for head that shown on the brower -->
+<html>
+<!-- for head that shown on the brower -->
 <head lang="en">
    <meta charset="utf-8">
    <title>Sign up</title>
@@ -13,12 +13,12 @@
 
 <body>
     <ul>
-      <a href="Signup.html">Sign-up</a> 
-      <a href="Signin.html">Login</a>
+      <a id="toSignUp">Sign-up</a> 
+      <a id="toLogin">Login</a>
     </ul>
 
 
-    <form class="modal-content" method="post">
+    <form class="modal-content" id='signupForm' method="post">
       <div class="container">
           <h1>Sign Up</h1>
           <p>Please fill in this form to create an account.</p>
@@ -33,6 +33,7 @@
 
           <label for="email"><b>Email/Username</b></label>
           <input type="text" placeholder="Enter Email/Username" id="email" required>
+          
           <div id="emailInput" style="color: red;"></div>
     
           <label for="pwd"><b>Password</b></label>
@@ -42,14 +43,40 @@
           <label for="cpwd"><b>Repeat Password</b></label>
           <input type="password" placeholder="Repeat Password" id="cpwd" required>
           <div id="cpwdInput" style="color: red;"></div>
-          
-    
-    
+        
           <div class="clearfix">
+            <button id="verify">Verify Email</button>
             <button type="reset" id="clearButton">Clear</button>
             <button type="button" id="signupbtn">Sign Up</button>
           </div>
         </div>
-      </form>
+    </form>
+
+    <form class="modal-content" id="loginForm" method="post">
+      <div class="container">
+          <h1>Sign In</h1>
+          <p>Please use your account to log in.</p>
+          <hr>
+            <label for="email1"><b>Email/Username</b></label>
+            <input type="text" placeholder="Enter Email/Username" id="email1" required>
+            <div id="emailInput1" style="color: red;"></div>
+      
+            <label for="pwd1"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" id="pwd1" required>
+            
+            <div id="pwdInput1" style="color: red;"></div>
+      
+            <div>
+              <button type="button" onclick="window.location.href ='reset_password_email.html'">Reset password</button>
+     
+            </div>
+
+            <div class="clearfix">
+              <button type="reset" id="clearButton">Clear</button>
+              <button type="button" id="signinbtn">Sign In</button>
+          </div>
+       
+      </div>
+    </form>
 </body>
 </html>
