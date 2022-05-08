@@ -26,11 +26,18 @@
       <h2>Edit profile</h2>
       <hr>
       <!-- get name, email from back-end  -->
+      <label for="first_name"><b>Name</b></label>
       <input type="text" contenteditable="true" id="first_name">
+      <label for="last_name"><b>Last Name</b></label>
       <input type="text" contenteditable="true" id="last_name">
+      <label for="email"><b>Email</b></label>
       <input type="text" contenteditable="true" id="email">
+      <label for="password"><b>password</b></label>
+      <input type="password" contenteditable="true" id="password">
+      <div id="updateProfile" style="color: red;"></div>
       <!-- need to confirm password first  -->
       <button type="button" id="update_profile">Update profile</button>
+      
     </div>
   </form>
 
@@ -39,10 +46,11 @@
       <h2>Change password</h2>
       <hr>
       <label for="cur_pwd"><b>Current password</b></label>
-      <input type="text" placeholder="Enter current password" name="current_password" required>
+      <input type="password" placeholder="Enter current password" name="current_password" id="cur_pwd" required>
       <label for="new_pwd"><b>New password</b></label>
-      <input type="text" placeholder="Enter new password" name="new_password" required>
-      <button type="button" class="update_password">Confirm</button>
+      <input type="password" placeholder="Enter new password" name="new_password" id="new_pwd" required>
+      <div id="updatePassword" style="color: red;"></div>
+      <button type="button" class="update_password" id="update_password">Confirm</button>
     </div>
   </form>
 
