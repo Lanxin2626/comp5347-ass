@@ -127,9 +127,14 @@ $(document).ready(function () {
         var data = {
             email: email
         }
-        axios.get('http://localhost:3000/api/user/emailVerified', data)
+        axios.post('http://localhost:3000/api/user/verificate', data)
             .then(function (response) {
-                alert('Congrats,you have verified your email!');
+                let data = response.data;
+                if (data['success']) {
+                    alert('Verification email sent successfully');
+                } else {
+                    alert(data['error']['email'])
+                }
             })
             .catch(function (error) {
                 console.log(error);
