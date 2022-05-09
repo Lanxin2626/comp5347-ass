@@ -170,7 +170,7 @@ $(document).ready(function () {
                 if (response.data['success']) {
                     var token = response.data['token'];
                     localStorage.setItem('token', token);
-                    window.location.href = "User.html";
+                    window.location.href = "MainPage.html";
                 } else {
                     pwdInput.text('Please check your account and password');
                 }
