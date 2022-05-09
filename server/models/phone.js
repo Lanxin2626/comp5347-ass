@@ -105,7 +105,7 @@ phoneSchema.statics.bestSeller = function (callback) {
         ]).exec(callback);
 }
 
-phoneSchema.statics.findOne = function (id,callback) {
+phoneSchema.statics.findPhone = function (id,callback) {
     return this
     .find({_id:id})
     .populate('seller','firstname lastname')

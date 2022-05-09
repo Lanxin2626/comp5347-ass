@@ -163,9 +163,9 @@ class Phonelist {
     }
 
     //find specific phone according to phone id
-    async findOne(req, res) {
+    async findPhone(req, res) {
         var phoneId = req.query.id;
-        phoneModel.findOne(phoneId, function (err, phonelist) {
+        phoneModel.findPhone(phoneId, function (err, phonelist) {
             if (err) {
                 console.log("Query error!");
             } else {

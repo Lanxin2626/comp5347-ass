@@ -27,7 +27,7 @@ router.get('/findSoldOut',phoneController.findSoldOut);
 router.get('/bestSeller',phoneController.bestSeller);
 
 //find speciic phone according to id
-router.get('/findOne',phoneController.findOne);
+router.get('/findOne',phoneController.findPhone);
 
 //comment on a phone
 router.post('/comment',phoneController.comment);
