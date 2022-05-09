@@ -246,9 +246,8 @@ class user_op {
                     message: "Price attribute error!"
                 });
             } else {
-                let temp = await phoneModel.findByTitleAndBrand(title, brand)
-                console.log(temp)
-                if (temp.length != 0) {
+                let temp = await phoneModel.findOne({title:title,brand:brand})
+                if (temp) {
                     return res.status(403).json({
                         code: 403,
                         message: "Already have such phone!"
@@ -318,7 +317,7 @@ class user_op {
                 });
             }
             //query phone based on phone_id and seller
-            let phone = phoneModel.findById({_id:phoneId,seller:user_id});
+            let phone = phoneModel.findOne({id:phoneId,seller:user_id});
             if (!phone) {
                 return res.status(404).json({
                     code: 404,
