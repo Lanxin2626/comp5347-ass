@@ -1,4 +1,71 @@
 $(document).ready(function () {
+    showProfileTab()
+
+    // implement tab switching
+    function showProfileTab() {
+        $('#profileForm').show();
+        $('#changePasswordForm').hide();
+        $('#manageListingForm').hide();
+        $('#addListingForm').hide();
+        $('#viewCommentForm').hide();
+        extract_profile();
+    }
+
+    function showChangePasswordTab() {
+        $('#profileForm').hide();
+        $('#changePasswordForm').show();
+        $('#manageListingForm').hide();
+        $('#addListingForm').hide();
+        $('#viewCommentForm').hide();
+    }
+
+    function showManageListingTab() {
+        $('#profileForm').hide();
+        $('#changePasswordForm').hide();
+        $('#manageListingForm').show();
+        $('#addListingForm').hide();
+        $('#viewCommentForm').hide();
+
+        retrieveListings()
+    }
+
+    function showAddListingTab() {
+        $('#profileForm').hide();
+        $('#changePasswordForm').hide();
+        $('#manageListingForm').hide();
+        $('#addListingForm').show();
+        $('#viewCommentForm').hide();
+    }
+
+    function showViewCommentTab() {
+        $('#profileForm').hide();
+        $('#changePasswordForm').hide();
+        $('#manageListingForm').hide();
+        $('#addListingForm').hide();
+        $('#viewCommentForm').show();
+    }
+
+    $('#profileTab').click(function () {
+        showProfileTab()
+    })
+
+    $('#changePasswordTab').click(function () {
+        showChangePasswordTab()
+    })
+
+    $('#manageListingTab').click(function () {
+        showManageListingTab()
+    })
+
+    $('#addListingTab').click(function (event) {
+        event.preventDefault()
+        showAddListingTab()
+    })
+
+    $('#viewCommentTab').click(function () {
+        showViewCommentTab()
+    })
+
 
     var first_name = document.getElementById("first_name")
     var last_name = document.getElementById("last_name")

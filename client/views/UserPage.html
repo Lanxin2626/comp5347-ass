@@ -15,13 +15,13 @@
 <body>
 
   <ul>
-    <a id=" ">Edit profile&emsp;</a>
-    <a id=" ">Change password&emsp;</a>
-    <a id=" ">Manage listings&emsp;</a>
-    <a id=" ">View comments</a>
+    <a id="profileTab">Edit profile&emsp;</a>
+    <a id="changePasswordTab">Change password&emsp;</a>
+    <a id="manageListingTab">Manage listings&emsp;</a>
+    <a id="viewCommentTab">View comments</a>
   </ul>
 
-  <form class="modal-content" method="post">
+  <form class="modal-content" method="post" id="profileForm">
     <div class="container">
       <h2>Edit profile</h2>
       <hr>
@@ -41,7 +41,7 @@
     </div>
   </form>
 
-  <form class="modal-content" method="post">
+  <form class="modal-content" method="post" id="changePasswordForm">
     <div class="container">
       <h2>Change password</h2>
       <hr>
@@ -54,10 +54,10 @@
     </div>
   </form>
 
-  <form class="modal-content" method="post">
+  <form class="modal-content" method="post" id="manageListingForm">
     <div class="container">
       <h2>Manage listings</h2>
-      <button type="submit" class="add_button">add a new listing</button>
+      <button type="submit" class="add_button" id="addListingTab">add a new listing</button>
     </div>
 
     <div id="listBox">
@@ -91,7 +91,7 @@
     </div>
   </form>
 
-  <form class="modal-content" method="post">
+  <form class="modal-content" method="post" id="addListingForm">
     <div class="container">
       <h2>Add listing</h2>
       <hr>
@@ -112,7 +112,7 @@
     </div>
   </form>
 
-  <form class="modal-content" method="post">
+  <form class="modal-content" method="post" id="viewCommentForm">
     <div class="container">
       <h2>View comments</h2>
       <!-- Get comments from dataset -->
