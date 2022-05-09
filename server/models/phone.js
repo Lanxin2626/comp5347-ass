@@ -115,5 +115,12 @@ phoneSchema.statics.findOne = function (id,callback) {
 
 }
 
+phoneSchema.statics.findByTitleAndBrand = function (title, brand, callback) {
+    return this
+        .find({ title: { $regex: title, $options: 'i' }, brand: brand, disabled: { $exists: false } })
+        .select({ title: 1, brand: 1, image: 1, stock: 1, seller: 1, price: 1, reviews: 1, disabled: 1 })
+        .exec(callback)
+}
+
 const phoneModel = mongoose.model("phonelists", phoneSchema);//第一个参数跟数据库表名无关
 module.exports = phoneModel;
