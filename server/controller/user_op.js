@@ -7,28 +7,33 @@ const jwtKey = "my_secret_key";
 class user_op {
 
     //verify token and return payload info
-    static verify(req, res) {
+    static verify(req) {
         const token =
             req.body.token || req.query.token || req.headers["authorization"];
-        if (!token) {
-            return res.status(400).json({
-                code: 400,
-                message: "A token is required for authentication!"
-            });
-        }
+        if (!token) return 'none';
         try {
             return jwt.verify(token, jwtKey);
         } catch (err) {
-            return res.status(401).json({
-                code: 401,
-                message:"Invalid Token!"
-            });
+            return 'invalid';
         }
     }
 
     //get user's profile
     async get_profile(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user = await userModel.findById(user_op.verify(req, res)["id"]);
 
@@ -56,6 +61,19 @@ class user_op {
     //change user's password
     async change_password(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user = await userModel.findById(user_op.verify(req, res)["id"]);
             if (!user) {
@@ -112,6 +130,19 @@ class user_op {
     //edit user's profile
     async edit_profile(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user = await userModel.findById(user_op.verify(req, res)["id"]);
             if (!user) {
@@ -177,6 +208,18 @@ class user_op {
     //get listing that related to the user
     async get_listing(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
             //query user based on id
             let user_id = user_op.verify(req, res)["id"];
             if (!user_id) {
@@ -210,6 +253,18 @@ class user_op {
     //add a phone listing
     async add_listing(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
             //query user id
             let user_id = user_op.verify(req, res)["id"];
             let reg_positive_int = /^\d+(\.\d+)?$/;
@@ -289,6 +344,18 @@ class user_op {
     //enable/disable a phone listing
     async listing_operation(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
             //query user based on id
             let user_id = user_op.verify(req, res)["id"];
             if (!user_id) {
@@ -349,6 +416,18 @@ class user_op {
     //remove a phone listing
     async remove_listing(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
             //query user based on id
             let user_id = user_op.verify(req, res)["id"];
             if (!user_id) {
@@ -396,8 +475,21 @@ class user_op {
         }
     }
 
+    //get listing comments
     async get_comments(req, res) {
         try {
+            // verify
+            if(user_op.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (user_op.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
             //query user based on id
             let user_id = user_op.verify(req, res)["id"];
             if (!user_id) {

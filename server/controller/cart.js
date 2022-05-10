@@ -9,28 +9,33 @@ const jwtKey = "my_secret_key"
 class cart {
 
     //verify token and return payload info
-    static verify(req, res) {
+    static verify(req) {
         const token =
             req.body.token || req.query.token || req.headers["authorization"];
-        if (!token) {
-            return res.status(400).json({
-                code: 400,
-                message: "A token is required for authentication!"
-            });
-        }
+        if (!token) return 'none';
         try {
             return jwt.verify(token, jwtKey);
         } catch (err) {
-            return res.status(401).json({
-                code: 401,
-                message:"Invalid Token!"
-            });
+            return 'invalid';
         }
     }
 
     //add an item to shopping cart
     async add_to_cart(req, res) {
         try {
+            // verify
+            if(cart.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (cart.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user_id = cart.verify(req, res)["id"]
             let user = await userModel.findById(user_id);
@@ -134,6 +139,19 @@ class cart {
     //edit item number in the shopping cart
     async edit_item(req, res) {
         try {
+            // verify
+            if(cart.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (cart.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user_id = cart.verify(req, res)["id"]
             let user = await userModel.findById(user_id);
@@ -231,6 +249,19 @@ class cart {
     //query all items in the shopping cart
     async query_cart(req, res) {
         try {
+            // verify
+            if(cart.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (cart.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user_id = cart.verify(req, res)["id"]
             let user = await userModel.findById(user_id);
@@ -311,6 +342,19 @@ class cart {
 
     async delete_item(req, res) {
         try {
+            // verify
+            if(cart.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (cart.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user_id = cart.verify(req, res)["id"];
             if (!user_id) {
@@ -360,6 +404,19 @@ class cart {
 
     async confirm_transaction(req, res) {
         try {
+            // verify
+            if(cart.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (cart.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
             //query user based on id
             let user_id = cart.verify(req, res)["id"];
             if (!user_id) {
