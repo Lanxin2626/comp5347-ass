@@ -30,7 +30,7 @@ const phoneSchema = new mongoose.Schema(
         },
         reviews: [
             {
-                reviewer: {  type: mongoose.Schema.Types.ObjectId,ref:"users" },
+                reviewer: {  type: String,ref:"users" },
                 rating: Number,
                 comment: String,
             },

@@ -7,22 +7,14 @@ const jwtKey = "my_secret_key"
 class Phonelist {
     
     //JWT 验证
-    static verify(req, res) {
+    static verify(req) {
         const token =
             req.body.token || req.query.token || req.headers["authorization"];
-        if (!token) {
-            return res.status(400).json({
-                code: 400,
-                message: "A token is required for authentication!"
-            });
-        }
+        if (!token) return 'none';
         try {
             return jwt.verify(token, jwtKey);
         } catch (err) {
-            return res.status(401).json({
-                code: 401,
-                message:"Invalid Token!"
-            });
+            return 'invalid';
         }
     }
 
@@ -175,6 +167,17 @@ class Phonelist {
     }
 
     async comment(req,res){
+        if(Phonelist.verify(req) === 'none') {
+            return res.status(400).json({
+                code: 400,
+                message: "A token is required for authentication!"
+            });
+        } else if (Phonelist.verify(req) === 'invalid') {
+            return res.status(401).json({
+                code: 401,
+                message:"Invalid Token!"
+            });
+        }
         var user_id = Phonelist.verify(req, res)["id"]
         //前端传参id,rating,comments
         var phoneId =req.body.id;
