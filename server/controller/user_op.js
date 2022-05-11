@@ -436,7 +436,7 @@ class user_op {
                     message:"No such user!"
                 });
             }
-            let {phoneId} = req.body;
+            let phoneId = req.query["phoneId"];
             if (!phoneId) {
                 return res.status(400).json({
                     code: 400,
