@@ -283,9 +283,10 @@ class cart {
                         data: {items}
                     })
                 } else {
-                    return res.status(404).json({
-                        code: 404,
-                        message:"No items!"
+                    return res.status(200).json({
+                        code: 200,
+                        message:"No items!",
+                        data: {items}
                     })
                 }
             } catch (err) {
