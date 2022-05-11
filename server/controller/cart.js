@@ -363,7 +363,7 @@ class cart {
                     message: "No such user!"
                 });
             }
-            let phoneId = req.query["phoneId"];
+            let {phoneId} = req.body;
             if (!phoneId) {
                 return res.status(400).json({
                     code: 400,
