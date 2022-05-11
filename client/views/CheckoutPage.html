@@ -16,49 +16,10 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar  navbar-dark bg-dark fixed-top" id="navBar-sellPhone">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#" id="brand">SellPhone</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <form class="d-flex">
-                <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="searchBox-inNav">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-              <ul class="navbar-nav   mb-2 mb-lg-0">
-                <li class="nav-item dropdown" id="dropDownFunction">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <ul class="ul2">
-                <li class="function-personal" id="function-personal">
-                    <button type="button" class="btn btn-outline-light">Checkout</button>
-                    <button type="button" class="btn btn-outline-light">Login</button>
-                </li>
-                <li class="price-slider-area">
-                    <span class="value">price range</span> 
-                    <input title="price Range" type="range" name="price-slider" id="price-slider" min="10" max="500" step="1" value="50" oninput="getRange_Price()">
-                    <span class="value" id="priceRangeGet">100 $</span>                    
-                </li>
-              </ul>
-            </div>
-        </div>
-    </nav>
-
      <section id="checkoutArea"class="pt-5 mt-5 container">
-       <div class="buttonArea-back">
-         <button title="Go-back-To-Main-Page"id="back-button" class="btn btn-dark"><-</button>
-         <h2 >---------------------------- Shopping Cart -----------------------------------</h2>
+       <div class="buttonArea-back fixed-top">
+         <button title="Go-back-To-Main-Page"id="back-button" class="btn btn-light" onclick="backToMainpage()"><-</button>
+         <h2>---------------------------- Shopping Cart -----------------------------------</h2>
        </div> 
        <section id="shoppingList" class="container" >
          <table width="100%">
@@ -74,45 +35,19 @@
              </tr>
            </thead>
            <tbody id="productsInCart">
-             <tr>
-               <td><h3>1</h3></td>
-               <td><img src="/client/static/phone_default_images/Apple.jpeg" alt=""></td>
-               <td><h3 name="product_title" value="" id="">IPhone pro 11</h3></td>
-               <td><h3 name="product_price" value="" id="">99$</h3></td>
-               <td><input title="product_quality" type="number" class="w-25 pl-1"name="product_quality" id="" value="2"></td>
-               <td><h3 name="total_price" value="" id="">188$</h3></td>
-               <td><button title="delete button" class="btn btn-dark">Delete</button></td>
-             </tr>
-             <tr>
-              <td><h3>2</h3></td>
-              <td><img src="/client/static/phone_default_images/Apple.jpeg" alt=""></td>
-              <td><h3 name="product_title" value="" id="">IPhone pro 12</h3></td>
-              <td><h3 name="product_price" value="" id="">99$</h3></td>
-              <td><input title="product_quality" type="number" class="w-25 pl-1"name="product_quality" id="" value="2"></td>
-              <td><h3 name="total_price" value="" id="">188$</h3></td>
-              <td><button title="delete button" class="btn btn-dark">Delete</button></td>
-            </tr>
-            <tr>
-              <td><h3>3</h3></td>
-              <td><img src="/client/static/phone_default_images/Apple.jpeg" alt=""></td>
-              <td><h3 name="product_title" value="" id="">IPhone pro 13</h3></td>
-              <td><h3 name="product_price" value="" id="">99$</h3></td>
-              <td><input title="product_quality" type="number" class="w-25 pl-1"name="product_quality" id="" value="2"></td>
-              <td><h3 name="total_price" value="" id="">188$</h3></td>
-              <td><button title="delete button" class="btn btn-dark">Delete</button></td>
-            </tr>
+            <script>showing_Cart_FrontEnd()</script>
             </tbody>
          </table>
        </section>
        <section id="transactionArea" class="container">
         <div class="productTotalPrice">
           <h2>The total Price:</h2>
-          <h2 id="totalPrice_trasaction">290 $</h2>
+          <h2 id="totalPrice_trasaction"></h2>
          </div>
          <div class="transaction-Details">
            <div class="productTotalQuality">
              <h2>The total Number:</h2>
-             <h2 id="totalQuality_trasaction">6 </h2>
+             <h2 id="totalQuality_trasaction"></h2>
            </div>
          </div>
          <div id="transactionFunction">

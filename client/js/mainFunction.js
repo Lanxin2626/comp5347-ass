@@ -1,136 +1,156 @@
 function init_NavBar(){
-    var content_page=document.getElementById("page_content");
-    var navigationBar=document.createElement('nav');
-    navigationBar.setAttribute("class","navbar navbar-expand-lg navbar-dark bg-dark fixed-top");
-    navigationBar.setAttribute("id","navBar-sellPhone");
-    content_page.appendChild(navigationBar);
-    
-    var container_fluid=document.createElement('div');
-    container_fluid.setAttribute("class","container-fluid");
-    navigationBar.appendChild(container_fluid);
-
-    var web_Brand=document.createElement('a');
-    container_fluid.appendChild(web_Brand);
-    web_Brand.setAttribute("class","navbar-brand");
-    web_Brand.setAttribute("id","brand");
-    web_Brand.setAttribute("href","#");
-    web_Brand.innerHTML="SellPhone";
-
-    var button_toggler=document.createElement('button');
-    container_fluid.appendChild(button_toggler);
-    var span_button_img=document.createElement('span');
-    span_button_img.setAttribute("class","navbar-toggler-icon");
-    button_toggler.appendChild(span_button_img);
-    button_toggler.setAttribute("class","navbar-toggler");
-    button_toggler.setAttribute("type","button");
-    button_toggler.setAttribute("data-bs-toggle","collapse");
-    button_toggler.setAttribute("data-bs-target","#navbarSupportedContent");
-    button_toggler.setAttribute("aria-controls","navbarSupportedContent");
-    button_toggler.setAttribute("aria-expanded","false");
-    button_toggler.setAttribute("aria-label","Toggle navigation");
-
-    var navbarSupportedContent=document.createElement('div');
-    container_fluid.appendChild(navbarSupportedContent);
-    navbarSupportedContent.setAttribute("class","collapse navbar-collapse");
-    navbarSupportedContent.setAttribute("id","navbarSupportedContent");
-
-    //define searchBox
-    var search_Form=document.createElement('form');
-    navbarSupportedContent.appendChild(search_Form);
-    search_Form.setAttribute("class","d-flex");
-    //add content to search_Area
-    var input_search=document.createElement('input');
-    var search_button=document.createElement('button');
-    search_Form.appendChild(input_search);
-    search_Form.appendChild(search_button);
-    //define the element in area
-    input_search.setAttribute("class","form-control me-2");
-    input_search.setAttribute("type","search");
-    input_search.setAttribute("placeholder","Search");
-    input_search.setAttribute("aria-label","Search");
-    input_search.setAttribute("id","searchBox");
-
-    search_button.setAttribute("class","btn btn-outline-success");
-    search_button.setAttribute("type","button");
-    //search_button.setAttribute("onclick","searchFunction_FrontEnd()");
+    //define searchFunction
+    var search_button=document.getElementById("searchButton");
     search_button.onclick=function(){
         searchFunction_FrontEnd();
     }
-    search_button.innerHTML="Search";
 
-    //define dropDown area
-    var ul_dropDown=document.createElement('ul');
-    navbarSupportedContent.appendChild(ul_dropDown);
-    ul_dropDown.setAttribute("class","navbar-nav me-auto mb-2 mb-lg-0");
-    //add element to dropDown area
-    var li_dropDown=document.createElement('li');
-    ul_dropDown.appendChild(li_dropDown);
-    li_dropDown.setAttribute("class","nav-item dropdown");
-    li_dropDown.setAttribute("id","dropDownFunction");
-    //define the element to li_dropDown
-    var brand_selector=document.createElement('a');
-    li_dropDown.appendChild(brand_selector);
-    var brand_menu=document.createElement('ul');
-    li_dropDown.appendChild(brand_menu);
-
-    //set brand_selector attribute
+    //set brand_selector function
+    var brand_selector=document.getElementById("navbarDropdown");
     brand_selector.innerHTML="brand-selector";
-    brand_selector.setAttribute("class","nav-link dropdown-toggle");
-    //brand_selector.setAttribute("onclick","homeState()");
-    brand_selector.setAttribute("id","navbarDropdown");
-    brand_selector.setAttribute("role","button");
-    brand_selector.setAttribute("data-bs-toggle","dropdown");
-    brand_selector.setAttribute("aria-expanded","false");
-    //加载brand_menu
-    brand_menu.setAttribute("class","dropdown-menu");
-    brand_menu.setAttribute("aria-labelledby","navbarDropdown");
-    brand_menu.setAttribute("id","categoryList");
+    var brand_menu=document.getElementById("categoryList");
     getCategoryMenu(brand_menu);
-    //define button_Perosnal Area
-    var ul_button_Perosnal=document.createElement('ul');
-    navbarSupportedContent.appendChild(ul_button_Perosnal);
-    ul_button_Perosnal.setAttribute('class','ul2');
+    document.getElementById("dropDownFunction").hidden=true;
+    document.getElementById("price-slider-area").hidden=true;
 
-    //add element to button_personal_area
-    var li_personal=document.createElement('li');
-    var li_price_slider=document.createElement('li');
-    ul_button_Perosnal.appendChild(li_personal);
-    ul_button_Perosnal.appendChild(li_price_slider);
-    li_personal.setAttribute("class","function-personal");
-    li_personal.setAttribute("id","function-personal-button");
-    li_price_slider.setAttribute("class","price-slider-area");
 
-    //define li_personal
+    //define li_personal button
+    var li_personal=document.getElementById("function-personal-button");
     whetherLogin_ButtonControl(li_personal);
-
-
-    //define li_price_slider
-    var span_priceRange=document.createElement('span');
-    var input_PriceRange=document.createElement('input');
-    var span_RangeResult=document.createElement('span');
-    li_price_slider.appendChild(span_priceRange);
-    li_price_slider.appendChild(input_PriceRange);
-    li_price_slider.appendChild(span_RangeResult);
-
-    span_priceRange.setAttribute("class","value");
-    span_priceRange.innerHTML="price range";
-    span_RangeResult.setAttribute("class","value");
-    span_RangeResult.setAttribute("id","priceRangeGet");
-    span_RangeResult.innerHTML="100 $";
-    //define slider
-    input_PriceRange.setAttribute("title","price Range");
-    input_PriceRange.setAttribute("type","range");
-    input_PriceRange.setAttribute("name","price-slider");
-    input_PriceRange.setAttribute("id","price-slider");
-    input_PriceRange.setAttribute("min","10");
-    input_PriceRange.setAttribute("max","500");
-    input_PriceRange.setAttribute("step","1");
-    //input_PriceRange.setAttribute("value","100");
-    input_PriceRange.setAttribute("oninput","getRange_Price()");
-    input_PriceRange.setAttribute("onchange","rangeAction_Frontend(this.value)");
     
 }
-function homeState(){
+function homeState_init(array_phone,setName,viewLevel2){
+        var loop=null;
+        var type_phone_group=document.createElement('div');       
+        var type_phone=document.createElement('h5');
+        type_phone.setAttribute("class","type_phone");
+        type_phone.innerHTML=setName;
+        type_phone_group.appendChild(type_phone);
+        type_phone_group.setAttribute("class","type_phone_group");
+        type_phone_group.setAttribute("id",setName);
+        if(setName=='Best Seller')
+        {
+            for(var i=0;i<array_phone.length;i++)
+            {
+               if(i==0){
+                var viewLevel3=document.createElement('div');
+                viewLevel3.setAttribute("class","row g-4");
+                loop=viewLevel3;
+               }
+               else if(i==3){
+                var viewLevel3=document.createElement('div');
+                viewLevel3.setAttribute("class","row g-4 py-5 justify-content-center");
+                loop=viewLevel3;
+               }
+               //3 to 2
+                type_phone_group.appendChild(loop);
+                var viewLevel4=document.createElement('div');
+                viewLevel4.setAttribute("class","col-lg-4");
+                //4 to 3
+                loop.appendChild(viewLevel4);
+                //Fifth level
+                var card=document.createElement('div');
+                card.setAttribute("class","card shadow-lg");
+                //5 to 4
+                viewLevel4.appendChild(card);
+                //sixth level
+                var cardImage=document.createElement('img');
+                cardImage.setAttribute("src",array_phone[i].image);
+                cardImage.setAttribute("class","card-img-top");
+        
+                var cardBody=document.createElement('div');
+                cardBody.setAttribute("class","card-body");
+                //6 to 5
+                card.appendChild(cardImage);
+                card.appendChild(cardBody);
+                //seventh level
+                var cardTitle=document.createElement('h3');
+                cardTitle.setAttribute("class","card-title");
+                //cardTitle.innerHTML="";
+                console.log(array_phone[i].avgRating);
+                cardTitle.innerHTML+=array_phone[i].avgRating.toFixed(1);
+                rating_showingFunction(cardTitle,array_phone[i].avgRating.toFixed(1));
+                var cardDescription=document.createElement('p');
+                cardDescription.setAttribute("class","card-text");
+                cardDescription.innerHTML="Brand: "+array_phone[i].brand;
+                var cardBtn=document.createElement('button');
+                cardBtn.setAttribute("class","btn btn-success");
+                cardBtn.setAttribute("value","phone");
+                cardBtn.innerHTML="more details";
+                //cardBtn.setAttribute('id',)
+                //var id =1;
+                //Go to the product detail page action
+                cardBtn.setAttribute("onclick","showPhoneDetail_FrontEnd("+JSON.stringify(array_phone[i]._id)+")");
+        
+                //7 to 6
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(cardDescription);
+                cardBody.appendChild(cardBtn);     
+            }
+        }
+        else
+        {
+            for(var i=0;i<array_phone.length;i++)
+            {
+               if(i==0){
+                var viewLevel3=document.createElement('div');
+                viewLevel3.setAttribute("class","row g-4");
+                loop=viewLevel3;
+               }
+               else if(i==3){
+                var viewLevel3=document.createElement('div');
+                viewLevel3.setAttribute("class","row g-4 py-5 justify-content-center");
+                loop=viewLevel3;
+               }
+               //3 to 2
+                type_phone_group.appendChild(loop);
+                var viewLevel4=document.createElement('div');
+                viewLevel4.setAttribute("class","col-lg-4");
+                //4 to 3
+                loop.appendChild(viewLevel4);
+                //Fifth level
+                var card=document.createElement('div');
+                card.setAttribute("class","card shadow-lg");
+                //5 to 4
+                viewLevel4.appendChild(card);
+                //sixth level
+                var cardImage=document.createElement('img');
+                cardImage.setAttribute("src",array_phone[i].image);
+                cardImage.setAttribute("class","card-img-top");
+        
+                var cardBody=document.createElement('div');
+                cardBody.setAttribute("class","card-body");
+                //6 to 5
+                card.appendChild(cardImage);
+                card.appendChild(cardBody);
+                //seventh level
+                var cardTitle=document.createElement('h3');
+                cardTitle.setAttribute("class","card-title");
+                cardTitle.innerHTML="Price: $"+array_phone[i].price;
+                var cardDescription=document.createElement('p');
+                cardDescription.setAttribute("class","card-text");
+                cardDescription.innerHTML="Brand: "+array_phone[i].brand;
+                var cardBtn=document.createElement('button');
+                cardBtn.setAttribute("class","btn btn-success");
+                cardBtn.setAttribute("value","phone");
+                cardBtn.innerHTML="get it";
+                //var id =1;
+                //Go to the product detail page action
+                cardBtn.setAttribute("onclick","showPhoneDetail_FrontEnd("+JSON.stringify(array_phone[i]._id)+")");
+        
+                //7 to 6
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(cardDescription);
+                cardBody.appendChild(cardBtn);     
+            }
+        }
+        // 2-1.5
+        viewLevel2.appendChild(type_phone_group);
+
+}
+function homeState(bestSeller,soldOut){
+    document.getElementById("dropDownFunction").hidden=true;
+    document.getElementById("price-slider-area").hidden=true;
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');
@@ -140,83 +160,17 @@ function homeState(){
     var viewLevel2=document.createElement('div');
     viewLevel2.setAttribute("class","container");
     // 2 to 1
-    viewLevel1.appendChild(viewLevel2)
+    viewLevel1.appendChild(viewLevel2);
+    homeState_init(bestSeller,'Best Seller',viewLevel2);
+    homeState_init(soldOut,'Sold Out Soon',viewLevel2);
 
     //From here to for loop
-    var loop=null;
-    for(var set=0;set<2;set++)
-    {
-        var type_phone_group=document.createElement('div');
-        
-        var type_phone=document.createElement('h5');
-        type_phone.setAttribute("class","type_phone");
-        type_phone.innerHTML="phone"+set;
-        type_phone_group.appendChild(type_phone);
-        type_phone_group.setAttribute("class","type_phone_group");
-        type_phone_group.setAttribute("id","phoneSet"+set);
-        for(var i=0;i<5;i++)
-        {
-           if(i==0){
-            var viewLevel3=document.createElement('div');
-            viewLevel3.setAttribute("class","row g-4");
-            loop=viewLevel3;
-           }
-           else if(i==3){
-            var viewLevel3=document.createElement('div');
-            viewLevel3.setAttribute("class","row g-4 py-5 justify-content-center");
-            loop=viewLevel3;
-           }
-           //3 to 2
-            type_phone_group.appendChild(loop);
-            var viewLevel4=document.createElement('div');
-            viewLevel4.setAttribute("class","col-lg-4");
-            //4 to 3
-            loop.appendChild(viewLevel4);
-            //Fifth level
-            var card=document.createElement('div');
-            card.setAttribute("class","card shadow-lg");
-            //5 to 4
-            viewLevel4.appendChild(card);
-            //sixth level
-            var cardImage=document.createElement('img');
-            cardImage.setAttribute("src","/client/static/phone_default_images/Apple.jpeg");
-            cardImage.setAttribute("class","card-img-top");
-    
-            var cardBody=document.createElement('div');
-            cardBody.setAttribute("class","card-body");
-            //6 to 5
-            card.appendChild(cardImage);
-            card.appendChild(cardBody);
-            //seventh level
-            var cardTitle=document.createElement('h3');
-            cardTitle.setAttribute("class","card-title");
-            cardTitle.innerHTML="phone";
-            var cardDescription=document.createElement('p');
-            cardDescription.setAttribute("class","card-text");
-            cardDescription.innerHTML="set"+set;
-            var cardBtn=document.createElement('button');
-            cardBtn.setAttribute("class","btn btn-success");
-            cardBtn.setAttribute("value","phone");
-            cardBtn.innerHTML="phone";
-            var id =1;
-            //Go to the product detail page action
-            cardBtn.setAttribute("onclick","showPhoneDetail("+id+")");
-    
-            //7 to 6
-            cardBody.appendChild(cardTitle);
-            cardBody.appendChild(cardDescription);
-            cardBody.appendChild(cardBtn);     
-        }
-        // 2-1.5
-        viewLevel2.appendChild(type_phone_group);
-    }
-
 
 }
 
 // showing after search function
 function searchState(searchResult){
-    //console.log(searchResult.length);
+    console.log(searchResult);
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');
@@ -281,7 +235,8 @@ function searchState(searchResult){
             cardBtn.innerHTML="See more";
             var id =1;
             //Go to the product detail page action
-            cardBtn.setAttribute("onclick","showPhoneDetail("+searchResult[set].id+")");
+            
+            cardBtn.setAttribute("onclick","showPhoneDetail_FrontEnd("+JSON.stringify(searchResult[set]._id)+")");
     
             //7 to 6
             cardBody.appendChild(cardTitle);
@@ -299,12 +254,15 @@ function searchState(searchResult){
 
 // show product detail page
 function productDetail_State(item){
+    document.getElementById("dropDownFunction").hidden=true;
+    document.getElementById("price-slider-area").hidden=true;
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var section=document.createElement('section');
     section.setAttribute('class','container productDetail my-1 pt-5');
     showingArea.appendChild(section);
     var div1_level1=document.createElement('div');
+    section.appendChild(div1_level1);
     div1_level1.setAttribute('class','row mt-1');
     
     var div1_level1_1=document.createElement('div');
@@ -312,27 +270,44 @@ function productDetail_State(item){
     div1_level1_1.setAttribute('class','col-lg-5 col-md-12 col-12');
     var image_product=document.createElement('img');
     image_product.setAttribute('class','img-fluid w-100 productDetail_photo');
-    image_product.setAttribute('src',item.image);
+    image_product.setAttribute('src',item[0].image);
     div1_level1_1.appendChild(image_product);
 
     var div1_level1_2=document.createElement('div');
     div1_level1.appendChild(div1_level1_2);
-    div1_level1_1.setAttribute('class','col-lg-6 col-md-12 col-12');
+    div1_level1_2.setAttribute('class','col-lg-6 col-md-12 col-12');
     var div1_level1_2_1=document.createElement('div');
     div1_level1_2.appendChild(div1_level1_2_1);
     div1_level1_2_1.setAttribute('class','phoneDetail-FunctionArea');
-
-    var phoneDetail_Title =document.createElement('h3');
-    phoneDetail_Title.setAttribute('class','phoneDetail-Title');
-    div1_level1_2_1.appendChild(phoneDetail_Title);
+    console.log(item[0].title.length)
+    if(item[0].title.length<90){
+        var phoneDetail_Title =document.createElement('h3');
+        phoneDetail_Title.setAttribute('class','phoneDetail-Title');
+        div1_level1_2_1.appendChild(phoneDetail_Title);
+        phoneDetail_Title.innerHTML=item[0].title;
+    }
+    else{
+        var phoneDetail_Title =document.createElement('h6');
+        phoneDetail_Title.setAttribute('class','phoneDetail-Title');
+        div1_level1_2_1.appendChild(phoneDetail_Title);
+        phoneDetail_Title.innerHTML=item[0].title;
+    }
     var phoneDetail_Brand =document.createElement('h4');
     phoneDetail_Brand.setAttribute('class','phoneDetail-Brand');
+    phoneDetail_Brand.innerHTML="Brand: "+item[0].brand;
+
     div1_level1_2_1.appendChild(phoneDetail_Brand);
     var phoneDetail_Price =document.createElement('h1');
     phoneDetail_Price.setAttribute('class','phoneDetail-Price');
+    phoneDetail_Price.innerHTML="$"+item[0].price;
     div1_level1_2_1.appendChild(phoneDetail_Price);
-    var phoneDetail_Stock =document.createElement('h6');
+    var phoneDetail_Seller=document.createElement('h5');
+    div1_level1_2_1.appendChild(phoneDetail_Seller);
+    phoneDetail_Seller.setAttribute("class","phoneDetail-Seller");
+    phoneDetail_Seller.innerHTML="Seller: "+item[0].seller.firstname+" "+item[0].seller.lastname;
+    var phoneDetail_Stock =document.createElement('h5');
     div1_level1_2_1.appendChild(phoneDetail_Stock);
+    phoneDetail_Stock.innerHTML="Stock :"+item[0].stock;
     phoneDetail_Stock.setAttribute('class','phoneDetail-Stock');
 
     var div1_level1_2_1_2 =document.createElement('div');
@@ -342,7 +317,7 @@ function productDetail_State(item){
     button_addingCart.setAttribute('class','adding-btn btn btn-dark');
     button_addingCart.innerHTML='Add it to cart';
     button_addingCart.onclick=function(){
-        addToCart(item.id);
+        addToCart(item[0]._id,item[0].stock);
     };
     div1_level1_2_1_2.appendChild(button_addingCart);
     var itemInCart=document.createElement('input');
@@ -351,14 +326,15 @@ function productDetail_State(item){
     itemInCart.setAttribute('class','cart-itemNum');
     itemInCart.setAttribute('id','itemInCart');
     itemInCart.setAttribute('title','The number of the this item in your cart');
-    itemInCart.setAttribute('readonly');
+    itemInCart.readOnly=true;
+    get_ThisItemInCart(item[0]._id);
 
 
     var div1_level1_2_1_3 =document.createElement('div');
     div1_level1_2_1.appendChild(div1_level1_2_1_3);
     div1_level1_2_1_3.setAttribute('class','ratingAndComment');
     var rating_function=document.createElement('div');
-    rating_function.setAttribute('class','rating_function');
+    rating_function.setAttribute('class','rating-function');
     div1_level1_2_1_3.appendChild(rating_function);
     // init stars
     var star1_radio=document.createElement('input');
@@ -415,21 +391,27 @@ function productDetail_State(item){
     star5_radio.setAttribute('name',"rating1");
     star5_radio.setAttribute('id','rating5');
     star5_radio.setAttribute('value','5');
-    star5_radio.setAttribute('checked');
+    star5_radio.checked=true;
+    //star5_radio.setAttribute('checked');
     rating_function.appendChild(star5_radio);
     var star5_label=document.createElement('label');
     star5_label.setAttribute('for','rating5');
     star5_label.setAttribute('class','fa fa-star checked');
     rating_function.appendChild(star5_label);
+    var marking_tip=document.createElement('span');
+    marking_tip.innerHTML="  Marking it";
+    rating_function.appendChild(marking_tip);
     // 如果监听不到rating 就把 rating_fuction 这个区都传入post的onclick事件里，再在onclick getElementID
 
     var commentingFunction_area=document.createElement('div');
     div1_level1_2_1_3.appendChild(commentingFunction_area);
     commentingFunction_area.setAttribute('class','commentingFunction-area');
     var commentBox=document.createElement('textarea');
+    commentBox.setAttribute('id','commentBox');
     commentingFunction_area.appendChild(commentBox);
     commentBox.setAttribute('title','input your comment about this product');
-    commentBox.setAttribute('id',);
+    //为什么要commentID
+    //commentBox.setAttribute('id',);
     commentBox.setAttribute('cols','30');
     commentBox.setAttribute('rows','10');
     var button_post =document.createElement('button');
@@ -437,14 +419,59 @@ function productDetail_State(item){
     button_post.setAttribute('class','comment-btn btn btn-success');
     button_post.setAttribute('title','comment Something');
     commentingFunction_area.appendChild(button_post);
+    button_post.innerHTML="post it"
     button_post.onclick=function(){
-        postComment(commentBox.innerHTML,section);
+        postComment(section,item[0]._id);
         //后续完善post函数
     };
-    //后续确定接口 不一定是 showingUserComment(section);
+    //show user comment
+    showingUserComment(section,item[0].reviews);
+}
+function get_ThisItemInCart(id)
+{
+    let token=localStorage.getItem('token');
+    if(!token)
+    {
+
+    }
+    else
+    {
+        axios.get('http://localhost:3000/api/cart/get_items',{
+            headers:{
+            Authorization: token
+        }
+        })
+        .then(function(response){
+            if(response.data.data.items.length>0)
+            {
+               var result= findThisItem_Cart(response.data.data.items,id);
+               document.getElementById("itemInCart").value=result;
+            }
+            else
+            {
+                document.getElementById("itemInCart").value=0;
+            }
+            
+        }).catch(function(error){
+            
+        });      
+    }  
+}
+function findThisItem_Cart(items,id){
+    var result=0;
+    for(var i=0;i<items.length;i++)
+    {
+        if(items[i].phone_id._id==id)
+        {
+            result=items[i].number;
+        }
+    }
+    console.log(result+"hrer");
+    //return result;
+
 }
 function showingUserComment(section,commentSet){
-    //section.appendChild(userCommentArea);
+
     var div2_level1=document.createElement('div');
     div2_level1.setAttribute('class','row mt-1');
     div2_level1.setAttribute('id','users_comment_Area')
@@ -456,46 +483,165 @@ function showingUserComment(section,commentSet){
     var users_comment_title=document.createElement('h3');
     users_comment_title.setAttribute('class','users_comment_title');
     users_comment_title.innerHTML='Users-Comment';
+    div2_level2.appendChild(users_comment_title);
+    
     var div2_level3=document.createElement('div');
     div2_level2.appendChild(div2_level3);
     div2_level3.setAttribute('class','card');
-    for(var i=0;i<commentSet.length;i++)
-    {
-        var commentRow =document.createElement('div');
-        commentRow.setAttribute('class','card-body');
-        div2_level3.appendChild(commentRow);
-        //Title 可以写得分
-        var comment_Title =document.createElement('h5');
-        comment_Title.setAttribute('class','card-title');
-        commentRow.appendChild(comment_Title);
-        //subTitle 可以写用户名
-        var comment_SubTitle =document.createElement('h6');
-        commentRow.appendChild(comment_SubTitle);
-        comment_SubTitle.setAttribute('class','card-subtitle mb-6');
-        //记得判断一下p是否大于200;
-        var comment_commentText =document.createElement('p');
-        commentRow.appendChild(comment_commentText);
-        comment_commentText.setAttribute('class','card-text');
-        var comment_moreWord =document.createElement('a');
-        comment_moreWord.setAttribute('class','card-link');
-        comment_moreWord.setAttribute('href','#');
-        commentRow.appendChild(comment_moreWord);
+    div2_level3.setAttribute('id','comments_body');
+    showingAllComments(div2_level3,commentSet,3);
 
+}
+function showingAllComments(div2_level3,commentSet,input_Length)
+{
+    commentSet=commentSet.reverse();
+    var length_Input=0;
+    if(input_Length>commentSet.length)
+    {
+        length_Input=commentSet.length;
     }
+    else
+    {
+        length_Input=input_Length;
+    }
+    div2_level3.innerHTML="";
+    if(commentSet.length>0)
+    {
+        for(var i=0;i<length_Input;i++)
+        {
+            var commentRow =document.createElement('div');
+            commentRow.setAttribute('id',"comment-"+i);
+            commentRow.setAttribute('class','card-body');
+            div2_level3.appendChild(commentRow);
+            //Title 可以写得分
+            var comment_Title =document.createElement('h5');
+            comment_Title.setAttribute('class','card-title');
+            commentRow.appendChild(comment_Title);
+            rating_showingFunction(comment_Title,commentSet[i].rating);
+            //subTitle 可以写用户名
+            var comment_SubTitle =document.createElement('h6');
+            commentRow.appendChild(comment_SubTitle);
+            comment_SubTitle.setAttribute('class','card-subtitle mb-6');
+            comment_SubTitle.innerHTML=commentSet[i].reviewer.firstname+" "+commentSet[i].reviewer.lastname;
+            //记得判断一下p是否大于200;
+            if(commentSet[i].comment.length>200)
+            {
+                console.log(commentSet[i].comment.length);
+                var comment_commentText =document.createElement('p');
+                commentRow.appendChild(comment_commentText);
+                comment_commentText.setAttribute('class','card-text');
+                comment_commentText.setAttribute('id',"text-"+i);            
+                comment_commentText.innerHTML=showLimitWord(commentSet[i].comment)+'<br>';
+                var comment_moreWord =document.createElement('button');
+                comment_moreWord.setAttribute('class','btn btn-dark');
+                comment_moreWord.id=i;
+                comment_moreWord.name="comment-detail";
+                //comment_moreWord.setAttribute('class','card-link');
+                comment_moreWord.innerHTML="see full text";
+                comment_commentText.appendChild(comment_moreWord);
+                comment_moreWord.onclick=function(){
+                    showEnsureComment(commentSet,this.id);
+                }
+            }
+            else
+            {
+                var comment_commentText =document.createElement('p');
+                commentRow.appendChild(comment_commentText);
+                comment_commentText.setAttribute('class','card-text');
+                comment_commentText.innerHTML=commentSet[i].comment;         
+            }
+
+        }
+        if(length_Input<commentSet.length)
+        {
+            var comment_moreComment =document.createElement('button');
+            comment_moreComment.setAttribute('class','btn btn-success');
+            comment_moreComment.onclick=function(){
+                showingAllComments(div2_level3,commentSet.reverse(),commentSet.length);
+            };
+            comment_moreComment.innerHTML="See more comments";
+            div2_level3.appendChild(comment_moreComment);
+        }
+        else
+        {
+
+        }
+    }
+
+}
+// showing Ensure Comment
+function showEnsureComment(commentSet,id){
+
+     var commentRow=document.getElementById("comment-"+id);
+     var commentText=document.getElementById("text-"+id);
+     commentText.innerHTML="";
+     console.log(id);
+     commentText.innerHTML=commentSet[id].comment;
+    commentRow.appendChild(commentText);
+    
+    
+
+}
+//showing Limit word
+function showLimitWord(word){
+    var word_array=word.split(/[\s\n]/);
+    var return_Word="";
+    var i=0;
+    while(return_Word.length<200)
+    {
+        return_Word+=" "+word_array[i];
+        i++;
+    }   
+    return return_Word;
+}
+// rating showing comment part
+function rating_showingFunction(part,rating){
+    for(var i=0;i<Math.floor(rating);i++)
+    {
+        var star=document.createElement('label');
+        star.setAttribute('class','fa fa-star checked');
+        part.appendChild(star);
+    }
+    if(rating%1===0){
+        for(var i=0;i<(5-rating);i++)
+        {
+            var star=document.createElement('label');
+            star.setAttribute('class','fa fa-star');
+            part.appendChild(star);     
+        }
+    }
+    else{
+        var star_half=document.createElement('label');
+        star_half.setAttribute('class','fa fa-star-half-o checked');
+        part.appendChild(star_half);
+        for(var i=0;i<(5-Math.floor(rating)-1);i++)
+        {
+            var star=document.createElement('label');
+            star.setAttribute('class','fa fa-star');
+            part.appendChild(star);     
+        }
+    }
+
+
+
 }
 //showing Login button or logout and profile button
 function whetherLogin_ButtonControl(li_functionPersonal){
     let token=localStorage.getItem('token');
     var button_checkout=document.createElement('button');
     button_checkout.setAttribute("class","btn btn-outline-light");
-    li_functionPersonal.appendChild( button_checkout);
+    li_functionPersonal.appendChild(button_checkout);
     button_checkout.innerHTML="Checkout";
+    button_checkout.setAttribute('onclick',"location.href='CheckoutPage.html'");
     if(!token)
     {       
         var button_login=document.createElement('button');
         button_login.setAttribute("class","btn btn-outline-light");
         button_login.innerHTML="Login";
+        button_login.setAttribute('onclick',"location.href='SignPage.html'");
         li_functionPersonal.appendChild(button_login);
+        //button_login.onclick=window.location.reload("SignPage.html");
+        
     }
     else
     {
@@ -504,8 +650,12 @@ function whetherLogin_ButtonControl(li_functionPersonal){
         var button_logout=document.createElement('button');
         button_logout.setAttribute("class","btn btn-outline-light");
         button_logout.innerHTML="Logout";
+        button_logout.onclick=function(){
+            logout_frontEnd();
+        }
         button_profile.innerHTML="Profile";
-        li_functionPersonal.appendChild(button.button_profile);
+        button_profile.setAttribute('onclick',"location.href='UserPage.html'");
+        li_functionPersonal.appendChild(button_profile);
         li_functionPersonal.appendChild(button_logout);
     }
 
@@ -528,13 +678,23 @@ function init_CategoryMenu(brandMenu,brandSet){
         a_dropDown_item.setAttribute("name",brandSet[i]);
         a_dropDown_item.innerHTML=brandSet[i];
     }
-        var li_divider=document.createElement("li");
-        li_divider.setAttribute('class','dropdown-divider');
+        var li_divider_1=document.createElement("li");
+        li_divider_1.setAttribute('class','dropdown-divider');
+        brandMenu.appendChild(li_divider_1);
+        var li_allChoice=document.createElement("li");
+        li_allChoice.setAttribute('class','dropdown-item');
+        li_allChoice.setAttribute('id','ALL');
+        li_allChoice.innerHTML="ALL";
+        brandMenu.appendChild(li_allChoice);
+        li_allChoice.setAttribute("href","javascript:catergorySelector_FontEnd(ALL);");
+        
+        var li_divider_2=document.createElement("li");
+        li_divider_2.setAttribute('class','dropdown-divider');
         var li_pastChoice=document.createElement("li");
         li_pastChoice.setAttribute('class','dropdown-item');
         li_pastChoice.setAttribute('id','pastChoice');
         
-        brandMenu.appendChild(li_divider);
+        brandMenu.appendChild(li_divider_2);
         brandMenu.appendChild(li_pastChoice);
         li_pastChoice.innerHTML="brand-selector";
         li_pastChoice.onclick=function(){
@@ -545,6 +705,27 @@ function init_CategoryMenu(brandMenu,brandSet){
 }
 
 //Following is the  interface writing part
+function getHomeStateItems(){
+    axios.get('http://localhost:3000/api/phone/bestSeller')
+    .then(function(response){
+        axios.get('http://localhost:3000/api/phone/findSoldOut')
+        .then(function(res)
+        {
+            homeState(response.data.success,res.data.success);
+        })
+    });
+}
+
+function logout_frontEnd(){
+    axios.get('http://localhost:3000/api/user/logout')
+    .then(function(response){
+        localStorage.removeItem('token');
+        var li_personal=document.getElementById("function-personal-button");
+        li_personal.innerHTML="";
+        whetherLogin_ButtonControl(li_personal);
+    });
+}
+
 function getCategoryMenu(brandMenu){
 
     //get all brands
@@ -565,13 +746,15 @@ function getRange_Price(){
 function showPhoneDetail_FrontEnd(productID){
     //check wheter login first, get the Product number in the cart to show in the detail page
     console.log(productID);
+    const data={id: productID};
     // according to the id/other key information of product, skip to their detailed page
-    axios.get('',JSON.stringify({
-        productID:this.productID
-    })).then(function(response){
+    axios.get('http://localhost:3000/api/phone/findOne',{
+        params:data
+    }).then(function(response){
         //console.log(response);
         //function about showing product in this price range
-        productDetail_State();
+        productDetail_State(response.data.success);
+        
     });
 
     
@@ -581,12 +764,17 @@ function searchFunction_FrontEnd(){
     var searchBox=document.getElementById("searchBox");
     if(searchBox.value=="")
     {
-        homeState();
+        document.getElementById("dropDownFunction").hidden=true;
+        document.getElementById("price-slider-area").hidden=true;
+        getHomeStateItems();
     }
     else
     {
+        document.getElementById("dropDownFunction").hidden=false;
+        document.getElementById("price-slider-area").hidden=false;
         const data={title: searchBox.value};
         // go to the search back end method
+        
         axios.get('http://localhost:3000/api/phone/search',{
             params:data
         }).then(function(response){
@@ -598,16 +786,19 @@ function searchFunction_FrontEnd(){
 
 }
 function catergorySelector_FontEnd(brandName){
-    const data={brand: brandName};
+    const data={
+        title: document.getElementById('searchBox').innerHTML,
+        price: document.getElementById('price-slider').value,
+        brand: brandName};
     console.log(brandName);
     // go to the search fliter end method
-    axios.get('http://localhost:3000/api/phone/filter',{
+    axios.get('http://localhost:3000/api/phone/searchPhoneList',{
         params:data
     }).then(function(response){
         document.getElementById('navbarDropdown').innerHTML=brandName;
         if(brandName=='brand-selector')
         {
-            homeState();
+            getHomeStateItems();
         }
         else{
             searchState(response.data.success);
@@ -631,19 +822,62 @@ function checkout_action(){
 function rangeAction_Frontend(priceRange){
         //go to the backend rangeAction()
     //console.log(priceRange);
-    const data={price:priceRange}
-    axios.get('http://localhost:3000/api/phone/range',{
+    const data={
+        price:priceRange,
+        title: document.getElementById('searchBox').innerHTML,
+        brand: document.getElementById('navbarDropdown').innerHTML
+    }
+    axios.get('http://localhost:3000/api/phone/searchPhoneList',{
         params:data
     }).then(function(response){
         //console.log(response.data.success);
         searchState(response.data.success);
     })
 }
+function postComment_ShowingfrontEnd(section,id){
+    const data={id: id};
+    // according to the id/other key information of product, skip to their detailed page
+    axios.get('http://localhost:3000/api/phone/findOne',{
+        params:data
+    }).then(function(response){
+        showingAllComments(document.getElementById('comments_body'),response.data.success[0].reviews,3);       
+    });
+
+}
+function comment_FrontEnd(comment,section,id,rating){
+    let token=localStorage.getItem('token');
+    if(!token)
+    {
+        alert("Please login first for your commenting");
+    }
+    else
+    {
+        axios.post('http://localhost:3000/api/phone/comment',{
+            id:id,
+            comments:comment,
+            rating:rating
+        },
+        {
+            headers:{
+                Authorization: token
+            }
+        }
+            
+)    
+    .then(function(response){
+        postComment_ShowingfrontEnd(section,id);
+        
+    })
+    }
+
+
+}
 //product Detail page function
-function postComment(comment,section){
-    var v=null;
-    v=$('input[name="rating1"]:checked').val();
-    if(v=null){
+function postComment(section,phoneId){
+    var rating=null;
+    rating=$('input[name="rating1"]:checked').val();
+    
+    if(rating=null){
         alert("You haven't marked it");
     }
     else{
@@ -651,29 +885,66 @@ function postComment(comment,section){
         // record in database
         // comment area 动态更新
         //if token else
-        showingUserComment(section);
+        let token=localStorage.getItem('token');
+        if(!token) {
+            alert("Please sign in first");
+            location.href='SignPage.html';
+        } else {
+            //建立一个只获取review的接口
+            //showingUserComment(section);
+            comment_FrontEnd($('#commentBox').val(),section,phoneId,$('input[name="rating1"]:checked').val());
+        }        
     }
     
 
 }
-function addToCart(id){
+function addToCart(id,stock){
+    console.log(id);
     var pAmount = prompt("Please input the amount of this book you want to have :");
     var regulation_number = /^[1-9]+.?[0-9]*/;
-    if(pAmount!=null)
+    let token=localStorage.getItem('token');
+    if(pAmount!=null||pAmount!="")
     {
         if (!regulation_number.test(pAmount)) {
             alert("You should input valid number (number > = 0)");
         }
         else {
-            alert("successful Phone"+id+"amount "+pAmount);
-            axios.get('',JSON.stringify({
-                productID:id,
-                amount:this.pAmount 
-                //user id maybe?
-            })).then(function(response){
-                //console.log(response);
-                // product in cart 实时更新
-            });           
+            if(!token)
+            {
+                alert('please login first for adding it to your cart');
+                //跳转到login 界面
+                location.href='SignPage.html';
+            }
+            else{
+                
+                var existed_number=parseInt(document.getElementById("itemInCart").value);
+                if(stock>=(parseInt(pAmount)+existed_number))
+                {
+                    axios.post('http://localhost:3000/api/cart/add_item',{
+                        phoneId:id,
+                        number:pAmount
+                    },
+                    {
+                        headers:{
+                            Authorization: token
+                        }
+                    }
+                )    
+                .then(function(response){
+                   // postComment_ShowingfrontEnd(section,id);
+                   alert("sucessful adding");
+                   document.getElementById("itemInCart").value=(parseInt(pAmount)+existed_number);
+                    
+                }) 
+                }
+                else
+                {
+                    alert("Out of stock and cannot be added");
+                }
+
+
+            }
+          
         }
     }
 

@@ -1,3 +1,7 @@
+#navBar-sellPhone
+{
+    display: none;
+}
 .d-flex{
     width: 45%;
     margin-left: 50%;
@@ -86,12 +90,13 @@ body{
     }
 }
 .buttonArea-back{
-    background: white;
+    background: rgb(37, 36, 36);
     border-radius: 0.5em;
-    margin-top: 5%;
+    margin-top: 0%;
     height: 60px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
+    color: white;
 }
 #checkoutArea{  
     width: 80%;   

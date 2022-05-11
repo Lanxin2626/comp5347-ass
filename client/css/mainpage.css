@@ -108,7 +108,7 @@ img{
     margin-left: 5%;
 }
 .users_comment .card-title{
-    color: wheat;
+    color: rgb(91, 89, 87);
 }
 .productDetail_photo{
     margin-bottom: 10%;
@@ -121,17 +121,17 @@ img{
     border-radius: 0.5em;
 }
 .addingFunction-area{
-    margin-top: 4%;
+    margin-top: 2%;
     margin-bottom: -2%;
     
 }
 .phoneDetail-FunctionArea{
     color: black;   
 }
-.phoneDetail-FunctionArea h3, h4, h5{
+.phoneDetail-FunctionArea h3, h4, h5, h6{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-.phoneDetail-FunctionArea h1, h6{
+.phoneDetail-FunctionArea h1{
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .commentingFunction-area{
@@ -168,8 +168,15 @@ img{
     cursor: pointer;
 }
 .rating-function input:checked +label ~ label{
-    color: #838383;
+    color: #070303;
 }
 .rating-function label:active{
     transform: scale(0.8);
+}
+
+.phoneDetail-Stock{
+    width: 50%;
+    float: right;
+    margin-top: -5%;
+    margin-right: -12%;
 }
