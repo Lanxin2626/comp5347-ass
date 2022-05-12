@@ -212,8 +212,8 @@ $(document).ready(function () {
         let price = document.createElement('td')
         let stock = document.createElement('td')
         let title = document.createElement('td')
-        let disabled = document.createElement('td')
 
+        let disabledButtonCell = document.createElement('td')
         let deleteButtonCell = document.createElement('td')
 
         brand.innerText = listing['brand']
@@ -221,7 +221,47 @@ $(document).ready(function () {
         price.innerText = listing['price']
         stock.innerText = listing['stock']
         title.innerText = listing['title']
-        disabled.innerText = listing['disabled']
+
+
+        let disableButton = document.createElement('Button')
+        let content = ""
+        let state = ""
+        if (listing['disabled'] === "false") {
+            content = "Disable"
+            state = "true"
+        } else {
+            content = "Enable"
+            state = "false"
+        }
+        disableButton.innerHTML = content
+        disableButton.setAttribute('value', listing['_id'])
+        disableButton.setAttribute('value1', state)
+
+        disabledButtonCell.appendChild(disableButton)
+
+        disableButton.onclick = function (event) {
+            event.preventDefault()
+
+            let phoneId = this.getAttribute('value')
+            let disabled = this.getAttribute('value1')
+            let data = {
+                "phoneId": phoneId,
+                "disabled": state
+            }
+
+            axios.post('http://localhost:3000/api/userop/listing_op', data, {
+                headers: {
+                    'Authorization': localStorage.getItem('token'),
+                }
+            }).then(function (response) {
+                let message = response.data['message']
+                alert(message)
+                retrieveListings()
+            }).catch(function (error) {
+                let message = error.response.data['message']
+                $('#tableError').text(message)
+            })
+        }
 
 
         let deleteButton = document.createElement('Button')
@@ -254,7 +294,7 @@ $(document).ready(function () {
         row.appendChild(price)
         row.appendChild(stock)
         row.appendChild(title)
-        row.appendChild(disabled)
+        row.appendChild(disabledButtonCell)
         row.appendChild(deleteButtonCell)
         return row
     }
