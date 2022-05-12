@@ -202,8 +202,10 @@ function transaction_FrontEnd(){
                     }    
                 })
                 .then(function(response){
-                    console.log(response);
-                    showing_Cart_FrontEnd();
+                    sessionStorage.setItem("function","getHomeStateItems(");
+                    //showing_Cart_FrontEnd();
+                    backToMainpage();
+
             
                 })
                 .catch(function (error) {
