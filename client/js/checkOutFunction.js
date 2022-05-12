@@ -1,6 +1,7 @@
 function backToMainpage(){
-// skip to Main page
-location.href="MainPage.html";
+//back to previous page
+//self.location=document.referrer;
+window.location.href='MainPage.html';
 }
 function showing_CartArea(products_cart){
     var showing_Area=document.getElementById("productsInCart");
@@ -21,13 +22,21 @@ function showing_CartArea(products_cart){
         var tds_img=document.createElement("td");
         tr_cart.appendChild(tds_img);
         var td_img=document.createElement("img");
+        td_img.setAttribute("id","photo-"+products_cart[i].phone_id._id);
         tds_img.appendChild(td_img)
+        td_img.onclick=function(){
+            //document.getElementById("showingArea").innerHTML="";
+            location.href="MainPage.html";
+            sessionStorage.setItem("function","showPhoneDetail_FrontEnd("+this.id.split('-')[1]);
+            //showPhoneDetail_FrontEnd();
+        }
         td_img.setAttribute("src",products_cart[i].phone_id.image);
 
         var tds_product_title=document.createElement("td");
         tr_cart.appendChild(tds_product_title);
         var td_product_title=document.createElement("h3");
         tds_product_title.appendChild(td_product_title);
+        td_product_title.setAttribute('class','title_checkout');
         td_product_title.setAttribute("name","product_title");
         //处理一下过长的title length<60
         td_product_title.innerHTML=products_cart[i].phone_id.title;
@@ -57,7 +66,7 @@ function showing_CartArea(products_cart){
         tds_total_price.appendChild(td_total_price);
         td_total_price.setAttribute("name","total_price");
         td_total_price.setAttribute("id","total_price"+products_cart[i].phone_id._id);
-        td_total_price.innerHTML="$"+ parseFloat(products_cart[i].money);
+        td_total_price.innerHTML="$"+ parseFloat(products_cart[i].money).toFixed(2);
 
         var tds_delete_btn=document.createElement("td");
         tr_cart.appendChild(tds_delete_btn);
@@ -70,26 +79,24 @@ function showing_CartArea(products_cart){
         td_delete_btn.onclick=function(){
             deleteProduct(this.id);
         };
-
-        // td_product_quality setting onchange event here need to change the price and the total price setting
+      
+        // td_product_quality setting onchange event here need to change the price and the total price setting       
         td_product_quality.onchange=function(){
-            console.log(this.id.split("-")[0]);
-            changeAmount_Cart(this.id.split("-")[0],this.value);
+            changeAmount_Cart(this.id.split("-")[0],this.value,this.id.split("-")[1]);
             change_PartPrice(this.id.split("-")[0],this.value,this.id.split("-")[1]);
-            change_SUM_Number_Price();
+            //change_SUM_Number_Price();
         };
         // 定点改变，不要全部刷新，设个ID后面
         total_quality+=products_cart[i].number;// 加上所有的quality
         total_price+=parseFloat(products_cart[i].money);//加上所有的总价
     }
     // price sum part
-    console.log(total_price);
     document.getElementById("totalQuality_trasaction").innerHTML=total_quality;
     document.getElementById("totalPrice_trasaction").innerHTML="$"+parseFloat(total_price).toFixed(2);
 }
 function change_PartPrice(id,number_new,price_per){
-    document.getElementById("total_price"+id).innerHTML="$"+(number_new*price_per);
-
+    document.getElementById("total_price"+id).innerHTML="$"+(number_new*price_per).toFixed(2);
+    console.log(document.getElementById("total_price"+id).innerHTML);
 }
 function showing_Cart_FrontEnd(){
     let token=localStorage.getItem('token');
@@ -121,7 +128,7 @@ function showing_Cart_FrontEnd(){
     }
 
 }
-function changeAmount_Cart(productID,value){
+function changeAmount_Cart(productID,value,price_per){
     let token=localStorage.getItem('token');
     if(!token)
     {
@@ -131,7 +138,7 @@ function changeAmount_Cart(productID,value){
     {
         if(value>0)
         {
-            console.log(productID);
+            // make sure the product cannot over the stock           
             axios.post('http://localhost:3000/api/cart/edit_item',{
                 phoneId:productID,
                 number:value
@@ -142,9 +149,15 @@ function changeAmount_Cart(productID,value){
                 }
             }).then(function(response){
                 console.log(response);
-                change_SUM_Number_Price()
+                document.getElementById("total_price"+productID).innerHTML="$"+(value*price_per).toFixed(2);
+                change_SUM_Number_Price();
             }).catch(function(error){
-                console.log(error);
+                if(error.response.status=="403")
+                {
+                    alert("over the stock, we can't sell it to you");
+                    showing_Cart_FrontEnd();
+
+                }
             });
         }
         else
@@ -183,12 +196,14 @@ function transaction_FrontEnd(){
             }
             else
             {
-                axios.post('http://localhost:3000/api/cart/checkout',{
-                    headers:token
-    
+                axios.post('http://localhost:3000/api/cart/checkout',{},{
+                    headers:{
+                        Authorization: token
+                    }    
                 })
                 .then(function(response){
-                    console.response(response);
+                    console.log(response);
+                    showing_Cart_FrontEnd();
             
                 })
                 .catch(function (error) {
