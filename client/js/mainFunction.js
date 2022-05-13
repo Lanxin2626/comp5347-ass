@@ -1,34 +1,47 @@
 function init_MainPage(){
-
-}
-window.onload=function(){
     var functionName=sessionStorage.getItem("function");
     console.log(functionName);
     if(functionName!=null)  
     {
         if(functionName.split('(')[0]=='showPhoneDetail_FrontEnd')
         {        
-            showPhoneDetail_FrontEnd(functionName.split('(')[1]);
-            sessionStorage.setItem("function","");
+            $(document).ready(function(){
+                showPhoneDetail_FrontEnd(functionName.split('(')[1]);
+                sessionStorage.setItem("function","");
+            });
         }
         else if(functionName=="")
         {
-            getHomeStateItems();
+            $(document).ready(function(){
+                getHomeStateItems();
+            });
+            
         }
         else if(functionName.split('(')[0]=="getHomeStateItems")
         {
-            getHomeStateItems();
+            $(document).ready(function(){
+                getHomeStateItems();
+            });
         }
         else if(functionName.split('(')[0]=="searchFunction_FrontEnd")
         {
-            searchFunction_FrontEnd();
+            $(document).ready(function(){
+                searchFunction_FrontEnd();
+            });
+            
         }
         else if(functionName.split('(')[0]=="catergorySelector_FontEnd")
         {
-            catergorySelector_FontEnd(functionName.split('(')[1]);
+            $(document).ready(function(){
+                catergorySelector_FontEnd(functionName.split('(')[1]);
+            });
+            
         }
         else if(functionName.split('(')[0]=="rangeAction_Frontend"){
-            rangeAction_Frontend(functionName.split('(')[1]);
+            $(document).ready(function(){
+                rangeAction_Frontend(functionName.split('(')[1]);
+            });
+            
         }
         else
         {
