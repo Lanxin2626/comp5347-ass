@@ -31,7 +31,7 @@ cd server && npm install
 cd server && node app.js
 ```
 
-* Find **views** folder under **client** folder and right click on SignPage and **Open with Live Server**
+* Find **views** folder under **client** folder and right click on SignPage.html and **Open with Live Server**
 
 ## Contributing
 
