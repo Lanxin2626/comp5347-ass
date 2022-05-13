@@ -13,7 +13,7 @@ Install Node.js on https://nodejs.org/en/
 
 ### Installing
 
-Installing NPM modules on server side
+* Installing NPM modules on server side
 
 Execute these commands from the project directory
 
@@ -21,7 +21,7 @@ Execute these commands from the project directory
 cd server && npm install
 ```
 
-Installing Live server extension. If you are using Visual Studio Code, you can click **Extensions** on right panel and search Live server and install.
+* Installing Live server extension. If you are using Visual Studio Code, you can click **Extensions** on right panel and search Live server and install.
 
 ### Running the app
 
