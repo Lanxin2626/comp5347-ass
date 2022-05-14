@@ -1,6 +1,7 @@
 $(document).ready(function () {
-    $('#loginForm').hide()
-    $('#signupForm').show()
+    $('#loginForm').show()
+    $('#signupForm').hide()
+    $('#resetForm').hide()
 
     $('#toSignUp').click(function () {
         toSignUp()
@@ -10,14 +11,26 @@ $(document).ready(function () {
         toLogin()
     })
 
+    $('#resetPasswordButton').click(function () {
+        toReset()
+    })
+
     function toLogin() {
         $('#loginForm').show()
         $('#signupForm').hide()
+        $('#resetForm').hide()
     }
 
     function toSignUp() {
         $('#loginForm').hide()
         $('#signupForm').show()
+        $('#resetForm').hide()
+    }
+
+    function toReset() {
+        $('#loginForm').hide()
+        $('#signupForm').hide()
+        $('#resetForm').show()
     }
 
     $("#signupbtn").on("click", function () {
@@ -177,8 +190,64 @@ $(document).ready(function () {
             })
             .catch(function (error) {
                 console.log(error);
+                emailInput.text('')
+                pwdInput.text('')
             });
     });
 
+    $('#sendRestEmail').on("click", function (event) {
+        event.preventDefault()
+
+
+        let email = $('#resetEmail').val()
+        let data = {
+            email: email
+        }
+
+        axios.post('http://localhost:3000/api/user/resetPwd', data)
+            .then(function (response) {
+                alert('Reset password email sent successfully');
+            })
+            .catch(function (error) {
+                let data = error.response.data;
+                alert(data['error']['email'])
+            })
+    })
+
+    $('#sendResetPassword').on("click", function (event) {
+        event.preventDefault()
+
+        let pwd1 = $('#reset_new_password').val()
+        let pwd2 = $('#reset_new_password2').val() 
+
+        let data =  {
+            "pwd": pwd1,
+            "cpwd": pwd2
+        }
+
+        axios.post("http://localhost:3000/api/user/inputPwd", data).then(function (response) {
+            let data = response.data;
+                if (data['success']) {
+                    alert(data['success']);
+                } else {
+                    let errorMessage = data['error']
+                    if (errorMessage['pwd']) {
+                        $('#errorpwd1').text(errorMessage['pwd'])
+                    }
+                    
+                    if (errorMessage['cpwd']) {
+                        $('#errorpwd2').text(errorMessage['cpwd'])
+                    }
+
+                    if (errorMessage['fail']) {
+                        $('#errorpwd2').text(errorMessage['fail'])
+                    }
+                }    
+
+        }).catch(function (error) {
+            alert("error")
+        })
+
+    })
 });
 

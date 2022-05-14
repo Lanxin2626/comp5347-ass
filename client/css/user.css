@@ -97,3 +97,13 @@ li a {
   padding: 8px;
   background-color: #dddddd;
 }
+
+.expand{
+  position: absolute;
+  top: 6px;
+  right: 50px;
+}
+
+.expand:hover a{
+  color: #fff;
+}

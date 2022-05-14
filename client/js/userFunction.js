@@ -204,6 +204,11 @@ $(document).ready(function () {
             console.log(tableContent)
         }).catch(function (error) {
             alert(error.response.data['message'])
+            
+            if (error.response.status === 404) {
+                let tableContent = document.getElementById("TableContent")
+                tableContent.innerHTML = ""
+            }
         })
     }
 

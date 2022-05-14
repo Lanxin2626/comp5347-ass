@@ -67,7 +67,7 @@
             <div id="pwdInput1" style="color: red;"></div>
       
             <div>
-              <button type="button" onclick="window.location.href ='reset_password_email.html'">Reset password</button>
+              <button type="button" id="resetPasswordButton">Reset password</button>
      
             </div>
 
@@ -78,5 +78,21 @@
        
       </div>
     </form>
+
+    <form class="modal-content" id="resetForm" method="post">
+      <div class="container">
+        <h1>Reset Password</h1>
+        <hr>
+        <label for="resetEmail"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" id="resetEmail" required>
+        <div id="resetEmailError" style="color: red;"></div>
+
+        <div class="clearfix">
+          <button id="sendRestEmail">Send Reset Email</button>
+        </div>
+      </div>
+
+    </form>
+    
 </body>
 </html>

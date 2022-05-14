@@ -4,12 +4,21 @@
 
 <head lang="en">
   <meta charset="utf-8">
-  <title>Sign-in/Sign-up</title>
+  <title>User page</title>
   <link rel="stylesheet" type="text/css" href="../../client/css/user.css" />
   <script src="../js/jquery-3.6.0.min.js"></script>
   <script src="../js/userFunction.js"></script>
   <!-- Axios cdn-->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    // Sign-out
+    function signOut() {
+      // Clear three caches 
+      sessionStorage.clear();
+      localStorage.clear();
+      cookies.clear()
+    }
+  </script>
 </head>
 
 <body>
@@ -19,6 +28,9 @@
     <a id="changePasswordTab">Change password&emsp;</a>
     <a id="manageListingTab">Manage listings&emsp;</a>
     <a id="viewCommentTab">View comments</a>
+    <div class="expand" onclick="signOut()">
+      <a href="./SignPage.html">Sign-out</a>
+    </div>
   </ul>
 
   <form class="modal-content" method="post" id="profileForm">
@@ -114,10 +126,7 @@
 
   <div class="modal-content" id="viewCommentForm">
     <h2>View comments</h2>
-    <div class="container" id="viewCommentContainer">
-      
-      
-    </div>
+    <div class="container" id="viewCommentContainer"></div>
   </div>
 
     
