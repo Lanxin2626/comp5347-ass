@@ -43,6 +43,8 @@ $(document).ready(function () {
         $('#manageListingForm').hide();
         $('#addListingForm').hide();
         $('#viewCommentForm').show();
+
+        retrieveComments()
     }
 
     $('#profileTab').click(function () {
@@ -84,13 +86,13 @@ $(document).ready(function () {
             last_name.value = data['lastname']
             email.value = data['email']
         }).catch(function (error) {
-            alert(error.response.data['message'] + "\n Please login")
+            alert(error.response.data['message'])
         })
     }
 
     extract_profile()
 
-    
+
 
     $("#update_profile").on("click", function () {
 
@@ -201,7 +203,7 @@ $(document).ready(function () {
             }
             console.log(tableContent)
         }).catch(function (error) {
-            alert(error.response.data['message'] + "\n Please login")
+            alert(error.response.data['message'])
         })
     }
 
@@ -215,6 +217,7 @@ $(document).ready(function () {
 
         let disabledButtonCell = document.createElement('td')
         let deleteButtonCell = document.createElement('td')
+        
 
         brand.innerText = listing['brand']
         image.innerText = listing['image']
@@ -273,7 +276,7 @@ $(document).ready(function () {
         deleteButton.onclick = function (event) {
 
             event.preventDefault()
-            
+
             let id = this.getAttribute('id')
             axios.post(`http://localhost:3000/api/userop/del_listing?phoneId=${id}`, {}, {
                 headers: {
@@ -289,6 +292,11 @@ $(document).ready(function () {
                 $('#tableError').text(message)
             })
         }
+
+
+        
+
+
         row.appendChild(brand)
         row.appendChild(image)
         row.appendChild(price)
@@ -299,5 +307,79 @@ $(document).ready(function () {
         return row
     }
 
-    retrieveListings()
+    function retrieveComments() {
+
+        axios.get('http://localhost:3000/api/userop/comments', {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        }).then(function (response) {
+            // all comments of phone listing
+            let data = response.data['data']['Comments']
+            // use createTable function to create multiple tables
+            let divPart = document.getElementById('viewCommentContainer')
+            divPart.innerHTML = ""
+            for(let i=0;i<data.length;i++) {
+                let tempData = data[i]
+                let tempTable = createTable(tempData['title'], tempData['brand'], tempData['reviews'])
+                divPart.appendChild(tempTable)
+            }
+
+        }).catch(function (error) {
+            alert(error.response.data['message'])
+        })
+
+    }
+
+    function createTable(title, brand, reviews) {
+
+        let table = document.createElement('table')
+        let tableCaption = document.createElement('caption')
+        let tableHead = document.createElement('thead')
+        let tableBody = document.createElement('tbody')
+
+        tableCaption.innerHTML = `title: ${title}<br>brand: ${brand}`
+        table.appendChild(tableCaption)
+
+        // table head has four columns named firstname, lastname, rating and comment
+        let tableHeadRow = document.createElement('tr')
+        let tableHeadFirstName = document.createElement('th')
+        tableHeadFirstName.innerHTML = "First Name"
+        tableHeadRow.appendChild(tableHeadFirstName)
+        let tableHeadLastName = document.createElement('th')
+        tableHeadLastName.innerHTML = "Last Name"
+        tableHeadRow.appendChild(tableHeadLastName)
+        let tableHeadRating = document.createElement('th')
+        tableHeadRating.innerHTML = "Rating"
+        tableHeadRow.appendChild(tableHeadRating)
+        let tableHeadComment = document.createElement('th')
+        tableHeadComment.innerHTML = "Comment"
+        tableHeadRow.appendChild(tableHeadComment)
+
+        tableHead.appendChild(tableHeadRow)
+        table.appendChild(tableHead)
+
+        // create the table body part of the reviews
+        for (let i = 0; i < reviews.length; i++) {
+            let review = reviews[i]
+            let tableBodyRow = document.createElement('tr')
+            let tableBodyFirstName = document.createElement('td')
+            tableBodyFirstName.innerHTML = review['reviewer']['firstname']
+            tableBodyRow.appendChild(tableBodyFirstName)
+            let tableBodyLastName = document.createElement('td')
+            tableBodyLastName.innerHTML = review['reviewer']['lastname']
+            tableBodyRow.appendChild(tableBodyLastName)
+            let tableBodyRating = document.createElement('td')
+            tableBodyRating.innerHTML = review['rating']
+            tableBodyRow.appendChild(tableBodyRating)
+            let tableBodyComment = document.createElement('td')
+            tableBodyComment.innerHTML = review['comment']
+            tableBodyRow.appendChild(tableBodyComment)
+            tableBody.appendChild(tableBodyRow)
+        }
+
+        table.appendChild(tableBody)
+        return table
+    }
+
 })
