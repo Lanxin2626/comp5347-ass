@@ -1,3 +1,4 @@
+// home state product showing format
 function homeState_init(array_phone,setName,viewLevel2){
     var loop=null;
     var type_phone_group=document.createElement('div');       
@@ -127,6 +128,7 @@ function homeState_init(array_phone,setName,viewLevel2){
     viewLevel2.appendChild(type_phone_group);
 
 }
+// homestate html showing
 function homeState(bestSeller,soldOut){
     sessionStorage.setItem("function","getHomeStateItems(");
     document.getElementById("dropDownFunction").hidden=true;
@@ -147,8 +149,10 @@ function homeState(bestSeller,soldOut){
     //From here to for loop
 
 }
-// 接口
+// get data to the home state
 function getHomeStateItems(){
+    sessionStorage.setItem("brand","All");
+    sessionStorage.setItem("pricerange",100);
     axios.get('http://localhost:3000/api/phone/bestSeller')
     .then(function(response){
         axios.get('http://localhost:3000/api/phone/findSoldOut')

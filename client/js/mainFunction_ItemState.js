@@ -174,7 +174,7 @@ function productDetail_State(item){
     //show user comment
     showingUserComment(section,item[0].reviews);
 }
-//展示部分用户评论
+//Showing new three users'comments
 function showingUserComment(section,commentSet){
 
     var div2_level1=document.createElement('div');
@@ -197,7 +197,7 @@ function showingUserComment(section,commentSet){
     showingAllComments(div2_level3,commentSet,3);
 
 }
-//展示所有用户评论
+//showing all users' comments
 function showingAllComments(div2_level3,commentSet,input_Length)
 {
     commentSet=commentSet.reverse();
@@ -275,7 +275,7 @@ function showingAllComments(div2_level3,commentSet,input_Length)
     }
 
 }
-// showing Ensure Comment 展示特定用户评论
+// showing Ensure Comment 
 function showEnsureComment(commentSet,id){
 
     var commentRow=document.getElementById("comment-"+id);
@@ -311,7 +311,8 @@ function postComment(section,phoneId){
     
 
 }
-// 接口 ---------------------------
+// get data part ---------------------------
+// get product detail
 function showPhoneDetail_FrontEnd(productID){
     //check wheter login first, get the Product number in the cart to show in the detail page
     const data={id: productID};
@@ -325,6 +326,7 @@ function showPhoneDetail_FrontEnd(productID){
         
     });    
 }
+// get this item amount in the users cart
 function get_ThisItemInCart(id)
 {
     let token=localStorage.getItem('token');
@@ -355,6 +357,7 @@ function get_ThisItemInCart(id)
         });      
     }  
 }
+// update the area of user comment
 function postComment_ShowingfrontEnd(section,id){
     const data={id: id};
     // according to the id/other key information of product, skip to their detailed page
@@ -365,6 +368,7 @@ function postComment_ShowingfrontEnd(section,id){
     });
 
 }
+// post the comment to database
 function comment_FrontEnd(comment,section,id,rating){
     let token=localStorage.getItem('token');
     if(!token)
@@ -391,6 +395,7 @@ function comment_FrontEnd(comment,section,id,rating){
     })
     }
 }
+// add it to the cart
 function addToCart(id,stock){
     console.log(id);
     var pAmount = prompt("Please input the amount of this book you want to have :");
@@ -442,7 +447,7 @@ function addToCart(id,stock){
     }
 
 }
-// 工具 ----------------------------
+// Tool ----------------------------
 //showing this item amount in this user cart
 function findThisItem_Cart(items,id){
     var result=0;

@@ -1,8 +1,8 @@
+// back button function
 function backToMainpage(){
-//back to previous page
-//self.location=document.referrer;
 window.location.href='MainPage.html';
 }
+// cart showing front end
 function showing_CartArea(products_cart){
     var showing_Area=document.getElementById("productsInCart");
     showing_Area.innerHTML="";
@@ -94,10 +94,12 @@ function showing_CartArea(products_cart){
     document.getElementById("totalQuality_trasaction").innerHTML=total_quality;
     document.getElementById("totalPrice_trasaction").innerHTML="$"+parseFloat(total_price).toFixed(2);
 }
+// change the related total price row
 function change_PartPrice(id,number_new,price_per){
     document.getElementById("total_price"+id).innerHTML="$"+(number_new*price_per).toFixed(2);
     console.log(document.getElementById("total_price"+id).innerHTML);
 }
+// cart showing data-get
 function showing_Cart_FrontEnd(){
     let token=localStorage.getItem('token');
     if(!token)
@@ -128,6 +130,7 @@ function showing_Cart_FrontEnd(){
     }
 
 }
+//change amount function
 function changeAmount_Cart(productID,value,price_per){
     let token=localStorage.getItem('token');
     if(!token)
@@ -167,6 +170,7 @@ function changeAmount_Cart(productID,value,price_per){
 
     }   
 }
+// delete product function
 function deleteProduct(productID){
     let token=localStorage.getItem('token');
     console.log(productID.split("-")[1]);
@@ -188,6 +192,7 @@ function deleteProduct(productID){
     );
 
 }
+// transaction function
 function transaction_FrontEnd(){
             let token=localStorage.getItem('token');
             if(!token)
@@ -204,6 +209,7 @@ function transaction_FrontEnd(){
                 .then(function(response){
                     sessionStorage.setItem("function","getHomeStateItems(");
                     //showing_Cart_FrontEnd();
+                    alert("pay successfully");
                     backToMainpage();
 
             
@@ -219,6 +225,7 @@ function transaction_FrontEnd(){
 
 
 }
+// change the bottom total price function
 function change_SUM_Number_Price(){
     let token=localStorage.getItem('token');
     if(!token)
@@ -249,6 +256,7 @@ function change_SUM_Number_Price(){
         });
     }
 }
+// empty cart showing
 function emptyCart(){
     var showing_Area=document.getElementById("productsInCart");
     showing_Area.innerHTML="";

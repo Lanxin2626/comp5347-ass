@@ -1,3 +1,4 @@
+// Main page content
 function init_MainPage(){
     var functionName=sessionStorage.getItem("function");
     console.log(functionName);
@@ -26,19 +27,30 @@ function init_MainPage(){
         else if(functionName.split('(')[0]=="searchFunction_FrontEnd")
         {
             $(document).ready(function(){
+                document.getElementById('searchBox').value=sessionStorage.getItem("search");
+                document.getElementById('price-slider').value=sessionStorage.getItem("range");
+                document.getElementById('navbarDropdown').innerHTML=sessionStorage.getItem("brand");
                 searchFunction_FrontEnd();
+
             });
             
         }
         else if(functionName.split('(')[0]=="catergorySelector_FontEnd")
         {
-            $(document).ready(function(){
+            $(document).ready(function(){                
+                document.getElementById('searchBox').value=sessionStorage.getItem("search");
+                //document.getElementById('navbarDropdown').innerHTML=functionName.split('(')[1];
+                document.getElementById('price-slider').value=sessionStorage.getItem("range");
                 catergorySelector_FontEnd(functionName.split('(')[1]);
+                
             });
             
         }
         else if(functionName.split('(')[0]=="rangeAction_Frontend"){
             $(document).ready(function(){
+                document.getElementById('searchBox').value=sessionStorage.getItem("search");
+                document.getElementById('navbarDropdown').innerHTML=sessionStorage.getItem("brand");
+                //document.getElementById('price-slider').value=sessionStorage.getItem("range");               
                 rangeAction_Frontend(functionName.split('(')[1]);
             });
             
@@ -53,6 +65,7 @@ function init_MainPage(){
         getHomeStateItems();
     }
 }
+//navigation bar content
 function init_NavBar(){
     //define searchFunction
     var search_button=document.getElementById("searchButton");
@@ -109,7 +122,7 @@ function whetherLogin_ButtonControl(li_functionPersonal){
     }
 
 }
-// main page button change function
+// brand menu init
 function init_CategoryMenu(brandMenu,brandSet){
     for(var i=0;i<brandSet.length;i++)
     {
@@ -156,6 +169,7 @@ function init_CategoryMenu(brandMenu,brandSet){
 }
 
 //Following is the  interface writing part
+//logout button function
 function logout_frontEnd(){
     axios.get('http://localhost:3000/api/user/logout')
     .then(function(response){
@@ -165,6 +179,7 @@ function logout_frontEnd(){
         whetherLogin_ButtonControl(li_personal);
     });
 }
+// single category function
 function getCategoryMenu(brandMenu){
 
     //get all brands

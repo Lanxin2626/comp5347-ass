@@ -1,5 +1,8 @@
 // showing search state the html layout
 function searchState(searchResult){
+    document.getElementById("dropDownFunction").hidden=false;
+    document.getElementById("price-slider-area").hidden=false;
+    document.getElementById("priceRangeGet").innerHTML=sessionStorage.getItem("range");
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');
@@ -79,6 +82,7 @@ function searchState(searchResult){
 // search function area
 function searchFunction_FrontEnd(){
     sessionStorage.setItem("function","searchFunction_FrontEnd(");
+    
     var searchBox=document.getElementById("searchBox");
     if(searchBox.value=="")
     {
@@ -88,6 +92,7 @@ function searchFunction_FrontEnd(){
     }
     else
     {
+        sessionStorage.setItem("search",searchBox.value);
         var brand="";
         document.getElementById("dropDownFunction").hidden=false;
         document.getElementById("price-slider-area").hidden=false;
@@ -98,7 +103,7 @@ function searchFunction_FrontEnd(){
         else
         {
             brand=document.getElementById('navbarDropdown').innerHTML;
-        }
+        }      
         const data={
             title: searchBox.value,
             brand:brand,
@@ -116,8 +121,9 @@ function searchFunction_FrontEnd(){
 
 
 }
+//catergory selector area
 function catergorySelector_FontEnd(brandName){
-    sessionStorage.setItem("function","catergorySelector_FontEnd("+brandName);
+    sessionStorage.setItem("function","catergorySelector_FontEnd("+brandName); 
     const data={
         title: document.getElementById('searchBox').value,
         price: document.getElementById('price-slider').value,
@@ -130,18 +136,22 @@ function catergorySelector_FontEnd(brandName){
         document.getElementById('navbarDropdown').innerHTML=brandName;
         if(brandName=='brand-selector')
         {
+            //sessionStorage.setItem("category","brand");
             getHomeStateItems();
         }
         else{
+            sessionStorage.setItem("category",brandName);
             searchState(response.data.success);
         }
         
 
     });
 }
-// front end send data to backend
+// price range area
 function rangeAction_Frontend(priceRange){
     sessionStorage.setItem("function","rangeAction_Frontend("+priceRange);
+    sessionStorage.setItem("range",parseInt(priceRange));
+    //console.log(sessionStorage.getItem("range"));
     const data={
         price:priceRange,
         title: document.getElementById('searchBox').value,
