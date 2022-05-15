@@ -2,7 +2,7 @@
 function searchState(searchResult){
     document.getElementById("dropDownFunction").hidden=false;
     document.getElementById("price-slider-area").hidden=false;
-    document.getElementById("priceRangeGet").innerHTML=sessionStorage.getItem("range");
+    document.getElementById("priceRangeGet").innerHTML=sessionStorage.getItem("range")+"$";
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');
@@ -123,12 +123,11 @@ function searchFunction_FrontEnd(){
 }
 //catergory selector area
 function catergorySelector_FontEnd(brandName){
-    sessionStorage.setItem("function","catergorySelector_FontEnd("+brandName); 
+    sessionStorage.setItem("function","catergorySelector_FontEnd("+brandName);
     const data={
         title: document.getElementById('searchBox').value,
         price: document.getElementById('price-slider').value,
         brand: brandName};
-    console.log(brandName);
     // go to the search fliter end method
     axios.get('http://localhost:3000/api/phone/searchPhoneList',{
         params:data
@@ -151,16 +150,23 @@ function catergorySelector_FontEnd(brandName){
 function rangeAction_Frontend(priceRange){
     sessionStorage.setItem("function","rangeAction_Frontend("+priceRange);
     sessionStorage.setItem("range",parseInt(priceRange));
-    //console.log(sessionStorage.getItem("range"));
+    var brandName="";
+    if(document.getElementById('navbarDropdown').innerHTML=="brand-selector")
+    {
+        brandName="All";
+    }
+    else
+    {
+        brandName=document.getElementById('navbarDropdown').innerHTML;
+    }
     const data={
         price:priceRange,
         title: document.getElementById('searchBox').value,
-        brand: document.getElementById('navbarDropdown').innerHTML
+        brand:brandName
     }
     axios.get('http://localhost:3000/api/phone/searchPhoneList',{
         params:data
     }).then(function(response){
-        //console.log(response.data.success);
         searchState(response.data.success);
     })
 }

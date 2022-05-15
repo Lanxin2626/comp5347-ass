@@ -113,7 +113,17 @@ function whetherLogin_ButtonControl(li_functionPersonal){
         button_logout.setAttribute("class","btn btn-outline-light");
         button_logout.innerHTML="Logout";
         button_logout.onclick=function(){
-            logout_frontEnd();
+            var ensure=confirm("Are you sure you want to log out of your account ?");
+            if(ensure==true)
+            {
+                logout_frontEnd();
+                alert("log out successfully");
+                location.href="MainPage.html";
+            }
+            else
+            {
+
+            }            
         }
         button_profile.innerHTML="Profile";
         button_profile.setAttribute('onclick',"location.href='UserPage.html'");
@@ -194,7 +204,6 @@ function getCategoryMenu(brandMenu){
 function getRange_Price(){
     var slider=document.getElementById("price-slider");  
     var price=document.getElementById("priceRangeGet");
-    console.log(slider.value);
     price.innerHTML=slider.value+"$";  
 }
 
