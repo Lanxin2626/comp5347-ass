@@ -301,11 +301,24 @@ class cart {
         }
     }
 
-    async test_query_cart(req, res) {
+    async get_total(req, res) {
         try {
-            //query user based on email
-            let email = req.body.email
-            let user = await userModel.findOne({email:email});
+            // verify
+            if(cart.verify(req) === 'none') {
+                return res.status(400).json({
+                    code: 400,
+                    message: "A token is required for authentication!"
+                });
+            } else if (cart.verify(req) === 'invalid') {
+                return res.status(401).json({
+                    code: 401,
+                    message:"Invalid Token!"
+                });
+            }
+
+            //query user based on id
+            let user_id = cart.verify(req, res)["id"]
+            let user = await userModel.findById(user_id);
             if (!user) {
                 return res.status(404).json({
                     code: 404,
@@ -313,15 +326,18 @@ class cart {
                 })
             }
             try {
-                let items = await cartModel.find(
-                    {user_id:user["_id"].toString()},
-                    {_id:0,__v:0,user_id:0}
-                ).populate("phone_id", "title brand image price");
+                let items = await cartModel.find({user_id:user["_id"].toString()})
+
+                let total = 0;
+                for(let item in items) {
+                    total += items[item].number;
+                }
+
                 if (items.length > 0) {
                     return res.status(200).json({
                         code: 200,
                         message:"Query success!",
-                        data: {items}
+                        data: total
                     })
                 } else {
                     return res.status(404).json({
@@ -337,10 +353,11 @@ class cart {
                 })
             }
         } catch (err) {
-            console.log("Error in query_cart!", err);
+            console.log("Error in get_total!", err);
         }
     }
 
+    //delete and item in the shopping cart
     async delete_item(req, res) {
         try {
             // verify
@@ -403,6 +420,7 @@ class cart {
         }
     }
 
+    //confirm transaction
     async confirm_transaction(req, res) {
         try {
             // verify

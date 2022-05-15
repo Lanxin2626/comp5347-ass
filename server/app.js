@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 // import router
-const indexRouter = require('./routes/index');
 const userRouter = require('./routes/auth');
 const phoneRouter = require('./routes/phonelist');
 const userActionRouter = require('./routes/user_operation');
