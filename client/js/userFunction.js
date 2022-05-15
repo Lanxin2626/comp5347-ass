@@ -158,8 +158,8 @@ $(document).ready(function () {
         data = {
             "brand": brand.value,
             "image": imageUrl.value,
-            "price": parseFloat(price.value),
-            "stock": parseInt(stock.value),
+            "price": price.value,
+            "stock": stock.value,
             "title": title.value,
             "disabled": disabled.value
         }
@@ -215,7 +215,7 @@ $(document).ready(function () {
     function createTableRow(listing) {
         let row = document.createElement('tr')
         let brand = document.createElement('td')
-        let image = document.createElement('td')
+        let imageCell = document.createElement('td')
         let price = document.createElement('td')
         let stock = document.createElement('td')
         let title = document.createElement('td')
@@ -225,10 +225,17 @@ $(document).ready(function () {
         
 
         brand.innerText = listing['brand']
-        image.innerText = listing['image']
+        //image.innerText = listing['image']
         price.innerText = listing['price']
         stock.innerText = listing['stock']
         title.innerText = listing['title']
+
+        let image = document.createElement('img')
+        image.src = listing['image']
+        image.width = 100
+        image.height = 100
+        image.alt = "image here"
+        imageCell.appendChild(image)
 
 
         let disableButton = document.createElement('Button')
@@ -297,16 +304,13 @@ $(document).ready(function () {
                 $('#tableError').text(message)
             })
         }
+ 
 
-
-        
-
-
-        row.appendChild(brand)
-        row.appendChild(image)
-        row.appendChild(price)
-        row.appendChild(stock)
         row.appendChild(title)
+        row.appendChild(brand)
+        row.appendChild(imageCell)
+        row.appendChild(stock)
+        row.appendChild(price)
         row.appendChild(disabledButtonCell)
         row.appendChild(deleteButtonCell)
         return row
@@ -321,11 +325,15 @@ $(document).ready(function () {
         }).then(function (response) {
             // all comments of phone listing
             let data = response.data['data']['Comments']
+            console.log("data is ", data)
             // use createTable function to create multiple tables
             let divPart = document.getElementById('viewCommentContainer')
             divPart.innerHTML = ""
             for(let i=0;i<data.length;i++) {
                 let tempData = data[i]
+                if (tempData["reviews"].length == 0) {
+                    continue
+                }
                 let tempTable = createTable(tempData['title'], tempData['brand'], tempData['reviews'])
                 divPart.appendChild(tempTable)
             }

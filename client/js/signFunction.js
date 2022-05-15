@@ -46,6 +46,12 @@ $(document).ready(function () {
         var pwdInput = $("#pwdInput");
         var cpwdInput = $("#cpwdInput");
 
+        firstnameInput.text("")
+        lastnameInput.text("")
+        emailInput.text("")
+        pwdInput.text("")
+        cpwdInput.text("")
+
         // Input field has empty value
         if (!firstname || !lastname || !email || !pwd || !cpwd) {
             if (!firstname) {
@@ -144,7 +150,7 @@ $(document).ready(function () {
             .then(function (response) {
                 let data = response.data;
                 if (data['success']) {
-                    alert('Verification email sent successfully');
+                    alert(data['success']);
                 } else {
                     alert(data['error']['email'])
                 }
@@ -206,7 +212,12 @@ $(document).ready(function () {
 
         axios.post('http://localhost:3000/api/user/resetPwd', data)
             .then(function (response) {
-                alert('Reset password email sent successfully');
+                let data = response.data;
+                if (data['success']) {
+                    alert(data['success']);
+                } else {
+                    alert(data['error']['email'])
+                }
             })
             .catch(function (error) {
                 let data = error.response.data;
@@ -250,4 +261,3 @@ $(document).ready(function () {
 
     })
 });
-
