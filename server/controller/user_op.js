@@ -400,29 +400,41 @@ class user_op {
             } else {
 
                 if (disabled.toString().toLowerCase() === 'false') {
-                    disabled = null;
+                    await phone.updateOne({
+                        $unset: { disabled: "" }
+                    }).exec((err, result) => {
+                        if (err) {
+                            console.log("Update error: ", err);
+                            return res.status(500).json({
+                                code: 500,
+                                message:"Server error!"
+                            })
+                        } else if (result.modifiedCount === 1) {
+                            return res.status(200).json({
+                                code: 200,
+                                message:"Successfully update!"
+                            })
+                        }
+                    })
                 } else {
                     disabled = disabled.toString().toLowerCase();
+                    await phone.updateOne({
+                        disabled:disabled
+                    }).exec((err, result) => {
+                        if (err) {
+                            console.log("Update error: ", err);
+                            return res.status(500).json({
+                                code: 500,
+                                message:"Server error!"
+                            })
+                        } else if (result.modifiedCount === 1) {
+                            return res.status(200).json({
+                                code: 200,
+                                message:"Successfully update!"
+                            })
+                        }
+                    })
                 }
-
-                console.log("disabled:", disabled)
-
-                await phone.updateOne({
-                    disabled: disabled
-                }).exec((err, result) => {
-                    if (err) {
-                        console.log("Update error: ", err);
-                        return res.status(500).json({
-                            code: 500,
-                            message:"Server error!"
-                        })
-                    } else if (result.modifiedCount === 1) {
-                        return res.status(200).json({
-                            code: 200,
-                            message:"Successfully update!"
-                        })
-                    }
-                })
             }
         } catch (err) {
             console.log("Error in listing_operation!", err);
