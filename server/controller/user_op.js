@@ -233,6 +233,13 @@ class user_op {
                 {seller:user_id},
                 {title: 1, brand: 1, image: 1, price: 1, stock: 1, disabled: 1}
                 )
+
+            for (let list in listings) {
+                if (listings[list].disabled === "" || listings[list].disabled === null || listings[list].disabled === undefined) {
+                    listings[list].disabled = 'false'
+                }
+            }
+
             if (listings.length > 0) {
                 return res.status(200).json({
                     code: 200,
@@ -384,15 +391,24 @@ class user_op {
                 });
             }
             //query phone based on phone_id and seller
-            let phone = phoneModel.findOne({id:phoneId,seller:user_id});
+            let phone = phoneModel.findOne({_id:phoneId,seller:user_id});
             if (!phone) {
                 return res.status(404).json({
                     code: 404,
                     message:"No such phone!"
                 })
             } else {
-                phone.updateOne({
-                    disabled: disabled.toString().toLowerCase()
+
+                if (disabled.toString().toLowerCase() === 'false') {
+                    disabled = null;
+                } else {
+                    disabled = disabled.toString().toLowerCase();
+                }
+
+                console.log("disabled:", disabled)
+
+                await phone.updateOne({
+                    disabled: disabled
                 }).exec((err, result) => {
                     if (err) {
                         console.log("Update error: ", err);

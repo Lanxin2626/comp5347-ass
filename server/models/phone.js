@@ -37,7 +37,7 @@ const phoneSchema = new mongoose.Schema(
         ],
         disabled: {
             type: String,
-            maxlength: 100
+            maxlength: 100,
         },
     },
     { timestamps: true }

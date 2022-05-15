@@ -34,7 +34,6 @@ app.use(bodyParser.json());
 
 
 // user routes
-app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/userop', userActionRouter);
 app.use('/api/cart', cartRouter)
