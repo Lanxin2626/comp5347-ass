@@ -148,32 +148,33 @@ $(document).ready(function () {
     })
 
     $("#addListingSubmit").on("click", function () {
+
         var brand = document.getElementById('addBrand');
-        var imageUrl = document.getElementById('addImageUrl');
+        var file = document.getElementById('addImage').files
         var price = document.getElementById('addPrice');
         var stock = document.getElementById('addStock');
         var title = document.getElementById('addTitle');
         var disabled = document.getElementById('addDisabled');
 
-        data = {
-            "brand": brand.value,
-            "image": imageUrl.value,
-            "price": price.value,
-            "stock": stock.value,
-            "title": title.value,
-            "disabled": disabled.value
-        }
+        //create new form data
+        let forms = new FormData()
+        forms.append('brand', brand.value)
+        forms.append('image', file[0])
+        forms.append('price', parseFloat(price.value))
+        forms.append('stock', parseInt(stock.value))
+        forms.append('title', title.value)
+        forms.append('disabled',disabled.value)
 
-        axios.post('http://localhost:3000/api/userop/add_listing', data, {
+        axios.post('http://localhost:3000/api/userop/add_listing',forms, {
             headers: {
-                'Authorization': localStorage.getItem('token')
+                'Authorization': localStorage.getItem('token'),
+                'content-type': 'multipart/form-data'
             }
         }).then(function (response) {
             let message = response.data['message'];
             alert(message)
 
             brand.value = ""
-            imageUrl.value = ""
             price.value = ""
             stock.value = ""
             title.value = ""
