@@ -80,8 +80,7 @@ function init_NavBar(){
     getCategoryMenu(brand_menu);
     document.getElementById("dropDownFunction").hidden=true;
     document.getElementById("price-slider-area").hidden=true;
-
-
+    document.getElementById("ul-cartshowing").hidden=true;
     //define li_personal button
     var li_personal=document.getElementById("function-personal-button");
     whetherLogin_ButtonControl(li_personal);
@@ -95,6 +94,7 @@ function whetherLogin_ButtonControl(li_functionPersonal){
     li_functionPersonal.appendChild(button_checkout);
     button_checkout.innerHTML="Checkout";
     button_checkout.setAttribute('onclick',"location.href='CheckoutPage.html'");
+
     if(!token)
     {       
         var button_login=document.createElement('button');
@@ -118,6 +118,9 @@ function whetherLogin_ButtonControl(li_functionPersonal){
             {
                 logout_frontEnd();
                 alert("log out successfully");
+                sessionStorage.clear();
+                //init_NavBar();
+                //getHomeStateItems();
                 location.href="MainPage.html";
             }
             else

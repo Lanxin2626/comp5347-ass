@@ -297,13 +297,16 @@ $(document).ready(function () {
                 $('#tableError').text(message)
             })
         }
- 
 
-        row.appendChild(title)
+
+        
+
+
         row.appendChild(brand)
         row.appendChild(image)
-        row.appendChild(stock)
         row.appendChild(price)
+        row.appendChild(stock)
+        row.appendChild(title)
         row.appendChild(disabledButtonCell)
         row.appendChild(deleteButtonCell)
         return row
@@ -318,15 +321,11 @@ $(document).ready(function () {
         }).then(function (response) {
             // all comments of phone listing
             let data = response.data['data']['Comments']
-            console.log("data is ", data)
             // use createTable function to create multiple tables
             let divPart = document.getElementById('viewCommentContainer')
             divPart.innerHTML = ""
             for(let i=0;i<data.length;i++) {
                 let tempData = data[i]
-                if (tempData["reviews"].length == 0) {
-                    continue
-                }
                 let tempTable = createTable(tempData['title'], tempData['brand'], tempData['reviews'])
                 divPart.appendChild(tempTable)
             }

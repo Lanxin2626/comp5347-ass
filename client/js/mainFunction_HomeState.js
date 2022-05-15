@@ -52,7 +52,7 @@ function homeState_init(array_phone,setName,viewLevel2){
             rating_showingFunction(cardTitle,array_phone[i].avgRating.toFixed(1));
             var cardDescription=document.createElement('p');
             cardDescription.setAttribute("class","card-text");
-            cardDescription.innerHTML="Brand: "+array_phone[i].brand;
+            cardDescription.innerHTML=array_phone[i].title;
             var cardBtn=document.createElement('button');
             cardBtn.setAttribute("class","btn btn-success");
             cardBtn.setAttribute("value","phone");
@@ -109,7 +109,7 @@ function homeState_init(array_phone,setName,viewLevel2){
             cardTitle.innerHTML="Price: $"+array_phone[i].price;
             var cardDescription=document.createElement('p');
             cardDescription.setAttribute("class","card-text");
-            cardDescription.innerHTML="Brand: "+array_phone[i].brand;
+            cardDescription.innerHTML=array_phone[i].title;
             var cardBtn=document.createElement('button');
             cardBtn.setAttribute("class","btn btn-success");
             cardBtn.setAttribute("value","phone");
@@ -133,6 +133,7 @@ function homeState(bestSeller,soldOut){
     sessionStorage.setItem("function","getHomeStateItems(");
     document.getElementById("dropDownFunction").hidden=true;
     document.getElementById("price-slider-area").hidden=true;
+    document.getElementById("ul-cartshowing").hidden=true;
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');

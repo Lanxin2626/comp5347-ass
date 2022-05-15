@@ -3,6 +3,7 @@ function productDetail_State(item){
     sessionStorage.setItem("function","showPhoneDetail_FrontEnd("+item[0]._id);
     document.getElementById("dropDownFunction").hidden=true;
     document.getElementById("price-slider-area").hidden=true;
+    document.getElementById("ul-cartshowing").hidden=false;
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var section=document.createElement('section');
@@ -323,6 +324,7 @@ function showPhoneDetail_FrontEnd(productID){
         //console.log(response);
         //function about showing product in this price range
         productDetail_State(response.data.success);
+        getCartSum_FrontEnd();
         
     });    
 }
@@ -432,6 +434,7 @@ function addToCart(id,stock){
                    // postComment_ShowingfrontEnd(section,id);
                    alert("sucessful adding");
                    document.getElementById("itemInCart").value=(parseInt(pAmount)+existed_number);
+                   getCartSum_FrontEnd();
                     
                 }) 
                 }
@@ -500,4 +503,27 @@ function rating_showingFunction(part,rating){
             part.appendChild(star);     
         }
     }
+}
+// box showing part
+function getCartSum_FrontEnd(){
+    let token=localStorage.getItem('token');
+    if(!token)
+    {
+
+    }
+    else
+    {
+        axios.get('http://localhost:3000/api/cart/total',{
+            headers:{
+            Authorization: token
+        }
+        }).then(function(response){
+            console.log(response);
+            getCartSum_Showing(response.data.data);
+        })
+    }
+}
+function getCartSum_Showing(amount){
+    document.getElementById("showcart-amount").innerHTML="("+amount+")";
+
 }

@@ -2,7 +2,15 @@
 function searchState(searchResult){
     document.getElementById("dropDownFunction").hidden=false;
     document.getElementById("price-slider-area").hidden=false;
-    document.getElementById("priceRangeGet").innerHTML=sessionStorage.getItem("range")+"$";
+    document.getElementById("ul-cartshowing").hidden=true;
+    if(sessionStorage.getItem("range")==null)
+    {
+        document.getElementById("priceRangeGet").innerHTML=100+"$";
+    }
+    else
+    {
+        document.getElementById("priceRangeGet").innerHTML=sessionStorage.getItem("range")+"$";
+    }   
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');
@@ -56,11 +64,11 @@ function searchState(searchResult){
             //seventh level
             var cardTitle=document.createElement('h3');
             cardTitle.setAttribute("class","card-title");
-            cardTitle.innerHTML="Brand: "+searchResult[set].brand;
+            cardTitle.innerHTML="Price: "+searchResult[set].price+" $";
             //console.log(searchResult[set].brand+set)
             var cardDescription=document.createElement('p');
             cardDescription.setAttribute("class","card-text");
-            cardDescription.innerHTML="Price: "+searchResult[set].price+" $";
+            cardDescription.innerHTML=searchResult[set].title;
             var cardBtn=document.createElement('button');
             cardBtn.setAttribute("class","btn btn-success");
             cardBtn.setAttribute("value","phone");
