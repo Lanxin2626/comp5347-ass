@@ -31,7 +31,7 @@ cd server && npm install
 cd server && node app.js
 ```
 
-* Find **views** folder under **client** folder and right click on SignPage.html or MainPage.html and **Open with Live Server (Reminder: The port used in front end is 5501)**
+* Find **views** folder under **client** folder and right click on SignPage.html or MainPage.html and **Open with Live Server (Reminder: The port used in front end should be 5501)**
 
 ## Contributing
 
