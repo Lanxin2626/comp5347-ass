@@ -460,12 +460,15 @@ class cart {
                         })
                     }
 
+                    /*
                     //check stock and update status
                     let result = await phoneModel.updateMany(
                         {stock:0},
                         {disabled:"true"}
                     )
                     console.log(result.modifiedCount + " phone in stock is disabled");
+
+                     */
 
                     return res.status(200).json({
                         code: 200,
