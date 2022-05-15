@@ -233,7 +233,7 @@ $(document).ready(function () {
         let image = document.createElement('img')
         image.src = listing['image']
         image.width = 100
-        image.height = 100
+        image.height = 150
         image.alt = "image here"
         imageCell.appendChild(image)
 
