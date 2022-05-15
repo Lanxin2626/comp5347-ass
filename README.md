@@ -39,5 +39,6 @@ cd server && node app.js
 * **Ruoyao Tan** - front end deisgn of Signin/Signup page and User page
 * **Xufeng Zheng** - back end implementation of Main page and Signin/Signup page 
 * **Ning Yang** - back end implementation of Checkout page and User page
+(add the item to cart backend logic and file-upload frontend+backend logic)
 
 See also the list of [contributors](https://github.sydney.edu.au/COMP5347-2022/WebDev-11/graphs/contributors) who participated in this project.

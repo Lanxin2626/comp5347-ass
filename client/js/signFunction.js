@@ -189,7 +189,8 @@ $(document).ready(function () {
                 if (response.data['success']) {
                     var token = response.data['token'];
                     localStorage.setItem('token', token);
-                    window.location.href = "MainPage.html";
+        			showMain_history();
+                    //window.location.href = "MainPage.html";
                 } else {
                     pwdInput.text('Please check your account and password');
                 }

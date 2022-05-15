@@ -375,7 +375,9 @@ function comment_FrontEnd(comment,section,id,rating){
     let token=localStorage.getItem('token');
     if(!token)
     {
+        record_UserHistory();
         alert("Please login first for your commenting");
+        location.href="SignPage.html";
     }
     else
     {
@@ -399,7 +401,6 @@ function comment_FrontEnd(comment,section,id,rating){
 }
 // add it to the cart
 function addToCart(id,stock){
-    console.log(id);
     var pAmount = prompt("Please input the amount of this book you want to have :");
     var regulation_number = /^[1-9]+.?[0-9]*/;
     let token=localStorage.getItem('token');
@@ -411,6 +412,7 @@ function addToCart(id,stock){
         else {
             if(!token)
             {
+                record_UserHistory();
                 alert('please login first for adding it to your cart');
                 //跳转到login 界面
                 location.href='SignPage.html';

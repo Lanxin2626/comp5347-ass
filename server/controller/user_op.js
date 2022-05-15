@@ -1,7 +1,9 @@
 const userModel = require("../models/users");
 const phoneModel = require("../models/phone")
 const jwt = require("jsonwebtoken");
+const multer  = require('multer')
 const md5 = require("js-md5");
+const {token} = require("morgan");
 const jwtKey = "my_secret_key";
 
 class user_op {
@@ -257,8 +259,8 @@ class user_op {
         }
     }
 
-    //add a phone listing
-    async add_listing(req, res) {
+    //add a phone listing and upload a file
+    async add_listing_with_file(req, res) {
         try {
             // verify
             if(user_op.verify(req) === 'none') {
@@ -283,8 +285,9 @@ class user_op {
                     message:"No such user!"
                 });
             }
-            let {brand, image, price, stock, title, disabled} = req.body;
-            if (!brand || !image || !price || !stock || !title || !disabled ) {
+
+            let {brand, price, stock, title, disabled} = req.body;
+            if (!brand || !price || !stock || !title || !disabled ) {
                 return res.status(400).json({
                     code: 400,
                     message: "All filled must be required"
@@ -317,22 +320,43 @@ class user_op {
                 }
                 //perform request
                 try {
-                    let newListing = new phoneModel({
-                        title,
-                        brand,
-                        image,
-                        stock,
-                        seller:user_id,
-                        price,
-                        reviews: [],
-                        disabled:disabled.toString().toLowerCase()
-                    })
-                    let save = await newListing.save();
-                    if (save) {
-                        return res.status(200).json({
-                            code: 200,
-                            message:"Phone listing created successfully!"
-                        });
+                    let pre_path = "../../"
+                    let image = pre_path + req.file.path;
+                    if (disabled.toString().toLowerCase() === 'true') {
+                        let newListing = new phoneModel({
+                            title,
+                            image,
+                            brand,
+                            stock,
+                            seller:user_id,
+                            price,
+                            reviews: [],
+                            disabled:disabled.toString().toLowerCase()
+                        })
+                        let save = await newListing.save();
+                        if (save) {
+                            return res.status(200).json({
+                                code: 200,
+                                message:"Phone listing created successfully!"
+                            });
+                        }
+                    } else if (disabled.toString().toLowerCase() === 'false') {
+                        let newListing = new phoneModel({
+                            title,
+                            image,
+                            brand,
+                            stock,
+                            seller:user_id,
+                            price,
+                            reviews: []
+                        })
+                        let save = await newListing.save();
+                        if (save) {
+                            return res.status(200).json({
+                                code: 200,
+                                message:"Phone listing created successfully!"
+                            });
+                        }
                     }
                 } catch (err) {
                     console.log("Save error: ", err);
@@ -345,8 +369,9 @@ class user_op {
         } catch (err) {
             console.log("Error in add_listing!", err);
         }
-
     }
+
+
 
     //enable/disable a phone listing
     async listing_operation(req, res) {

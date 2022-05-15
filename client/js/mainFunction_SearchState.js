@@ -5,7 +5,7 @@ function searchState(searchResult){
     document.getElementById("ul-cartshowing").hidden=true;
     if(sessionStorage.getItem("range")==null)
     {
-        document.getElementById("priceRangeGet").innerHTML=100+"$";
+        document.getElementById("priceRangeGet").innerHTML=document.getElementById("price-slider")+"$";
     }
     else
     {

@@ -2,6 +2,7 @@
 function init_MainPage(){
     var functionName=sessionStorage.getItem("function");
     console.log(functionName);
+    console.log(localStorage.getItem("function"));
     if(functionName!=null)  
     {
         if(functionName.split('(')[0]=='showPhoneDetail_FrontEnd')
@@ -93,14 +94,30 @@ function whetherLogin_ButtonControl(li_functionPersonal){
     button_checkout.setAttribute("class","btn btn-outline-light");
     li_functionPersonal.appendChild(button_checkout);
     button_checkout.innerHTML="Checkout";
-    button_checkout.setAttribute('onclick',"location.href='CheckoutPage.html'");
+    button_checkout.onclick=function(){
+        record_UserHistory();
+        if(!token)
+        {
+            alert("please login firstly");
+            location.href="SignPage.html";
+        }
+        else
+        {
+            location.href='CheckoutPage.html';
+        }        
+    }
+    //button_checkout.setAttribute('onclick',"location.href='CheckoutPage.html'");
 
     if(!token)
     {       
         var button_login=document.createElement('button');
         button_login.setAttribute("class","btn btn-outline-light");
         button_login.innerHTML="Login";
-        button_login.setAttribute('onclick',"location.href='SignPage.html'");
+        button_login.onclick=function(){
+            record_UserHistory();
+            location.href='SignPage.html';
+        }
+        //button_login.setAttribute('onclick',"location.href='SignPage.html'");
         li_functionPersonal.appendChild(button_login);
         //button_login.onclick=window.location.reload("SignPage.html");
         
@@ -116,6 +133,7 @@ function whetherLogin_ButtonControl(li_functionPersonal){
             var ensure=confirm("Are you sure you want to log out of your account ?");
             if(ensure==true)
             {
+                record_UserHistory();
                 logout_frontEnd();
                 alert("log out successfully");
                 sessionStorage.clear();
@@ -209,5 +227,68 @@ function getRange_Price(){
     var price=document.getElementById("priceRangeGet");
     price.innerHTML=slider.value+"$";  
 }
+function showMain_history(){
+    var functionName=localStorage.getItem("function");
+    console.log("I come here");
+    if(functionName!=null)  
+    {
+        if(functionName.split('(')[0]=='showPhoneDetail_FrontEnd')
+        {        
 
-
+            sessionStorage.setItem("function",functionName);
+        }
+        else if(functionName=="")
+        {
+            sessionStorage.setItem("function","getHomeStateItems(");
+            
+        }
+        else if(functionName.split('(')[0]=="getHomeStateItems")
+        {
+            sessionStorage.setItem("function",functionName);
+        }
+        else if(functionName.split('(')[0]=="searchFunction_FrontEnd")
+        {
+            sessionStorage.setItem("search",localStorage.getItem("search"));
+            sessionStorage.setItem("range",localStorage.setItem("range"));
+            sessionStorage.setItem("brand",localStorage.getItem("brand"));
+            
+        }
+        else if(functionName.split('(')[0]=="catergorySelector_FontEnd")
+        {             
+            sessionStorage.setItem("search",localStorage.getItem("search"));
+            sessionStorage.setItem("range",localStorage.setItem("range"));  
+            sessionStorage.setItem("function",functionName);
+            
+        }
+        else if(functionName.split('(')[0]=="rangeAction_Frontend"){
+                sessionStorage.setItem("search",localStorage.getItem("search"));
+                sessionStorage.setItem("brand",localStorage.getItem("brand"));               
+                sessionStorage.setItem("function",functionName);
+            
+        }
+        else
+        {
+            
+        }
+    } 
+    else
+    {
+        sessionStorage.setItem("function","getHomeStateItems(");
+    }
+    window.location.href = "MainPage.html";
+}
+function record_UserHistory(){
+    localStorage.setItem('function',sessionStorage.getItem('function'));
+    if(sessionStorage.getItem('search')!=null)
+    {
+        localStorage.setItem('search',sessionStorage.getItem('search'));
+    }
+    if(sessionStorage.getItem('brand')!=null)
+    {
+        localStorage.setItem('brand',sessionStorage.getItem('brand'));
+    }
+    if(sessionStorage.getItem('range')!=null)
+    {
+        localStorage.setItem('range',sessionStorage.getItem('range'));
+    }   
+}
