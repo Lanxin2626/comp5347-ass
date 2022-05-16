@@ -25,6 +25,8 @@ cd server && npm install
 
 ### Running the app
 
+* Import two json file (userlist and phonelist) by using MongoDBCompass
+
 * Opening back end server first
 
 ```
