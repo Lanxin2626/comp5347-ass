@@ -90,7 +90,6 @@ function searchState(searchResult){
 // search function area
 function searchFunction_FrontEnd(){
     sessionStorage.setItem("function","searchFunction_FrontEnd(");
-    
     var searchBox=document.getElementById("searchBox");
     if(searchBox.value=="")
     {
@@ -100,7 +99,10 @@ function searchFunction_FrontEnd(){
     }
     else
     {
-        sessionStorage.setItem("search",searchBox.value);
+        var title_deal="";
+        title_deal=title_deal_function(searchBox.value);
+        console.log(title_deal);
+        sessionStorage.setItem("search",title_deal);
         var brand="";
         document.getElementById("dropDownFunction").hidden=false;
         document.getElementById("price-slider-area").hidden=false;
@@ -113,7 +115,7 @@ function searchFunction_FrontEnd(){
             brand=document.getElementById('navbarDropdown').innerHTML;
         }      
         const data={
-            title: searchBox.value,
+            title: title_deal,
             brand:brand,
             price: document.getElementById('price-slider').value
         };
@@ -133,7 +135,7 @@ function searchFunction_FrontEnd(){
 function catergorySelector_FontEnd(brandName){
     sessionStorage.setItem("function","catergorySelector_FontEnd("+brandName);
     const data={
-        title: document.getElementById('searchBox').value,
+        title: title_deal_function(document.getElementById('searchBox').value),
         price: document.getElementById('price-slider').value,
         brand: brandName};
     // go to the search fliter end method
@@ -169,7 +171,7 @@ function rangeAction_Frontend(priceRange){
     }
     const data={
         price:priceRange,
-        title: document.getElementById('searchBox').value,
+        title: title_deal_function(document.getElementById('searchBox').value),
         brand:brandName
     }
     axios.get('http://localhost:3000/api/phone/searchPhoneList',{
@@ -177,4 +179,12 @@ function rangeAction_Frontend(priceRange){
     }).then(function(response){
         searchState(response.data.success);
     })
+}
+// tool title deal
+function title_deal_function(title){
+    if(title.includes("+"))
+    {
+        title.replaceAll("+","%2B");
+    }
+    return title;
 }
