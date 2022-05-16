@@ -169,6 +169,9 @@ $(document).ready(function () {
         var emailInput = $("#emailInput1");
         var pwdInput = $("#pwdInput1");
 
+        emailInput.text("")
+        pwdInput.text("")
+
         if (!email || !pwd) {
             if (!email) {
                 emailInput.text("Field must not be empty");
@@ -191,6 +194,8 @@ $(document).ready(function () {
                     localStorage.setItem('token', token);
         			showMain_history();
                     //window.location.href = "MainPage.html";
+                    emailInput.text("")
+                    pwdInput.text("")
                 } else {
                     pwdInput.text('Please check your account and password');
                 }
