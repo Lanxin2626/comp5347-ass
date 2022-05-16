@@ -74,6 +74,7 @@ class Phonelist {
         var title = req.query.title;
         var brand = req.query.brand;
         var price = req.query.price;
+        //console.log("XXXX titile in controller"+title);
         var params = { title, brand, price };
         phoneModel.searchPhoneList(params, function (err, phonelist) {
             if (err) {
