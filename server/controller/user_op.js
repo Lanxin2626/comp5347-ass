@@ -92,9 +92,18 @@ class user_op {
                     message: "All fields must be required"
                 });
             }
+
+            if (req.body.newPassword.toString().length <= 5) {
+                return res.status(403).json({
+                    code: 403,
+                    message:"Your new password must have at least 5 characters!"
+                })
+            }
+
             //password validate
             let new_pwd = md5(req.body.newPassword.toString());
             let old_pwd = md5(req.body.oldPassword.toString());
+
             if (new_pwd === user.password) {
                 return res.status(403).json({
                     code: 403,
