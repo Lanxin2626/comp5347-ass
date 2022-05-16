@@ -241,6 +241,9 @@ $(document).ready(function () {
         let pwd1 = $('#reset_new_password').val()
         let pwd2 = $('#reset_new_password2').val() 
 
+        errorpwd1.text("")
+        errorpwd2.text("")
+
         let data =  {
             "pwd": pwd1,
             "cpwd": pwd2
@@ -250,6 +253,8 @@ $(document).ready(function () {
             let data = response.data;
                 if (data['success']) {
                     alert(data['success']);
+                    errorpwd1.text("")
+                    errorpwd2.text("")
                 } else {
                     let errorMessage = data['error']
                     if (errorMessage['pwd']) {
