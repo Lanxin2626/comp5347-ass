@@ -156,35 +156,52 @@ $(document).ready(function () {
         var title = document.getElementById('addTitle');
         var disabled = document.getElementById('addDisabled');
 
-        //create new form data
-        let forms = new FormData()
-        forms.append('brand', brand.value)
-        forms.append('image', file[0])
-        forms.append('price', parseFloat(price.value))
-        forms.append('stock', parseInt(stock.value))
-        forms.append('title', title.value)
-        forms.append('disabled',disabled.value)
+        let reg_positive_int = /^[1-9]\d*$/;
+        let reg_positive_float = /^([1-9]\d{0,6}|0)(\.\d{1,2})?$/;
+        if (title.value.length === 0) {
+            $('#addListingError').text("Title can't be empty!")
+        } else if (brand.value.length === 0) {
+            $('#addListingError').text("Brand can't be empty!")
+        } else if (file.length === 0) {
+            $('#addListingError').text("File can't be empty!")
+        } else if (!reg_positive_int.test(stock.value) || stock.value === "0") {
+            $('#addListingError').text("Stock attribute error! Should be positive integer!")
+        } else if (!reg_positive_float.test(price.value) || price.value === "0") {
+            $('#addListingError').text("Price attribute error! Should be positive float number!")
+        } else if (disabled.value.toString().toLowerCase() !== "false" && disabled.value.toString().toLowerCase() !== "true") {
+            $('#addListingError').text("Disabled attribute error!")
+        } else {
+            //create new form data
+            let forms = new FormData()
+            forms.append('brand', brand.value)
+            forms.append('image', file[0])
+            forms.append('price', parseFloat(price.value))
+            forms.append('stock', parseInt(stock.value))
+            forms.append('title', title.value)
+            forms.append('disabled',disabled.value)
 
-        axios.post('http://localhost:3000/api/userop/add_listing',forms, {
-            headers: {
-                'Authorization': localStorage.getItem('token'),
-                'content-type': 'multipart/form-data'
-            }
-        }).then(function (response) {
-            let message = response.data['message'];
-            alert(message)
-
-            brand.value = ""
-            price.value = ""
-            stock.value = ""
-            title.value = ""
-            disabled.value = ""
-            $('#addListingError').text("")
-            retrieveListings()
-        }).catch(function (error) {
-            let message = error.response.data['message']
-            $('#addListingError').text(message)
-        })
+            axios.post('http://localhost:3000/api/userop/add_listing', forms, {
+                headers: {
+                    'Authorization': localStorage.getItem('token'),
+                    'content-type': 'multipart/form-data'
+                }
+            }).then(function (response) {
+                let message = response.data['message'];
+                alert(message)
+                if (response.status === 200) {
+                    brand.value = ""
+                    price.value = ""
+                    stock.value = ""
+                    title.value = ""
+                    disabled.value = ""
+                    $('#addListingError').text("")
+                    retrieveListings()
+                }
+            }).catch(function (error) {
+                let message = error.response.data['message']
+                $('#addListingError').text(message)
+            })
+        }
     })
 
     function retrieveListings() {
@@ -332,7 +349,7 @@ $(document).ready(function () {
             divPart.innerHTML = ""
             for(let i=0;i<data.length;i++) {
                 let tempData = data[i]
-                if (tempData["reviews"].length == 0) {
+                if (tempData["reviews"].length === 0) {
                     continue
                 }
                 let tempTable = createTable(tempData['title'], tempData['brand'], tempData['reviews'])
@@ -390,9 +407,20 @@ $(document).ready(function () {
             tableBodyComment.innerHTML = review['comment']
             tableBodyRow.appendChild(tableBodyComment)
             tableBody.appendChild(tableBodyRow)
+
+            let empty = document.createElement('tr')
+            let test = document.createElement('td')
+            for (let j = 0; j < 2; j++) {
+                let blank = document.createElement('br')
+                test.appendChild(blank)
+            }
+            empty.appendChild(test)
+            tableBody.appendChild(empty)
+
         }
 
         table.appendChild(tableBody)
+        table.frame = 'border'
         return table
     }
 

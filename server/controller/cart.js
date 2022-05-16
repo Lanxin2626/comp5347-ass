@@ -162,7 +162,7 @@ class cart {
                 })
             }
             //validate number of item
-            let reg = /^\d+(\.\d+)?$/
+            let reg = /^[1-9]\d*$/
             let {phoneId, number} = req.body;
             if (!phoneId || !number) {
                 return res.status(400).json({

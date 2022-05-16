@@ -89,7 +89,7 @@ class user_op {
             if (!oldPassword || !newPassword) {
                 return res.status(400).json({
                     code: 400,
-                    message: "All filled must be required"
+                    message: "All fields must be required"
                 });
             }
             //password validate
@@ -157,7 +157,7 @@ class user_op {
             if (!firstName || !lastName || !email || !password ) {
                 return res.status(400).json({
                     code: 400,
-                    message: "All filled must be required"
+                    message: "All fields must be required"
                 });
             }
             //email regex
@@ -276,7 +276,7 @@ class user_op {
             }
             //query user id
             let user_id = user_op.verify(req, res)["id"];
-            let reg_positive_int = /^\d+(\.\d+)?$/;
+            let reg_positive_int = /^[1-9]\d*$/;
             let reg_positive_float = /^([1-9]\d{0,6}|0)(\.\d{1,2})?$/;
 
             if (!user_id) {
@@ -290,7 +290,7 @@ class user_op {
             if (!brand || !price || !stock || !title || !disabled ) {
                 return res.status(400).json({
                     code: 400,
-                    message: "All filled must be required"
+                    message: "All fields must be required"
                 });
             } else if (disabled.toString().toLowerCase() !== "false" && disabled.toString().toLowerCase() !== "true") {
                 //validate disabled attribute
@@ -304,7 +304,7 @@ class user_op {
                     code: 403,
                     message: "Stock attribute error!"
                 });
-            } else if (!reg_positive_float.test(price)) {
+            } else if (!reg_positive_float.test(price) || price === "0") {
                 //validate price
                 return res.status(403).json({
                     code: 403,
@@ -400,7 +400,7 @@ class user_op {
             if (!phoneId || !disabled ) {
                 return res.status(400).json({
                     code: 400,
-                    message: "All filled must be required"
+                    message: "All fields must be required"
                 });
             } else if (disabled.toString().toLowerCase() !== "false" && disabled.toString().toLowerCase() !== "true") {
                 //validate disabled attribute
@@ -493,7 +493,7 @@ class user_op {
             if (!phoneId) {
                 return res.status(400).json({
                     code: 400,
-                    message: "All filled must be required!"
+                    message: "All fields must be required!"
                 });
             } else if (phoneId.length > 24) {
                 //validate id
