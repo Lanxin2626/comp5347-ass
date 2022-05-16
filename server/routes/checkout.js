@@ -21,8 +21,6 @@ router.post("/del_item", cartController.delete_item)
 router.post("/checkout", cartController.confirm_transaction)
 
 
-router.get("/test", cartController.test)
-
 module.exports = router;
 
 

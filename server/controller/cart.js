@@ -478,16 +478,6 @@ class cart {
                         })
                     }
 
-                    /*
-                    //check stock and update status
-                    let result = await phoneModel.updateMany(
-                        {stock:0},
-                        {disabled:"true"}
-                    )
-                    console.log(result.modifiedCount + " phone in stock is disabled");
-
-                     */
-
                     return res.status(200).json({
                         code: 200,
                         message: "Successful transaction!"
@@ -526,18 +516,6 @@ class cart {
         } catch (err) {
             console.log("Error in confirm_transaction!", err);
         }
-    }
-
-    async test(req, res) {
-        let reg = /^\d+(\.\d+)?$/;
-        let regx = /^([1-9]\d{0,6}|0)(\.\d{1,2})?$/;
-        let flag = req.query["match"];
-        console.log("match: ", flag);
-        console.log("test: ", regx.test(flag));
-        return res.send(403,{
-            code: 403,
-            message:"Query failed!"
-        });
     }
 
 }
