@@ -259,6 +259,7 @@ $(document).ready(function () {
                 }     
                 else {
                     let errorMessage = data['error']
+                 
                     if (pwd1==""&&errorMessage['pwd']) {
                         $('#errorpwd1').text(errorMessage['pwd'])
                     }
@@ -266,10 +267,14 @@ $(document).ready(function () {
                     if (pwd2==""&&errorMessage['cpwd']) {
                         $('#errorpwd2').text(errorMessage['cpwd'])
                     }
+                    if(pwd1!=""&&errorMessage['pwd']){
+                        $('#errorpwd1').text(errorMessage['pwd'])
+                    }
 
                     if (errorMessage['fail']) {
                         $('#errorpwd2').text(errorMessage['fail'])
                     }
+
                 }    
 
         }).catch(function (error) {
