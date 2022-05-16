@@ -21,7 +21,8 @@ These instructions will get you a copy of the project up and running on your loc
 Execute these commands from the project directory
 
 ```
-cd server && npm install
+cd server
+npm install
 ```
 
 * Installing Live server extension. If you are using Visual Studio Code, you can click **Extensions** on right panel and search Live server and install.
@@ -33,7 +34,8 @@ cd server && npm install
 * Opening back end server first
 
 ```
-cd server && node app.js
+cd server
+node app.js
 ```
 
 * Find **views** folder under **client** folder and right click on SignPage.html or MainPage.html and **Open with Live Server (Reminder: The port used in front end should be 5501)**
