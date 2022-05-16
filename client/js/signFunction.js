@@ -112,6 +112,9 @@ $(document).ready(function () {
                 if (('fail' in error)) {
                     emailInput.text(error['fail']);
                 }
+                if (('password' in error)) {
+                    cpwdInput.text(error['password']);
+                }
 
                 if (response.data['success']) {
                     alert('Sign up successfully, you can login now');
@@ -221,6 +224,7 @@ $(document).ready(function () {
                 let data = response.data;
                 if (data['success']) {
                     alert(data['success']);
+
                 } else {
                     alert(data['error']['email'])
                 }
