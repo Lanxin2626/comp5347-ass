@@ -93,7 +93,7 @@ class user_op {
                 });
             }
 
-            if (req.body.newPassword.toString().length <= 5) {
+            if (req.body.newPassword.toString().length < 5) {
                 return res.status(403).json({
                     code: 403,
                     message:"Your new password must have at least 5 characters!"

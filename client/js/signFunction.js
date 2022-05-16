@@ -237,12 +237,13 @@ $(document).ready(function () {
 
     $('#sendResetPassword').on("click", function (event) {
         event.preventDefault()
-
+        console.log("xxxxx you ard click");
         let pwd1 = $('#reset_new_password').val()
         let pwd2 = $('#reset_new_password2').val() 
-
-        errorpwd1.text("")
-        errorpwd2.text("")
+        $('#errorpwd1').text("");
+        $('#errorpwd2').text("");
+        //errorpwd1.text("")
+        //errorpwd2.text("")
 
         let data =  {
             "pwd": pwd1,
@@ -255,13 +256,14 @@ $(document).ready(function () {
                     alert(data['success']);
                     errorpwd1.text("")
                     errorpwd2.text("")
-                } else {
+                }     
+                else {
                     let errorMessage = data['error']
-                    if (errorMessage['pwd']) {
+                    if (pwd1==""&&errorMessage['pwd']) {
                         $('#errorpwd1').text(errorMessage['pwd'])
                     }
                     
-                    if (errorMessage['cpwd']) {
+                    if (pwd2==""&&errorMessage['cpwd']) {
                         $('#errorpwd2').text(errorMessage['cpwd'])
                     }
 

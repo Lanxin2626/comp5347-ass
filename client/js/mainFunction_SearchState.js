@@ -3,14 +3,16 @@ function searchState(searchResult){
     document.getElementById("dropDownFunction").hidden=false;
     document.getElementById("price-slider-area").hidden=false;
     //document.getElementById("ul-cartshowing").hidden=true;
+    
     if(sessionStorage.getItem("range")==null)
     {
         document.getElementById("priceRangeGet").innerHTML=document.getElementById("price-slider").value+"$";
     }
     else
     {
-        document.getElementById("priceRangeGet").innerHTML=sessionStorage.getItem("range")+"$";
-    }   
+        document.getElementById("price-slider").value=sessionStorage.getItem("range");
+        document.getElementById("priceRangeGet").innerHTML=document.getElementById("price-slider").value+"$";
+    }
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');
