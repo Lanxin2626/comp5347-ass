@@ -81,7 +81,8 @@ function init_NavBar(){
     getCategoryMenu(brand_menu);
     document.getElementById("dropDownFunction").hidden=true;
     document.getElementById("price-slider-area").hidden=true;
-    document.getElementById("ul-cartshowing").hidden=true;
+    //document.getElementById("ul-cartshowing").hidden=true;
+    getCartSum_FrontEnd();
     //define li_personal button
     var li_personal=document.getElementById("function-personal-button");
     whetherLogin_ButtonControl(li_personal);

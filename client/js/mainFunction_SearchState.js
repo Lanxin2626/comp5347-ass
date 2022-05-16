@@ -2,7 +2,7 @@
 function searchState(searchResult){
     document.getElementById("dropDownFunction").hidden=false;
     document.getElementById("price-slider-area").hidden=false;
-    document.getElementById("ul-cartshowing").hidden=true;
+    //document.getElementById("ul-cartshowing").hidden=true;
     if(sessionStorage.getItem("range")==null)
     {
         document.getElementById("priceRangeGet").innerHTML=document.getElementById("price-slider").value+"$";
