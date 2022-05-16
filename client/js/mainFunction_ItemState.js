@@ -3,7 +3,7 @@ function productDetail_State(item){
     sessionStorage.setItem("function","showPhoneDetail_FrontEnd("+item[0]._id);
     document.getElementById("dropDownFunction").hidden=true;
     document.getElementById("price-slider-area").hidden=true;
-    document.getElementById("ul-cartshowing").hidden=false;
+    //document.getElementById("ul-cartshowing").hidden=false;
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var section=document.createElement('section');

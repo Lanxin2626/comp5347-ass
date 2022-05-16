@@ -133,7 +133,7 @@ function homeState(bestSeller,soldOut){
     sessionStorage.setItem("function","getHomeStateItems(");
     document.getElementById("dropDownFunction").hidden=true;
     document.getElementById("price-slider-area").hidden=true;
-    document.getElementById("ul-cartshowing").hidden=true;
+    //document.getElementById("ul-cartshowing").hidden=true;
     var showingArea = document.getElementById("showingArea");
     showingArea.innerHTML="";
     var viewLevel1=document.createElement('div');
