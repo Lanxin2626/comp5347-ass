@@ -114,7 +114,7 @@ function whetherLogin_ButtonControl(li_functionPersonal){
         button_login.setAttribute("class","btn btn-outline-light");
         button_login.innerHTML="Login";
         button_login.onclick=function(){
-            record_UserHistory();
+            //record_UserHistory();
             location.href='SignPage.html';
         }
         //button_login.setAttribute('onclick',"location.href='SignPage.html'");
