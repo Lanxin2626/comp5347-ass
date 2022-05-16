@@ -338,12 +338,25 @@ class Auth {
                 return res.json({ error });
             }
             else {
+                var user=await userModel.findOne({ email: recordEmail });
+                var oldEmail=user.password;
                 var passwordEncrypt = md5(newpwd);
-                const data = await userModel.findOneAndUpdate({ email: recordEmail }, { password: passwordEncrypt });
-                recordEmail="";
-                return res.json({
-                    success: "Your password has been reset",
-                });
+                //if password is same as old one
+                console.log("xxx "+passwordEncrypt);
+                console.log("xxx "+oldEmail);
+                if(passwordEncrypt==oldEmail){
+                    error = {
+                        fail: "Your new password equals to old one!",
+                    };
+                    return res.json({ error });
+                }
+                else{
+                    const data = await userModel.findOneAndUpdate({ email: recordEmail }, { password: passwordEncrypt });
+                    recordEmail="";
+                    return res.json({
+                        success: "Your password has been reset",
+                    });
+                }
             }
         }
     }
