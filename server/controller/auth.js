@@ -339,12 +339,12 @@ class Auth {
             }
             else {
                 var user=await userModel.findOne({ email: recordEmail });
-                var oldEmail=user.password;
+                var oldpwd=user.password;
                 var passwordEncrypt = md5(newpwd);
                 //if password is same as old one
                 console.log("xxx "+passwordEncrypt);
-                console.log("xxx "+oldEmail);
-                if(passwordEncrypt==oldEmail){
+                console.log("xxx "+oldpwd);
+                if(passwordEncrypt==oldpwd){
                     error = {
                         fail: "Your new password equals to old one!",
                     };

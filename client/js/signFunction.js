@@ -254,8 +254,9 @@ $(document).ready(function () {
             let data = response.data;
                 if (data['success']) {
                     alert(data['success']);
-                    errorpwd1.text("")
-                    errorpwd2.text("")
+                    $('#errorpwd1').text("");
+                    $('#errorpwd2').text("");
+                    $('#sendResetPassword').prop('disabled', true);
                 }     
                 else {
                     let errorMessage = data['error']
@@ -277,9 +278,6 @@ $(document).ready(function () {
 
                 }    
 
-        }).catch(function (error) {
-            alert("error")
         })
-
     })
 });
