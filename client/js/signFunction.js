@@ -55,19 +55,19 @@ $(document).ready(function () {
         // Input field has empty value
         if (!firstname || !lastname || !email || !pwd || !cpwd) {
             if (!firstname) {
-                firstnameInput.text("Filed must not be empty");
+                firstnameInput.text("Field must not be empty");
             }
             if (!lastname) {
-                lastnameInput.text("Filed must not be empty");
+                lastnameInput.text("Field must not be empty");
             }
             if (!email) {
-                emailInput.text("Filed must not be empty");
+                emailInput.text("Field must not be empty");
             }
             if (!pwd) {
-                pwdInput.text("Filed must not be empty");
+                pwdInput.text("Field must not be empty");
             }
             if (!cpwd) {
-                cpwdInput.text("Filed must not be empty");
+                cpwdInput.text("Field must not be empty");
             }
             return false;
         }
@@ -171,10 +171,10 @@ $(document).ready(function () {
 
         if (!email || !pwd) {
             if (!email) {
-                emailInput.text("Filed must not be empty");
+                emailInput.text("Field must not be empty");
             }
             if (!pwd) {
-                pwdInput.text("Filed must not be empty");
+                pwdInput.text("Field must not be empty");
             }
             return false;
         }
