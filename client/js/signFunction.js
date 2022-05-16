@@ -224,7 +224,8 @@ $(document).ready(function () {
                 let data = response.data;
                 if (data['success']) {
                     alert(data['success']);
-
+                    console.log("xxxxxx click");
+                    $('#sendRestEmail').prop('disabled', true);
                 } else {
                     alert(data['error']['email'])
                 }
