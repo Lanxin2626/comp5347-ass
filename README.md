@@ -9,7 +9,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Install Node.js on https://nodejs.org/en/
+* Install Node.js on https://nodejs.org/en/
+
+* Install MongoDBCompass on https://www.mongodb.com/products/compass
+
 
 ### Installing
 
@@ -25,7 +28,7 @@ cd server && npm install
 
 ### Running the app
 
-* Import two json file (userlist and phonelist) by using MongoDBCompass
+* Import two json file (userlist and phonelisting) by using MongoDBCompass
 
 * Opening back end server first
 
