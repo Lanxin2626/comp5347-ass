@@ -340,9 +340,9 @@ class cart {
                         data: total
                     })
                 } else {
-                    return res.status(404).json({
-                        code: 404,
-                        message:"No items!"
+                    return res.status(200).json({
+                        code: 200,
+                        data: 0
                     })
                 }
             } catch (err) {
