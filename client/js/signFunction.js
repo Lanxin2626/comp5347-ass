@@ -258,6 +258,7 @@ $(document).ready(function () {
                     $('#errorpwd1').text("");
                     $('#errorpwd2').text("");
                     $('#sendResetPassword').prop('disabled', true);
+                    location.href='SignPage.html';
                 }     
                 else {
                     let errorMessage = data['error']
@@ -265,14 +266,12 @@ $(document).ready(function () {
                     if (pwd1==""&&errorMessage['pwd']) {
                         $('#errorpwd1').text(errorMessage['pwd'])
                     }
-                    
                     if (pwd2==""&&errorMessage['cpwd']) {
                         $('#errorpwd2').text(errorMessage['cpwd'])
                     }
-                    if(pwd1!=""&&errorMessage['pwd']){
-                        $('#errorpwd1').text(errorMessage['pwd'])
+                    if(pwd1!=""&&errorMessage['pwdlen']){
+                        $('#errorpwd1').text(errorMessage['pwdlen'])
                     }
-
                     if (errorMessage['fail']) {
                         $('#errorpwd2').text(errorMessage['fail'])
                     }

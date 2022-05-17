@@ -43,7 +43,7 @@ class Auth {
         else {
             if ((password.length > 255) || (password.length < 5)) {
                 error = {
-                    password: "Password must be at least 5 charecter",
+                    password: "Password must be at least 5 characters",
                 };
                 return res.json({ error });
             }
@@ -324,7 +324,7 @@ class Auth {
         //密码小于5位数
         else if (newpwd.length < 5) {
             error = {
-                pwd: "Password must be at least 5 charecter",
+                pwdlen: "Password must be at least 5 characters",
             };
             return res.json({ error });
         }
